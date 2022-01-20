@@ -1,15 +1,15 @@
 ---
-title: "TITLE HERE"
+title: "Introduction to R for the Python user"
 description: |
-  DESCRIPTION HERE
+  A quick-start guide for Python users to get up to speed with the R programming language.
 author:
   - name: Benjamin Soltoff
     url: https://www.bensoltoff.com
     affiliation: University of Chicago
     affiliation_url: https://macss.uchicago.edu
-date: "DATE WHEN WORKSHOP WILL BE HELD"
+date: 2022-01-25
 creative_commons: CC BY-NC
-repository_url: https://github.com/css-skills/REPO
+repository_url: https://github.com/css-skills/intro-to-r-for-python-user
 output: distill::distill_article
 ---
 
