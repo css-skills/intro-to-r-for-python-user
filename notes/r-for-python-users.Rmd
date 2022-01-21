@@ -19,6 +19,15 @@ knitr::opts_chunk$set(
   fig.width = 6,
   fig.asp = 0.618 # 1 / phi
 )
+
+library(tidyverse)
+library(reticulate)
+library(rlang)
+library(knitr)
+library(glue)
+library(here)
+
+use_condaenv("r-reticulate")
 ```
 
 # Why R?
@@ -81,8 +90,1398 @@ However to harness the full strengths of R you will want to install additional p
 
 # Simple beginnings
 
+We begin by introducing the basic elements of R. You will use these less often than you might expect, but they are the building blocks for higher-level tools and offer the comfort of familiarity. Where we feel comparisons would aid understanding, we provide short examples in Python.
+
+## How do I say hello?
+
+We begin with a traditional greeting.
+In Python, we write:
+
+```{python python-hello}
+print("Hello, world!")
+```
+
+We can run the equivalent R in the RStudio Console"
+
+```{r r-hello}
+print("Hello, world!")
+```
+
+Python prints what we asked for,
+but what does the `[1]` in R's output signify?
+Is it perhaps something akin to a line number?
+Let's take a closer look by evaluating a couple of expressions without calling `print`:
+
+```{r r-quotes}
+'This is in single quotes.'
+"This is in double quotes."
+```
+
+`[1]` doesn't appear to be a line number;
+let's ignore it for now and do a little more exploring.
+
+> Note that R uses double quotes to display strings even when we give it a single-quoted string
+> (which is no worse than Python using single quotes when we've given it doubles).
+
+## How do I add numbers?
+
+In Python,
+we add numbers using `+`.
+
+```{python python-addition}
+print(1 + 2 + 3)
+```
+
+We can check the type of the result using `type`,
+which tells us that the result `6` is an integer:
+
+```{python python-type}
+print(type(6))
+```
+
+What does R do?
+
+```{r r-addition}
+1 + 2 + 3
+```
+```{r r-typeof}
+typeof(6)
+```
+
+R's type inspection function is called `typeof` rather than `type`,
+and it returns the type's name as a string.
+That's all fine,
+but it seems odd for integer addition to produce a double-precision floating-point result.
+Let's try an experiment:
+
+```{r typeof-6}
+typeof(6)
+```
+
+Ah: by default,
+R represents numbers as floating-point values,
+even if they look like integers when written.
+We can force a literal value to be an integer by appending an upper-case `L`
+(which stands for "long integer"):
+
+```{r typeof-6-int}
+typeof(6L)
+```
+
+Arithmetic on integers does produce integers:
+
+```{r integer-addition}
+typeof(1L + 2L + 3L)
+```
+
+and if we want to convert a floating-point number to an integer we can do so:
+
+```{r convert-to-integer}
+typeof(as.integer(6))
+```
+
+But wait:
+what is that dot in `as.integer`'s name?
+Is there an object called `as` with a [method](glossary.html#method) called `integer`?
+The answer is "no":
+`.` is (usually) just another character in R;
+like the underscore `_`,
+it is used to make names more readable.
+
+## How do I store many numbers together?
+
+The most common structure for storing multiple values together in Python is the list.
+We create lists using square brackets
+and assign a list to a variable using `=`.
+If the variable does not exist, it is created:
+
+```{python python-list}
+primes = [3, 5, 7, 11]
+print(primes)
+```
+
+By default, Python does not display any output when this command is run.
+
+The equivalent operation in R uses a function called `c`,
+which stands for "column" and which creates a **vector** -- the most fundamental data structur in R:
+
+```{r r-vector}
+primes <- c(3, 5, 7, 11)
+primes
+```
+
+Assignment is done using a left-pointing arrow `<-`
+(though other forms exist, which we will discuss later).
+As in Python,
+assignment is a statement rather than an expression,
+so we enter the name of the newly-created variable to get R to display its value.
+
+Now that we can create vectors in R,
+we can explain the errant `[1]` in our previous examples.
+To start,
+let's have a look at the lengths of various things in Python:
+
+```{python py-len-list}
+print(primes, len(primes))
+```
+
+```{python py-len-int, error=TRUE}
+print(len(4))
+```
+
+Fair enough:
+the length of a list is the number of elements it contains,
+and since a scalar like the integer 4 doesn't contain elements,
+it has no length.
+What of R's vectors?
+
+```{r r-len-vec}
+length(primes)
+```
+
+Good—and numbers?
+
+```{r r-len-int}
+length(4)
+```
+
+That's surprising.
+Let's have a closer look:
+
+```{r r-typeof-vec}
+typeof(primes)
+```
+
+That's also unexpected:
+the type of the vector is the type of the elements it contains.
+This all becomes clear once we realize that *there are no scalars in R*.
+`4` is not a single lonely integer,
+but rather a vector of length one containing the value 4.
+When we display its value,
+the `[1]` that R prints is the index of its first value.
+We can prove this by creating and displaying a longer vector:
+
+```{r long-vec}
+c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+```
+
+In order to help us find our way in our data,
+R automatically breaks long lines
+and displays the starting index of each line.
+These indices also show us that R counts from 1 as humans do,
+rather than from zero.
+
+## How do I index a vector?
+
+Python's rules for indexing are simple once you understand them
+(a statement which is also true of quantum mechanics and necromancy).
+To avoid confusing indices with values,
+let's create a list of color names and index that:
+
+```{python py-index-0}
+colors = ["eburnean", "glaucous", "wenge"]
+print(colors[0])
+```
+```{python py-index-top}
+print(colors[2])
+```
+```{python py-index-error, error=TRUE}
+colors[3]
+```
+```{python py-index-negative}
+print(colors[-1])
+```
+
+Indexing the equivalent vector in R with the indices 1 to 3 produces unsurprising results:
+
+```{r r-index-first}
+colors <- c("eburnean", "glaucous", "wenge")
+colors[1]
+```
+```{r r-index-last}
+colors[3]
+```
+
+In Python,
+a negative index counts backward from the end of a list.
+In R,
+we use a negative index to indicate a value that we don't want:
+
+```{r r-index-negative}
+colors[-1]
+```
+
+But wait.
+If every value in R is a vector,
+then when we use 1 or -1 as an index,
+we're actually using a vector to index another one.
+What happens if the index itself contains more than one value?
+
+```{r r-index-vec-error, error=TRUE}
+colors[1, 2]
+```
+
+That didn't work because R interprets `[i, j]` as being row and column indices,
+and our vector has only one dimension.
+What if we create a vector with `c(...)` and use that as a subscript?
+
+```{r r-index-with-vec}
+colors[c(3, 1, 2)]
+```
+
+That works, and allows us to repeat elements:
+
+```{r r-index-vec-repeat}
+colors[c(1, 1, 1)]
+```
+
+## How do I create new vectors from old?
+
+Modern Python encourages programmers to use list comprehensions
+instead of loops,
+i.e.,
+to write:
+
+```{python py-list-comp}
+original = [3, 5, 7, 9]
+doubled = [2 * x for x in original]
+print(doubled)
+```
+
+instead of:
+
+```{python py-list-loop}
+doubled = []
+for x in original:
+  doubled.append(2 * x)
+print(doubled)
+```
+
+If `original` is a NumPy array, we can shorten this to `2 * original`.
+R provides this capability in the language itself:
+
+```{r r-vec-comp}
+original <- c(3, 5, 7, 9)
+doubled <- 2 * original
+doubled
+```
+
+Modern R strongly encourages us to vectorize computations in this way,
+i.e.,
+to do operations on whole vectors at once rather than looping over their contents.
+To aid this,
+all arithmetic operations work element by element on vectors:
+
+```{r vector-ops}
+tens <- c(10, 20, 30)
+hundreds <- c(100, 200, 300)
+tens + hundreds / (tens * hundreds)
+```
+
+If two vectors of unequal length are used together,
+the elements of the shorter are recycled.
+This behaves sensibly if one of the vectors is a scalar—it is just re-used as many times as necessary:
+
+```{r scalar-vector}
+hundreds + 5
+```
+
+If both vectors have several elements,
+the shorter is repeated as often as necessary.
+This works,
+but is so likely to lead to hard-to-find bugs that R produces a warning message:
+
+```{r vec-length-mismatch}
+thousands <- c(1000, 2000)
+hundreds + thousands
+```
+
+R also provides vectorized alternatives to `if`-`else` statements.
+If we use a vector containing the logical (or Boolean) values `TRUE` and `FALSE` as an index,
+it selects elements corresponding to `TRUE` values:
+
+```{r vector-conditional}
+colors # as a reminder
+colors[c(TRUE, FALSE, TRUE)]
+```
+
+This is called logical indexing.
+The function `ifelse` uses this to do what its name suggests:
+select a value from one vector if a condition is `TRUE`,
+and a corresponding value from another vector if the condition is `FALSE`:
+
+```{r ifelse-func}
+before_letter_m <- colors < "m"
+before_letter_m # to show the index
+ifelse(before_letter_m, colors, c("comes", "after", "m"))
+```
+
+All three vectors are of the same length,
+and the first (the condition) is usually constructed using the values of one or both of the other vectors:
+
+```{r ifelse-example}
+ifelse(colors < "m", colors, toupper(colors))
+```
+
+## How can I store a mix of different types of objects?
+
+One of the things that newcomers to R often trip over is the various ways in which structures can be indexed.
+All of the following are legal:
+
+```{r subscript-examples, eval=FALSE}
+thing[i]
+thing[i, j]
+thing[[i]]
+thing[[i, j]]
+thing$name
+thing$"name"
+```
+
+but they can behave differently depending on what kind of thing `thing` is.
+To explain, we must first take a look at lists.
+
+A list in R is a vector that can contain values of many different types.
+
+
+We'll use this list in our examples:
+
+```{r list-of-things}
+thing <- list("first", c(2, 20, 200), 3.3)
+thing
+```
+
+The output tells us that the first element of `thing` is a vector of one element,
+that the second is a vector of three elements,
+and the third is again a vector of one element;
+the major indices are shown in `[[…]]`,
+while the indices of the contained elements are shown in `[…]`.
+(Again,
+remember that `"first"` and 3.3 are actually vectors of length 1.)
+
+> In keeping with R's conventions,
+> we will henceforth use `[[` and `[` to refer to the two kinds of indexing
+> rather than `[[…]]` and `[…]`.
+
+## What is the difference between `[` and `[[`?
+
+The output above strongly suggests that we can get the elements of a list using `[[` (double square brackets):
+
+```{r double-square-first}
+thing[[1]]
+```
+```{r double-square-second}
+thing[[2]]
+```
+```{r double-square-third}
+thing[[3]]
+```
+
+Let's have a look at the types of those three values:
+
+```{r double-square-elements-first}
+typeof(thing[[1]])
+```
+```{r double-square-elements-second}
+typeof(thing[[2]])
+```
+```{r double-square-elements-third}
+typeof(thing[[3]])
+```
+
+That seems sensible.
+Now,
+what do we get if we index single square brackets `[…]`?
+
+```{r single-square-value}
+thing[1]
+```
+
+That looks like a list, not a vector—let's check:
+
+```{r single-square-typeof}
+typeof(thing[1])
+```
+
+This shows the difference between `[[` and `[`:
+the former peels away a layer of data structure, returning only the sub-structure,
+while the latter gives us back a structure of the same type as the thing being indexed.
+Since a "scalar" is just a vector of length 1,
+there is no difference between `[[` and `[` when they are applied to vectors:
+
+```{r single-and-double-1}
+v <- c("first", "second", "third")
+v[2]
+```
+```{r single-and-double-2}
+typeof(v[2])
+```
+```{r single-and-double-3}
+v[[2]]
+```
+```{r single-and-double-4}
+typeof(v[[2]])
+```
+
+## How can I access elements by name?
+
+R allows us to name the elements in vectors and lists:
+if we assign `c(one = 1, two = 2, three = 3)` to `names`,
+then `names["two"]` is 2.
+We can use this to create a lookup table:
+
+```{r lookup-table}
+values <- c("m", "f", "nb", "f", "f", "m", "m")
+lookup <- c(m = "Male", f = "Female", nb = "Non-binary")
+lookup[values]
+```
+
+If the structure in question is a list rather than an atomic vector of numbers, characters, or logicals,
+we can use the syntax `lookup$m` instead of `lookup["m"]`:
+
+```{r lookup-list}
+lookup_list <- list(m = "Male", f = "Female", nb = "Non-binary")
+lookup_list$m
+```
+
+We will explore this in more detail when we look at the tidyverse in Chapter \@ref(tidyverse),
+since that is where access-by-name is used most often.
+For now,
+simply note that if the name of an element isn't a legal variable name,
+we have to put it in backward quotes to use it with `$`:
+
+```{r quoted-names}
+another_list <- list("first field" = "F", "second field" = "S")
+another_list$`first field`
+```
+
+## How do I choose and repeat things?
+
+We cherish the illusion of free will so much that we embed a pretense of it in our machines
+in the form of conditional statements using `if` and `else`.
+For example,
+here is a snippet of Python that uses `for` and `if` to display
+the signs of the numbers in a list:
+
+```{python py-loop-cond}
+values = [-15, 0, 15]
+for v in values:
+    if v < 0:
+        pos_neg = -1
+    elif v == 0:
+        pos_neg = 0
+    else:
+        pos_neg = 1
+    print("The pos_neg of", v, "is", pos_neg)
+print("The final value of v is", v)
+```
+
+Its direct translation into R is:
+
+```{r r-loop-cond}
+values <- c(-15, 0, 15)
+for (v in values) {
+  if (v < 0) {
+    pos_neg <- -1
+  }
+  else if (v == 0) {
+    pos_neg <- 0
+  }
+  else {
+    pos_neg <- 1
+  }
+  print(glue::glue("The sign of {v} is {pos_neg}"))
+}
+print(glue::glue("The final value of v is {v}"))
+```
+
+There are a few things to note here:
+
+1.  The parentheses in the loop header are required:
+    we cannot simply write `for v in values`.
+1.  The curly braces around the body of the loop
+    and around the bodies of the conditional branches are optional,
+    since each contains only a single statement.
+    However, they should always be there to help readability.
+1.  As in Python,
+    the loop variable `v` persists after the loop is over.
+1.  `glue::glue` (the function `glue` from the library of the same name)
+    interpolates variables into strings in sensible ways.
+    We will load this library and use plain old `glue` in the explanations that follow.
+    (Note that R uses `::` to get functions out of packages rather than Python's `.`.)
+1.  We have called our temporary variable `pos_neg` rather than `sign`
+    so that we don't accidentally overwrite the rather useful built-in R function
+    with the latter name.
+    [Name collisions](glossary.html#name-collision) of this sort
+    are just as easy in R as they are in Python.
+
+## How can I vectorize loops and conditionals?
+
+The example above is *not* how we should write R:
+everything in that snippet can and should be vectorized.
+The simplest way to do this is to use the aforementioned built-in function:
+
+```{r using-sign}
+print(sign(values))
+print(glue::glue("The sign of {values} is {sign(values)}"))
+```
+
+But what if the function we want doesn't exist
+(or if we don't know what it's called)?
+In that case,
+the easiest approach is often to create a new vector
+whose values are derived from those of the vector we had
+and trust R to match up corresponding elements:
+
+```{r using-case-when}
+pos_neg <- dplyr::case_when(
+  values <  0 ~ -1,
+  values == 0 ~ 0,
+  values >  0 ~ 1
+)
+
+print(glue::glue("The sign of {values} is {pos_neg}"))
+```
+
+This solution makes use of `case_when`,
+which is a vectorized analog of `if`/`else if`/`else`.
+Each branch uses the `~` operator to combine
+a Boolean test on the left with a result on the right.
+We will see other uses for `~` in subsequent chapters.
+
+## How can I use a vector in a conditional statement?
+
+We cannot use a vector directly as a condition in an `if` statement:
+
+```{r vector-cond-fail, error=TRUE}
+numbers <- c(0, 1, 2)
+if (numbers) {
+  print("This should not work.")
+}
+```
+
+Instead,
+we must collapse the vector into a single logical value:
+
+```{r all-cond}
+numbers <- c(0, 1, 2)
+if (all(numbers >= 0)) {
+  print("This, on the other hand, should work.")
+}
+```
+
+The function `all` returns `TRUE` if every element in its argument is `TRUE`;
+it corresponds to a logical "and" of all its inputs.
+We can use a corresponding function `any` to check if at least one value is `TRUE`,
+which corresponds to a logical "or" across the whole input.
+
+## How do I create and call functions?
+
+As we have already seen,
+we call functions in R much as we do in Python:
+
+```{r func-call}
+max(1, 3, 5) + min(1, 3, 5)
+```
+
+We define a new function using the `function` keyword.
+This creates the function;
+to name it,
+we must assign the newly-created function to a variable:
+
+```{r func-def}
+swap <- function(pair) {
+  c(pair[2], pair[1])
+}
+swap(c("left", "right"))
+```
+
+## How can I write a function that takes variable arguments?
+
+If the number of arguments given to a function is not the number expected,
+R complains:
+
+```{r wrong-number-of-args, error=TRUE}
+swap("one", "two", "three")
+```
+
+(Note that we are passing three separate values here,
+not a single vector containing three values.)
+If we want a function to handle a [varying number of arguments](glossary.html#variable-arguments),
+we represent the "extra" arguments with an ellipsis `...` (three dots),
+which serves the same purpose as Python's `*args`:
+
+```{r dot-args}
+print_with_title <- function(title, ...) {
+  print(glue("=={title}=="), paste(..., sep = "\n"))
+}
+
+print_with_title("to-do", "Monday", "Tuesday", "Wednesday")
+```
+
+> The function `paste` creates a string by combining its arguments with the specified separator.
+
+## How can I provide default values for arguments?
+
+Like Python and most other modern programming languages,
+R lets us define default values for arguments and then pass arguments by name:
+
+```{r define-defaults}
+example <- function(first, second = "second", third = "third") {
+  print(glue("first='{first}' second='{second}' third='{third}'"))
+}
+
+example("with just first")
+example("with first and second by position", "positional")
+example("with first and third by name", third = "by name")
+```
+
+One caution:
+when you use a name in a function call,
+R ignores things that *aren't* functions when looking up the function.
+This means that
+the call to `orange()` in the code below produces 110 rather than an error
+because `purple(purple)` is interpreted as
+"pass the value 10 into the globally-defined function `purple`"
+rather than "try to call a function `10(10)`":
+
+```{r non-functions-in-call}
+purple <- function(x) x + 100
+orange <- function() {
+  purple <- 10
+  purple(purple)
+}
+orange()
+```
+
+Best rule of thumb: Give all your objects/functions/arguments distinct names!
 
 # The `tidyverse`
+
+ADD INTRO HERE
+
+## How do I read data?
+
+We begin by looking at the file `data/infant_hiv.csv`,
+a tidied version of data on the percentage of infants born to women with HIV
+who received an HIV test themselves within two months of birth.
+The original data comes from the UNICEF site at <https://data.unicef.org/resources/dataset/hiv-aids-statistical-tables/>,
+and this file contains:
+
+```
+country,year,estimate,hi,lo
+AFG,2009,NA,NA,NA
+AFG,2010,NA,NA,NA
+...
+AFG,2017,NA,NA,NA
+AGO,2009,NA,NA,NA
+AGO,2010,0.03,0.04,0.02
+AGO,2011,0.05,0.07,0.04
+AGO,2012,0.06,0.08,0.05
+...
+ZWE,2016,0.71,0.88,0.62
+ZWE,2017,0.65,0.81,0.57
+```
+
+The actual file has many more rows (and no ellipses).
+It uses `NA` to show missing data rather than (for example) `-`, a space, or a blank,
+and its values are interpreted as follows:
+
+| Header   | Datatype  | Description                                 |
+|----------|-----------|---------------------------------------------|
+| country  | char      | ISO3 country code of country reporting data |
+| year     | integer   | year CE for which data reported             |
+| estimate | double/NA | estimated percentage of measurement         |
+| hi       | double/NA | high end of range                           |
+| lo       | double/NA | low end of range                            |
+
+We can load this data in Python like this:
+
+```{python python-read-csv}
+import pandas as pd
+
+infant_hiv = pd.read_csv('data/infant_hiv.csv')
+print(infant_hiv)
+```
+
+The equivalent in R is to load
+the [tidyverse](glossary.html#tidyverse) collection of [packages](glossary.html#package)
+and then call the `read_csv` function.
+We will go through this in stages, since each produces output.
+
+```{r library-fail, eval=FALSE}
+library(tidyverse)
+```
+```
+Error in library(tidyverse) : there is no package called 'tidyverse'
+```
+
+Ah.
+We must install the tidyverse
+(but only need to do so once per machine):
+
+```{r library-install, eval=FALSE}
+install.packages("tidyverse")
+```
+
+At any time,
+we can call `sessionInfo` to find out what versions of which packages we have loaded,
+along with the version of R we're using and some other useful information:
+
+```{r session-info-orig}
+sessionInfo()
+```
+
+We then load the library once per program:
+
+```{r unloading, echo=FALSE}
+# Detach so that loading will be echoed.
+detach(package:tidyverse)
+```
+```{r library-succeed}
+library(tidyverse)
+```
+
+Note that we give `install.packages` a string to install,
+but simply give the name of the package we want to load to `library`.
+
+Loading the tidyverse gives us eight packages.
+One of those, dplyr, defines two functions that mask standard functions in R with the same names.
+If we need the originals,
+we can always get them with their
+[fully-qualified names](glossary.html#fully-qualified-name)
+`stats::filter` and `stats::lag`.
+
+Once we have the tidyverse loaded,
+reading the file looks remarkably like reading the file:
+
+```{r r-read-csv}
+infant_hiv <- read_csv('data/infant_hiv.csv')
+```
+
+R's `read_csv` tells us more about what it has done than Pandas does.
+In particular, it guesses the data types of columns based on the first thousand values
+and then tells us what types it has inferred.
+(In a better universe,
+people would habitually use the first *two* rows of their spreadsheets for name *and units*,
+but we do not live there.)
+
+We can now look at what `read_csv` has produced.
+
+```{r show-tibble}
+infant_hiv
+```
+
+This is a [tibble](glossary.html#tibble),
+which is the tidyverse's enhanced version of R's `data.frame`.
+It organizes data into named columns,
+each having one value for each row.
+In statistical terms,
+the columns are the variables being observed
+and the rows are the actual observations.
+
+## How do I inspect data?
+
+We often have a quick look at the content of a table to remind ourselves what it contains.
+Pandas does this using methods whose names are borrowed from the Unix shell's `head` and `tail` commands:
+
+```{python py-show-head}
+print(infant_hiv.head())
+```
+```{python py-show-tail}
+print(infant_hiv.tail())
+```
+
+R has similarly-named functions:
+
+```{r r-show-head}
+head(infant_hiv)
+```
+```{r r-show-tail}
+tail(infant_hiv)
+```
+
+Let's have a closer look at that last command's output:
+
+```{r r-tail-tibble, paged.print=FALSE}
+tail(infant_hiv)
+```
+
+Note that the row numbers printed by `tail` are [relative](glossary.html#relative-row-number) to the output,
+not [absolute](glossary.html#absolute-row-number) to the table.
+This is different from Pandas,
+which retains the original row numbers.
+
+What about overall information?
+
+```{python data-info}
+print(infant_hiv.info())
+```
+
+```{r data-summary}
+summary(infant_hiv)
+```
+
+Your display of R's summary may or may not wrap,
+depending on how large a screen the older acolytes have allowed you.
+
+## How do I index rows and columns?
+
+A Pandas DataFrame is a collection of series (also called columns),
+each containing the values of a single observed variable:
+
+```{python py-string-subscript, output.lines=NA}
+print(infant_hiv['estimate'])
+```
+
+We would get exactly the same output in Python with `infant_hiv.estimate`,
+i.e.,
+with an attribute name rather than a string subscript.
+The same tricks work in R:
+
+```{r r-string-subscript}
+infant_hiv['estimate']
+```
+
+However, R's `infant_hiv$estimate` provides all the data:
+
+```{r r-dollar-subscript, output.lines=NA}
+infant_hiv$estimate
+```
+
+Again, note that the boxed number on the left is the start index of that row.
+
+What about single values?
+Remembering to count from zero from Python and as humans do for R,
+we have:
+
+```{python py-individual-element}
+print(infant_hiv.estimate[11])
+```
+```{r r-individual-element}
+infant_hiv$estimate[12]
+```
+
+Ah—everything in R is a vector,
+so we get a vector of one value as an output rather than a single value.
+
+```{python py-len-individual-element, error=TRUE}
+print(len(infant_hiv.estimate[11]))
+```
+```{r r-len-individual-element}
+length(infant_hiv$estimate[12])
+```
+
+And yes, ranges work:
+
+```{python py-range-estimate}
+print(infant_hiv.estimate[5:15])
+```
+```{r r-range-estimate}
+infant_hiv$estimate[6:15]
+```
+
+Note that the upper bound is the same, because it's inclusive in R and exclusive in Python.
+Note also that nothing prevents us from selecting a range of rows that spans several countries,
+which is why selecting by row number is usually a sign of innocence, insouciance, or desperation.
+
+We can select by column number as well.
+Pandas uses the rather clumsy `object.iloc[rows, columns]` with the usual shortcut `:` for "entire range":
+
+```{python py-iloc, output.lines=NA}
+print(infant_hiv.iloc[:, 0])
+```
+
+Since this is a column, it can be indexed:
+
+```{python py-iloc-indexed}
+print(infant_hiv.iloc[:, 0][0])
+```
+
+In R, a single index is interpreted as the column index:
+
+```{r single-index-is-col}
+infant_hiv[1]
+```
+
+But notice that the output is not a vector, but another tibble (i.e., a table with N rows and one column).
+This means that adding another index does column-wise indexing on that tibble:
+
+```{r double-index-of-tibble}
+infant_hiv[1][1]
+```
+
+How then are we to get the first mention of Afghanistan?
+The answer is to use [double square brackets](glossary.html#double-square-brackets) to strip away one level of structure:
+
+```{r double-square-on-tibble, output.lines=NA}
+infant_hiv[[1]]
+```
+
+This is now a plain old vector, so it can be indexed with [single square brackets](glossary.html#single-square-brackets):
+
+```{r double-square-then-single}
+infant_hiv[[1]][1]
+```
+
+But that too is a vector, so it can of course be indexed as well (for some value of "of course"):
+
+```{r double-single-single}
+infant_hiv[[1]][1][1]
+```
+
+Thus,
+`data[1][[1]]` produces a tibble,
+then selects the first column vector from it,
+so it still gives us a vector.
+*This is not madness.*
+It is merely…differently sane.
+
+> **Subsetting Data Frames**
+>
+> When we are working with data frames (including tibbles),
+> subsetting with a single vector selects columns, not rows,
+> because data frames are stored as lists of columns.
+> This means that `df[1:2]` selects two columns from `df`.
+> However, in `df[2:3, 1:2]`, the first index selects rows, while the second selects columns.
+
+## How do I calculate basic statistics?
+
+What is the average estimate?
+We start by grabbing that column for convenience:
+
+```{python py-average-index}
+estimates = infant_hiv.estimate
+print(len(estimates))
+```
+```{python py-estimates-mean}
+print(estimates.mean())
+```
+
+This translates almost directly to R:
+
+```{r r-average-index}
+estimates <- infant_hiv$estimate
+length(estimates)
+```
+```{r r-estimates-mean}
+mean(estimates)
+```
+
+The void is always there, waiting for us…
+Let's fix this in R first by telling `mean` to drop NAs:
+
+```{r r-remove-na}
+mean(estimates, na.rm = TRUE)
+```
+
+and then try to get the statistically correct behavior in Pandas:
+
+```{python py-remove-na}
+print(estimates.mean(skipna=False))
+```
+
+Many functions in R use `na.rm` to control whether `NA`s are removed or not.
+(Remember, the `.` character is just another part of the name)
+R's default behavior is to leave `NA`s in, and then to include them in [aggregate](glossary.html#aggregation) computations.
+Python's is to get rid of missing values early and work with what's left,
+which makes translating code from one language to the next much more interesting than it might otherwise be.
+But other than that, the statistics works the same way.
+In Python, we write:
+
+```{python py-min-max-std}
+print("min", estimates.min())
+print("max", estimates.max())
+print("std", estimates.std())
+```
+
+and in R:
+
+```{r r-min-max-std}
+print(glue("min {min(estimates, na.rm = TRUE)}"))
+print(glue("max {max(estimates, na.rm = TRUE)}"))
+print(glue("sd {sd(estimates, na.rm = TRUE)}"))
+```
+
+A good use of aggregation is to check the quality of the data.
+For example,
+we can ask if there are any records where some of the estimate, the low value, or the high value are missing,
+but not all of them:
+
+```{python py-check-null}
+print((infant_hiv.hi.isnull() != infant_hiv.lo.isnull()).any())
+```
+```{r r-check-null}
+any(is.na(infant_hiv$hi) != is.na(infant_hiv$lo))
+```
+
+## How do I filter data?
+
+By "[filtering](glossary.html#filter)", we mean "selecting records by value".
+As discussed in Chapter \@ref(basics),
+the simplest approach is to use a vector of logical values to keep only the values corresponding to `TRUE`.
+In Python, this is:
+
+```{python py-simple-filter}
+maximal = estimates[estimates >= 0.95]
+print(len(maximal))
+```
+
+And in R:
+
+```{r r-simple-filter}
+maximal <- estimates[estimates >= 0.95]
+length(maximal)
+```
+
+The difference is unexpected.
+Let's have a closer look at the result in Python:
+
+```{python py-maximal, output.lines=NA}
+print(maximal)
+```
+
+And in R:
+
+```{r r-maximal, output.lines=NA}
+maximal
+```
+
+It appears that R has kept the unknown values in order to highlight just how little we know.
+More precisely,
+wherever there was an `NA` in the original data
+there is an `NA` in the logical vector
+and hence an `NA` in the final vector.
+Let us then turn to `which` to get a vector of indices at which a vector contains `TRUE`.
+This function does not return indices for `FALSE` or `NA`:
+
+```{r r-which}
+which(estimates >= 0.95)
+```
+
+And as a quick check:
+
+```{r r-length-which}
+length(which(estimates >= 0.95))
+```
+
+So now we can index our vector with the result of the `which`:
+
+```{r r-maximal-which}
+maximal <- estimates[which(estimates >= 0.95)]
+maximal
+```
+
+But should we do this?
+Those `NA`s are important information,
+and should not be discarded so blithely.
+What we should *really* be doing is using the tools the tidyverse provides
+rather than clever indexing tricks.
+These behave consistently across a wide scale of problems
+and encourage use of patterns that make it easier for others to understand our programs.
+
+## How do I write tidy code?
+
+The six basic data transformation operations in the tidyverse are:
+
+- `filter`: choose observations (rows) by value(s)
+- `arrange`: reorder rows
+- `select`: choose variables (columns) by name
+- `mutate`: derive new variables from existing ones
+- `group_by`: define subsets of rows for further processing
+- `summarize`: combine many values to create a single new value
+
+`filter(tibble, ...criteria...)` keeps rows that pass all of the specified criteria:
+
+```{r filter-as-function}
+filter(infant_hiv, lo > 0.5)
+```
+
+Notice that the expression is `lo > 0.5` rather than `"lo" > 0.5`.
+The latter expression would return the entire table
+because the string `"lo"` is greater than the number 0.5 everywhere.
+
+But how is it that the name `lo` can be used on its own?
+It is the name of a column, but there is no variable called `lo`.
+The answer is that R uses [lazy evaluation](glossary.html#lazy-evaluation):
+function arguments aren't evaluated until they're needed,
+so the function `filter` actually gets the expression `lo > 0.5`,
+which allows it to check that there's a column called `lo` and then use it appropriately.
+It may seem strange at first,
+but it is much tidier than `filter(data, data$lo > 0.5)` or `filter(data, "lo > 0.5")`.
+We will explore lazy evaluation further in Chapter \@ref(nse).
+
+We can make data anlaysis code more readable by using the [pipe operator](glossary.html#pipe-operator) `%>%`:
+
+```{r filter-in-pipe}
+infant_hiv %>% filter(lo > 0.5)
+```
+
+This may not seem like much of an improvement,
+but neither does a Unix pipe consisting of `cat filename.txt | head`.
+What about this?
+
+```{r filter-complex}
+filter(infant_hiv, (estimate != 0.95) & (lo > 0.5) & (hi <= (lo + 0.1)))
+```
+
+It uses the vectorized "and" operator `&` twice,
+and parsing the condition takes a human being at least a few seconds.
+Its pipelined equivalent is:
+
+```{r filter-complex-pipe}
+infant_hiv %>% filter(estimate != 0.95) %>% filter(lo > 0.5) %>% filter(hi <= (lo + 0.1))
+```
+
+Breaking the condition into stages like this often makes reading and testing much easier,
+and encourages incremental write-test-extend development.
+Let's increase the band from 10% to 20%,
+break the line the way the [tidyverse style guide][tidyverse-style] recommends
+to make the operations easier to spot,
+and order by `lo` in descending order:
+
+```{r filter-arrange}
+infant_hiv %>%
+  filter(estimate != 0.95) %>%
+  filter(lo > 0.5) %>%
+  filter(hi <= (lo + 0.2)) %>%
+  arrange(desc(lo))
+```
+
+We can now [select](glossary.html#select) the three columns we care about:
+
+```{r filter-arrange-select}
+infant_hiv %>%
+  filter(estimate != 0.95) %>%
+  filter(lo > 0.5) %>%
+  filter(hi <= (lo + 0.2)) %>%
+  arrange(desc(lo)) %>%
+  select(year, lo, hi)
+```
+
+Once again,
+we are using the unquoted column names `year`, `lo`, and `hi`
+and letting R's lazy evaluation take care of the details for us.
+
+Rather than selecting these three columns,
+we can [select *out*](glossary.html#negative-selection) the columns we're not interested in
+by negating their names.
+This leaves the columns that are kept in their original order,
+rather than putting `lo` before `hi`,
+which won't matter if we later select by name,
+but *will* if we ever want to select by position:
+
+```{r select-out}
+infant_hiv %>%
+  filter(estimate != 0.95) %>%
+  filter(lo > 0.5) %>%
+  filter(hi <= (lo + 0.2)) %>%
+  arrange(desc(lo)) %>%
+  select(-country, -estimate)
+```
+
+Giddy with power,
+we now add a column containing the difference between the low and high values.
+This can be done using either `mutate`,
+which adds new columns to the end of an existing tibble,
+or with `transmute`,
+which creates a new tibble containing only the columns we explicitly ask for.
+(There is also a function `rename` which simply renames columns.)
+Since we want to keep `hi` and `lo`,
+we decide to use `mutate`:
+
+```{r mutate-new-column}
+infant_hiv %>%
+  filter(estimate != 0.95) %>%
+  filter(lo > 0.5) %>%
+  filter(hi <= (lo + 0.2)) %>%
+  arrange(desc(lo)) %>%
+  select(-country, -estimate) %>%
+  mutate(difference = hi - lo)
+```
+
+Does the difference between high and low estimates vary by year?
+To answer that question,
+we use `group_by` to [group](glossary.html#group) records by value
+and then `summarize` to aggregate within groups.
+We might as well get rid of the `arrange` and `select` calls in our pipeline at this point,
+since we're not using them,
+and count how many records contributed to each aggregation using `n()`:
+
+```{r summarize-and-count}
+infant_hiv %>%
+  filter(estimate != 0.95) %>%
+  filter(lo > 0.5) %>%
+  filter(hi <= (lo + 0.2)) %>%
+  mutate(difference = hi - lo) %>%
+  group_by(year) %>%
+  summarize(count = n(), ave_diff = mean(year))
+```
+
+How might we do this with Pandas?
+One approach is to use a single multi-part `.query` to select data
+and store the result in a variable so that we can refer to the `hi` and `lo` columns twice
+without repeating the filtering expression.
+We then group by year and aggregate, again using strings for column names:
+
+```{python equivalent-to-pipeline}
+data = pd.read_csv('data/infant_hiv.csv')
+data = data.query('(estimate != 0.95) & (lo > 0.5) & (hi <= (lo + 0.2))')
+data = data.assign(difference = (data.hi - data.lo))
+grouped = data.groupby('year').agg(ave_diff=('difference', 'mean'), count=('difference', 'count'))
+print(grouped)
+```
+
+There are other ways to tackle this problem with Pandas,
+but the tidyverse approach produces code that I find more readable.
+
+## How do I model my data?
+
+Tidying up data can be as calming and rewarding in the same way as knitting
+or rearranging the specimen jars on the shelves in your dining room-stroke-laboratory.
+Eventually,
+though,
+people want to do some statistics.
+The simplest tool for this in R is `lm`, which stands for "linear model".
+Given a formula and a data set,
+it calculates coefficients to fit that formula to that data:
+
+```{r simple-formula}
+lm(estimate ~ lo, data = infant_hiv)
+```
+
+This is telling us that `estimate` is more-or-less equal to `0.0421 + 1.0707 * lo`.
+The `~` symbol is used to separate the left and right sides of the equation,
+and as with all things tidyverse,
+lazy evaluation allows us to use variable names directly.
+In fact,
+it lets us write much more complex formulas involving functions of multiple variables.
+For example,
+we can regress `estimate` against the square roots of `lo` and `hi`
+(though there is no sound statistical reason to do so):
+
+```{r complex-formula}
+lm(estimate ~ sqrt(lo) + sqrt(hi), data = infant_hiv)
+```
+
+One important thing to note here is the way that `+` is overloaded in formulas.
+The formula `estimate ~ lo + hi` does *not* mean "regress `estimate` against the sum of `lo` and `hi`",
+but rather, "regress `estimate` against the two variables `lo` and `hi`":
+
+```{r double-regression}
+lm(estimate ~ lo + hi, data = infant_hiv)
+```
+
+If we want to regress `estimate` against the average of `lo` and `hi`
+(i.e., regress `estimate` against a single calculated variable instead of against two variables)
+we need to create a temporary column:
+
+```{r regress-temporary}
+infant_hiv %>%
+  mutate(ave_lo_hi = (lo + hi)/2) %>%
+  lm(estimate ~ ave_lo_hi, data = .)
+```
+
+Here, the call to `lm` is using the variable `.` to mean
+"the data coming in from the previous stage of the pipeline".
+Most of the functions in the tidyverse use this convention
+so that data can be passed to a function that expects it in a position other than the first.
+
+## How do I create a plot?
+
+Human being always want to see the previously unseen,
+though they are not always glad to have done so.
+The most popular tool for doing this in R is `ggplot2`,
+which implements and extends the patterns for creating charts described in @Wilk2005.
+Every chart it creates has a [geometry](glossary.html#geometry) that controls how data is displayed
+and a [mapping](glossary.html#mapping) that controls how values are represented geometrically.
+For example,
+these lines of code create a scatter plot
+showing the relationship between `lo` and `hi` values in the infant HIV data:
+
+```{r basic-plot}
+ggplot(infant_hiv) + geom_point(mapping = aes(x = lo, y = hi))
+```
+
+Looking more closely:
+
+-   The function `ggplot` creates an object to represent the chart with `infant_hiv` as the underlying data.
+-   `geom_point` specifies the geometry we want (points).
+-   Its `mapping` argument is assigned an [aesthetic](glossary.html#aesthetic)
+    that specifies `lo` is to be used as the `x` coordinate and `hi` is to be used as the `y` coordinate.
+-   The elements of the chart are combined with `+` rather than `%>%` for historical reasons.
+
+Let's create a slightly more appealing plot by dropping NAs,
+making the points semi-transparent,
+and colorizing them according to the value of `estimate`:
+
+```{r plot-after-drop}
+infant_hiv %>%
+  drop_na() %>%
+  ggplot(mapping = aes(x = lo, y = hi, color = estimate)) +
+  geom_point(alpha = 0.5) +
+  xlim(0.0, 1.0) + ylim(0.0, 1.0)
+```
+
+We set the transparency `alpha` outside the aesthetic because its value is constant for all points.
+If we set it inside `aes(...)`,
+we would be telling ggplot2 to set the transparency according to the value of the data.
+We specify the limits to the axes manually with `xlim` and `ylim` to ensure that ggplot2 includes the upper bounds:
+without this,
+all of the data would be shown,
+but the upper label "1.00" would be omitted.
+
+This plot immediately shows us that we have some outliers.
+There are far more values with `hi` equal to 0.95 than it seems there ought to be,
+and there are eight points running up the left margin that seem troubling as well.
+Let's create a new tibble that doesn't have these:
+
+```{r plot-remove-outliers}
+infant_hiv %>%
+  drop_na() %>%
+  filter(hi != 0.95) %>%
+  filter(!((lo < 0.10) & (hi > 0.25))) %>%
+  ggplot(mapping = aes(x = lo, y = hi, color = estimate)) +
+  geom_point(alpha = 0.5) +
+  xlim(0.0, 1.0) + ylim(0.0, 1.0)
+```
+
+We can add the fitted curve by including another geometry called `geom_smooth`:
+
+```{r plot-with-fit}
+infant_hiv %>%
+  drop_na() %>%
+  filter(hi != 0.95) %>%
+  filter(!((lo < 0.10) & (hi > 0.25))) %>%
+  ggplot(mapping = aes(x = lo, y = hi)) +
+  geom_point(mapping = aes(color = estimate), alpha = 0.5) +
+  geom_smooth(method = lm, color = 'red') +
+  xlim(0.0, 1.0) + ylim(0.0, 1.0)
+```
+
+But wait:
+why is this complaining about missing values?
+Some online searches lead to the discovery that
+`geom_smooth` adds virtual points to the data for plotting purposes,
+some of which lie outside the range of the actual data,
+and that setting `xlim` and `ylim` then truncates these.
+(Remember, R is differently sane…)
+The safe way to control the range of the data is to add a call to `coord_cartesian`,
+which effectively zooms in on a region of interest:
+
+```{r plot-cartesian}
+infant_hiv %>%
+  drop_na() %>%
+  filter(hi != 0.95) %>%
+  filter(!((lo < 0.10) & (hi > 0.25))) %>%
+  ggplot(mapping = aes(x = lo, y = hi)) +
+  geom_point(mapping = aes(color = estimate), alpha = 0.5) +
+  geom_smooth(method = lm, color = 'red') +
+  coord_cartesian(xlim = c(0.0, 1.0), ylim = c(0.0, 1.0))
+```
+
+# R Markdown vs. Jupyter Notebooks
+
 
 
 # Running Python within R
