@@ -1,0 +1,104 @@
+---
+title: "Introduction to R for the Python User"
+author: "Benjamin Soltoff"
+date: "`r lubridate::today()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+set.seed(123)
+options(digits = 3)
+
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  cache = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  out.width = "80%",
+  fig.align = "center",
+  fig.width = 6,
+  fig.asp = 0.618 # 1 / phi
+)
+```
+
+# Why R?
+
+## R's origins
+
+> Drawn from ["History and Overview of R" in *R Programming for Data Science* by Roger Peng](https://bookdown.org/rdpeng/rprogdatascience/history-and-overview-of-r.html)
+
+R is derived from the S language developed by John Chambers for Bell Telephone Laboratories. S and its derivation S-PLUS are commercial properties built on C. The S language was designed explicitly from the realm of statistics and data analysis as opposed to a more traditional programming language. The goal of the language was to make data analysis easier, and as such focused both on the end **user** who wanted to conduct analysis as well as the **developer** who wanted to build programs in S.
+
+R is an open-source (free) off-shoot of S developed in the mid-1990s. The core software is developed on a frequent release cycle, including major and minor updates. It maintains the original S philosophy, providing robust support for both interactive data analysis as well as a powerful language for developing new tools. Finally, R has a robust user community that encourages contributions and package development, as well as the introduction of new users to R for data analysis.
+
+## Where things stand now
+
+R is widely used in the physical and social sciences, [as well as in government, non-profits, and the private sector](https://spectrum.ieee.org/top-programming-languages/).
+
+Many developers and social scientists write programs in R. As a result, there is also a large support community available to help troubleshoot problematic code. As seen in the [Redmonk programming language rankings](https://redmonk.com/sogrady/2021/08/05/language-rankings-6-21/) (which compare languages' appearances on Github [usage] and StackOverflow [support]), R appears near the top of both rankings.
+
+```{r echo = FALSE}
+knitr::include_graphics(path = "https://redmonk.com/sogrady/files/2021/08/lang.rank_.0621.png")
+```
+
+## Differences between R and Python
+
+### Things R does well
+
+- Data analysis - R was written by statisticians for statisticians, so it is designed first and foremost as a language for statistical and data analysis. Much of the cutting-edge research in machine learning occurs in R, and every week there are packages added to [CRAN](https://cran.r-project.org/) implementing these new methods. Furthermore, many models in R can be exported to other programming languages such as `C`, `C++`, `Python`, `tensorflow`, `stan`, etc.
+- Data visualization - while the base R `graphics` package is comprehensive and powerful, additional libraries such as [`ggplot2`](http://docs.ggplot2.org/current/) and [`lattice`](https://cran.r-project.org/web/packages/lattice/index.html) make R the go-to language for power data visualization approaches.
+- Report generation - R Markdown
+
+### Things Python does well
+
+* General computation - since Python is a general computational language, it is more versatile at non-statistical tasks and is a bit more popular outside the statistics community.
+* Speed - because it is a general computing language, Python is optimized to be fast (assuming you write your code optimally). As your data becomes larger or more complex, you might find Python to be faster than R for your analytical needs.
+* Workflow - since Python is a general-purpose language, you can build entire applications using it. R, not so much.
+
+That said, there are also things it does not do as well as R:
+
+* Visualizations - visual graphics libraries in Python are increasing in number and quality (see [`matplotlib`](http://matplotlib.org/), [`pygal`](http://www.pygal.org/en/stable/), and [`seaborn`](https://stanford.edu/~mwaskom/software/seaborn/)), but are still behind R in terms of comprehensiveness and ease of use. Of course, once you wish to create interactive and advanced information visualizations, you can also used more specialized software such as [Tableau](http://www.tableau.com/) or [D3](https://d3js.org/).
+* Add-on libraries - previously Python was criticized for its lack of libraries to perform statistical analysis and data manipulation, especially relative to the plethora of libraries for R. In recent years Python has begun to catch up with libraries for scientific computing ([`numpy`](http://www.numpy.org/)), data analysis ([`pandas`](http://pandas.pydata.org/)), and machine learning ([`scikit-learn`](http://scikit-learn.org/stable/)). However I personally have found immense difficulty installing and managing packages in Python, even with the use of a package manager such as [`conda`](https://conda.io/docs/).
+
+### Get the best of both worlds
+
+At the end of the day, I don't think it is a debate between learning R vs. Python. Frankly to be a desirable (and therefore highly-compensated) data scientist [you should learn both languages.](https://blog.usejournal.com/python-vs-and-r-for-data-science-833b48ccc91d) R and Python complement each other, and even R/Python luminaries such as [Hadley Wickham](https://twitter.com/hadleywickham) and [Wes McKinney](https://ursalabs.org/) promote the benefits of both languages:
+
+<blockquote class="twitter-tweet" data-conversation="none"><p lang="en" dir="ltr">It&#39;s not R or Python, but R _and_ Python. Read more about how we at <a href="https://twitter.com/rstudio?ref_src=twsrc%5Etfw">@rstudio</a> think about R &amp; Python below <a href="https://t.co/0fuqCcTQ9c">https://t.co/0fuqCcTQ9c</a></p>&mdash; Hadley Wickham (@hadleywickham) <a href="https://twitter.com/hadleywickham/status/1207288614465523712?ref_src=twsrc%5Etfw">December 18, 2019</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+# The R ecosystem
+
+R is available on the [Comprehensive R Archive Network](https://cran.r-project.org/) (known as CRAN). R is divided into two conceptual parts:
+
+1. "Base" R that is downloaded from CRAN
+1. Everything else
+
+R functionality is divided into distinct **packages**. Some packages are so essential to the functionality of R that they are included in the "base" R installation, and are automatically loaded when you start a new session of R.
+
+> Examples include `base`, `utils`, `stats`, `graphics`, `grid`, `splines`, `methods`, `tools`, etc.
+
+However to harness the full strengths of R you will want to install additional packages created by developers all around the world. CRAN also serves as a repository for a large number of these packages (over 4000), however you can also download packages using [Bioconductor](http://bioconductor.org/) and directly from GitHub.
+
+# Simple beginnings
+
+
+# The `tidyverse`
+
+
+# Running Python within R
+
+## `reticulate`
+
+
+## `keras`
+
+
+# Acknowledgments {.toc-ignore}
+
+- This workshop is derived in part from [R for Data Engineers: A Brief Introduction for People Who Count From Zero](https://tidynomicon.github.io/tidynomicon/) by Greg Wilson and is licensed under the [Creative Commons Attribution 4.0 International license (CC-BY-4.0)](https://tidynomicon.github.io/tidynomicon/license.html).
+
+# Session information {.toc-ignore}
+
+```{r session-info, cache = FALSE}
+sessioninfo::session_info()
+```
