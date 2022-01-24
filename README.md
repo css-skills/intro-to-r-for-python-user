@@ -25,3 +25,6 @@ Room 295 in [1155 E 60th St](https://goo.gl/maps/7n7wDsd9mjnfRBtR8).
 
 ## Links
 
+- [R for Data Engineers: A Brief Introduction for People Who Count From Zero](https://tidynomicon.github.io/tidynomicon/) by Greg Wilson
+- [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham and Garrett Grolemund
+- [Advanced R](https://adv-r.hadley.nz/) by Hadley Wickham
