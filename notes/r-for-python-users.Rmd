@@ -1534,11 +1534,45 @@ so that data can be passed to a function that expects it in a position other tha
 
 ### Alternative workflows for modeling
 
-TODO
+R does not have an extensive machine learning package such as `scikit-learn` which integrates the most common and advanced machine learning algorithms into a single package. This is partially because R has an extensive and decentralized developer base where anyone can write a package implementing a specific ML algorithm. Historically, R has been the development arena for new statistical and machine learning algorithms.
 
-- `caret`
-- `mlr`
-- `tidymodels`
+This can make it practically difficult to write code utilizing these methods when each package may use a different API to define a model. Consider three different packages which implement a random forest regression:
+
+```r
+# From randomForest
+rf_1 <- randomForest(
+  y ~ ., 
+  data = ., 
+  mtry = 10, 
+  ntree = 2000, 
+  importance = TRUE
+)
+
+# From ranger
+rf_2 <- ranger(
+  y ~ ., 
+  data = dat, 
+  mtry = 10, 
+  num.trees = 2000, 
+  importance = "impurity"
+)
+
+# From sparklyr
+rf_3 <- ml_random_forest(
+  dat, 
+  intercept = FALSE, 
+  response = "y", 
+  features = names(dat)[names(dat) != "y"], 
+  col.sample.rate = 10,
+  num.trees = 2000
+)
+```
+
+However, there are a few popular packages which act as wrappers around a common set of learners, providing a single, unified interface to a range of models.
+
+- [`caret`](https://topepo.github.io/caret/)
+- [`mlr3`](https://mlr3.mlr-org.com/)
+- [`tidymodels`](https://www.tidymodels.org/)
 
 ## How do I create a plot?
 
@@ -1631,6 +1665,75 @@ infant_hiv %>%
   geom_point(mapping = aes(color = estimate), alpha = 0.5) +
   geom_smooth(method = lm, color = 'red') +
   coord_cartesian(xlim = c(0.0, 1.0), ylim = c(0.0, 1.0))
+```
+
+## Exercise: creating graphs
+
+Let's practice generating layered graphics in R using data from [Gapminder World](https://www.gapminder.org/data/), which compiles country-level data on quality-of-life measures.
+
+### Load the `gapminder` dataset
+
+If you have not already installed the `gapminder` package and you try to load it using the following code, you will get an error:
+
+```{r gapminder-install, eval = FALSE}
+library(gapminder)
+```
+
+```
+Error in library(gapminder) : there is no package called ‘gapminder’
+```
+
+If this happens, install the gapminder package by running `install.packages("gapminder")` in your console.
+
+Once you've done this, load the gapminder package:
+
+```{r gapminder}
+library(gapminder)
+glimpse(gapminder)
+```
+
+### Generate a histogram of life expectancy
+
+```{r histo}
+ggplot(data = gapminder, mapping = aes(x = lifeExp)) +
+  geom_histogram()
+```
+
+### Generate separate histograms of life expectancy for each continent
+
+```{r histo-facet}
+ggplot(data = gapminder, mapping = aes(x = lifeExp)) +
+  geom_histogram() +
+  facet_wrap(facets = vars(continent))
+```
+
+### Compare the distribution of life expectancy, by continent by generating a boxplot
+
+```{r boxplot}
+ggplot(data = gapminder, mapping = aes(x = continent, y = lifeExp)) +
+  geom_boxplot()
+```
+
+#### Redraw the plot, but this time use a violin plot
+
+```{r violin-plot}
+ggplot(data = gapminder, mapping = aes(x = continent, y = lifeExp)) +
+  geom_violin()
+```
+
+### Generate a scatterplot of the relationship between per capita GDP and life expectancy
+
+```{r scatter}
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point()
+```
+
+#### Add a smoothing line to the scatterplot
+
+```{r scatter-smooth}
+ggplot(data = gapminder, mapping = aes(x = gdpPercap, y = lifeExp)) +
+  geom_point() +
+  geom_smooth()
 ```
 
 # R Markdown vs. Jupyter Notebooks
