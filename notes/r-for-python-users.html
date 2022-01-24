@@ -324,36 +324,36 @@ primes
 <div id="how-do-i-index-a-vector" class="section level2">
 <h2>How do I index a vector?</h2>
 <p>Python’s rules for indexing are simple once you understand them (a statement which is also true of quantum mechanics and necromancy). To avoid confusing indices with values, let’s create a list of color names and index that:</p>
-<pre class="python"><code>colors = [&quot;eburnean&quot;, &quot;glaucous&quot;, &quot;wenge&quot;]
+<pre class="python"><code>colors = [&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;]
 print(colors[0])
-## eburnean</code></pre>
+## red</code></pre>
 <pre class="python"><code>print(colors[2])
-## wenge</code></pre>
+## green</code></pre>
 <pre class="python"><code>colors[3]
 ## Error in py_call_impl(callable, dots$args, dots$keywords): IndexError: list index out of range
 ## 
 ## Detailed traceback:
 ##   File &quot;&lt;string&gt;&quot;, line 1, in &lt;module&gt;</code></pre>
 <pre class="python"><code>print(colors[-1])
-## wenge</code></pre>
+## green</code></pre>
 <p>Indexing the equivalent vector in R with the indices 1 to 3 produces unsurprising results:</p>
-<pre class="r"><code>colors &lt;- c(&quot;eburnean&quot;, &quot;glaucous&quot;, &quot;wenge&quot;)
+<pre class="r"><code>colors &lt;- c(&quot;red&quot;, &quot;blue&quot;, &quot;green&quot;)
 colors[1]
-## [1] &quot;eburnean&quot;</code></pre>
+## [1] &quot;red&quot;</code></pre>
 <pre class="r"><code>colors[3]
-## [1] &quot;wenge&quot;</code></pre>
+## [1] &quot;green&quot;</code></pre>
 <p>In Python, a negative index counts backward from the end of a list. In R, we use a negative index to indicate a value that we don’t want:</p>
 <pre class="r"><code>colors[-1]
-## [1] &quot;glaucous&quot; &quot;wenge&quot;</code></pre>
+## [1] &quot;blue&quot;  &quot;green&quot;</code></pre>
 <p>But wait. If every value in R is a vector, then when we use 1 or -1 as an index, we’re actually using a vector to index another one. What happens if the index itself contains more than one value?</p>
 <pre class="r"><code>colors[1, 2]
 ## Error in colors[1, 2]: incorrect number of dimensions</code></pre>
 <p>That didn’t work because R interprets <code>[i, j]</code> as being row and column indices, and our vector has only one dimension. What if we create a vector with <code>c(...)</code> and use that as a subscript?</p>
 <pre class="r"><code>colors[c(3, 1, 2)]
-## [1] &quot;wenge&quot;    &quot;eburnean&quot; &quot;glaucous&quot;</code></pre>
+## [1] &quot;green&quot; &quot;red&quot;   &quot;blue&quot;</code></pre>
 <p>That works, and allows us to repeat elements:</p>
 <pre class="r"><code>colors[c(1, 1, 1)]
-## [1] &quot;eburnean&quot; &quot;eburnean&quot; &quot;eburnean&quot;</code></pre>
+## [1] &quot;red&quot; &quot;red&quot; &quot;red&quot;</code></pre>
 </div>
 <div id="how-do-i-create-new-vectors-from-old" class="section level2">
 <h2>How do I create new vectors from old?</h2>
@@ -387,18 +387,18 @@ hundreds + thousands
 ## [1] 1100 2200 1300</code></pre>
 <p>R also provides vectorized alternatives to <code>if</code>-<code>else</code> statements. If we use a vector containing the logical (or Boolean) values <code>TRUE</code> and <code>FALSE</code> as an index, it selects elements corresponding to <code>TRUE</code> values:</p>
 <pre class="r"><code>colors # as a reminder
-## [1] &quot;eburnean&quot; &quot;glaucous&quot; &quot;wenge&quot;
+## [1] &quot;red&quot;   &quot;blue&quot;  &quot;green&quot;
 colors[c(TRUE, FALSE, TRUE)]
-## [1] &quot;eburnean&quot; &quot;wenge&quot;</code></pre>
+## [1] &quot;red&quot;   &quot;green&quot;</code></pre>
 <p>This is called logical indexing. The function <code>ifelse</code> uses this to do what its name suggests: select a value from one vector if a condition is <code>TRUE</code>, and a corresponding value from another vector if the condition is <code>FALSE</code>:</p>
 <pre class="r"><code>before_letter_m &lt;- colors &lt; &quot;m&quot;
 before_letter_m # to show the index
-## [1]  TRUE  TRUE FALSE
+## [1] FALSE  TRUE  TRUE
 ifelse(before_letter_m, colors, c(&quot;comes&quot;, &quot;after&quot;, &quot;m&quot;))
-## [1] &quot;eburnean&quot; &quot;glaucous&quot; &quot;m&quot;</code></pre>
+## [1] &quot;comes&quot; &quot;blue&quot;  &quot;green&quot;</code></pre>
 <p>All three vectors are of the same length, and the first (the condition) is usually constructed using the values of one or both of the other vectors:</p>
 <pre class="r"><code>ifelse(colors &lt; &quot;m&quot;, colors, toupper(colors))
-## [1] &quot;eburnean&quot; &quot;glaucous&quot; &quot;WENGE&quot;</code></pre>
+## [1] &quot;RED&quot;   &quot;blue&quot;  &quot;green&quot;</code></pre>
 </div>
 <div id="how-can-i-store-a-mix-of-different-types-of-objects" class="section level2">
 <h2>How can I store a mix of different types of objects?</h2>
@@ -703,7 +703,9 @@ y[c(&quot;a&quot;, &quot;c&quot;)]
 </div>
 <div id="the-tidyverse" class="section level1">
 <h1>The <code>tidyverse</code></h1>
-<p>TODO: ADD INTRO HERE</p>
+<blockquote>
+<p><a href="https://www.tidyverse.org/">Tidyverse</a></p>
+</blockquote>
 <div id="how-do-i-read-data" class="section level2">
 <h2>How do I read data?</h2>
 <p>We begin by looking at the file <code>data/infant_hiv.csv</code>, a tidied version of data on the percentage of infants born to women with HIV who received an HIV test themselves within two months of birth. The original data comes from the UNICEF site at <a href="https://data.unicef.org/resources/dataset/hiv-aids-statistical-tables/" class="uri">https://data.unicef.org/resources/dataset/hiv-aids-statistical-tables/</a>, and this file contains:</p>
