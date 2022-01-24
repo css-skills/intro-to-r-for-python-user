@@ -766,55 +766,39 @@ Create the sequence above in your R session. Write commands to subset the vector
 
 1. Keep the first through fourth elements, plus the seventh element.
 
-    {{< spoiler text="Click for the solution" >}}
-
-```{r subset-first-fourth}
-x[c(1, 2, 3, 4, 7)]
-
-# use a sequence shortcut
-x[c(seq(1, 4), 7)]
-```
-
-    {{< /spoiler >}}
-
+    ```{r subset-first-fourth}
+    x[c(1, 2, 3, 4, 7)]
+    
+    # use a sequence shortcut
+    x[c(seq(1, 4), 7)]
+    ```
+    
 1. Keep the first through eighth elements, plus the tenth element.
 
-    {{< spoiler text="Click for the solution" >}}
+    ```{r subset-first-eighth-tenth}
+    # long way
+    x[c(1, 2, 3, 4, 5, 6, 7, 8, 10)]
     
-```{r subset-first-eighth-tenth}
-# long way
-x[c(1, 2, 3, 4, 5, 6, 7, 8, 10)]
-
-# sequence shortcut
-x[c(seq(1, 8), 10)]
-
-# negative indexing
-x[c(-9)]
-```
-
-    {{< /spoiler >}}
-
+    # sequence shortcut
+    x[c(seq(1, 8), 10)]
+    
+    # negative indexing
+    x[c(-9)]
+    ```
+    
 1. Keep all elements with values greater than five.
 
-    {{< spoiler text="Click for the solution" >}}
-
-```{r subset-greater-five}
-# get the index for which values in x are greater than 5
-x > 5
-x[x > 5]
-```
-
-    {{< /spoiler >}}
+    ```{r subset-greater-five}
+    # get the index for which values in x are greater than 5
+    x > 5
+    x[x > 5]
+    ```
 
 1. Keep all elements evenly divisible by three.
 
-    {{< spoiler text="Click for the solution" >}}
-
-```{r subset-divide-three}
-x[x %% 3 == 0]
-```
-
-    {{< /spoiler >}}
+    ```{r subset-divide-three}
+    x[x %% 3 == 0]
+    ```
 
 ## Exercise: subset a list
 
@@ -826,50 +810,37 @@ str(y)
 Create the list above in your R session. Write commands to subset the list in the following ways:
 
 1. Subset `a`. The result should be an atomic vector.
-
-    {{< spoiler text="Click for the solution" >}}
     
-```{r subset-a}
-# use the index value
-y[[1]]
-
-# use the element name
-y$a
-y[["a"]]
-```  
+    ```{r subset-a}
+    # use the index value
+    y[[1]]
     
-    {{< /spoiler >}}
+    # use the element name
+    y$a
+    y[["a"]]
+    ```  
 
 1. Subset `pi`. The results should be a new list.
-
-    {{< spoiler text="Click for the solution" >}}
-
-```{r subset-pi}
-# correct method
-str(y["c"])
-
-# incorrect method to produce another list
-# the result is a scalar
-str(y$c)
-```
-
-    {{< /spoiler >}}
+    
+    ```{r subset-pi}
+    # correct method
+    str(y["c"])
+    
+    # incorrect method to produce another list
+    # the result is a scalar
+    str(y$c)
+    ```
 
 1. Subset the first and third elements from `y`.
 
-    {{< spoiler text="Click for the solution" >}}
-
-```{r subset-a-1-3}
-y[c(1, 3)]
-y[c("a", "c")]
-```
-
-    {{< /spoiler >}}
-
+    ```{r subset-a-1-3}
+    y[c(1, 3)]
+    y[c("a", "c")]
+    ```
 
 # The `tidyverse`
 
-ADD INTRO HERE
+TODO: ADD INTRO HERE
 
 ## How do I read data?
 
@@ -1447,7 +1418,67 @@ but the tidyverse approach produces code that I find more readable.
 
 ## Exercise: tidy workflow for data analysis
 
-TODO
+The Department of Education collects [annual statistics on colleges and universities in the United States](https://collegescorecard.ed.gov/). I have included a subset of this data from 2018-19 in the [`rcfss`](https://github.com/uc-cfss/rcfss) library from GitHub. To install the package, run the command `devtools::install_github("uc-cfss/rcfss")` in the console.
+
+> If you don't already have the `devtools` library installed, you will get an error. Go back and install this first using `install.packages("devtools")`, then run `devtools::install_github("uc-cfss/rcfss")`.
+
+```{r scorecard}
+library(rcfss)
+data("scorecard")
+glimpse(scorecard)
+```
+
+Type `?scorecard` in the console to open up the help file for this data set. This includes the documentation for all the variables.
+
+### Generate a data frame of schools with a greater than 40% share of first-generation students
+
+```{r filter}
+filter(.data = scorecard, firstgen > .40)
+```
+
+### Generate a data frame with the average SAT score for each type of college
+
+```{r highest-sat}
+scorecard %>%
+  group_by(type) %>%
+  summarize(mean_sat = mean(satavg, na.rm = TRUE))
+```
+
+### Calculate for each school how many students it takes to pay the average faculty member's salary and generate a data frame with the school's name and the calculated value
+
+Note: use the net cost of attendance.
+
+```{r avg-sal}
+scorecard %>%
+  mutate(ratio = avgfacsal / netcost) %>%
+  select(name, ratio)
+```
+
+### Calculate how many private, nonprofit schools have a smaller net cost than the University of Chicago
+
+Hint: the result should be a data frame with one row for the University of Chicago, and a column containing the requested value.
+
+##### Report the number as the total number of schools
+
+```{r uchicago-raw}
+scorecard %>%
+  filter(type == "Private, nonprofit") %>%
+  arrange(netcost) %>%
+  # use row_number() but subtract 1 since UChicago is not cheaper than itself
+  mutate(school_cheaper = row_number() - 1) %>%
+  filter(name == "University of Chicago") %>%
+  glimpse()
+```
+
+##### Report the number as the percentage of schools
+
+```{r uchicago-pct}
+scorecard %>%
+  filter(type == "Private, nonprofit") %>%
+  mutate(netcost_rank = percent_rank(netcost)) %>%
+  filter(name == "University of Chicago") %>%
+  glimpse()
+```
 
 ## How do I model my data?
 

@@ -623,19 +623,13 @@ orange()
 <p>Create the sequence above in your R session. Write commands to subset the vector in the following ways:</p>
 <ol style="list-style-type: decimal">
 <li><p>Keep the first through fourth elements, plus the seventh element.</p>
-<p>{{&lt; spoiler text=“Click for the solution” &gt;}}</p></li>
-</ol>
 <pre class="r"><code>x[c(1, 2, 3, 4, 7)]
 ## [1] 1 2 3 4 7
 
 # use a sequence shortcut
 x[c(seq(1, 4), 7)]
-## [1] 1 2 3 4 7</code></pre>
-<pre><code>{{&lt; /spoiler &gt;}}</code></pre>
-<ol style="list-style-type: decimal">
+## [1] 1 2 3 4 7</code></pre></li>
 <li><p>Keep the first through eighth elements, plus the tenth element.</p>
-<p>{{&lt; spoiler text=“Click for the solution” &gt;}}</p></li>
-</ol>
 <pre class="r"><code># long way
 x[c(1, 2, 3, 4, 5, 6, 7, 8, 10)]
 ## [1]  1  2  3  4  5  6  7  8 10
@@ -646,25 +640,17 @@ x[c(seq(1, 8), 10)]
 
 # negative indexing
 x[c(-9)]
-## [1]  1  2  3  4  5  6  7  8 10</code></pre>
-<pre><code>{{&lt; /spoiler &gt;}}</code></pre>
-<ol style="list-style-type: decimal">
+## [1]  1  2  3  4  5  6  7  8 10</code></pre></li>
 <li><p>Keep all elements with values greater than five.</p>
-<p>{{&lt; spoiler text=“Click for the solution” &gt;}}</p></li>
-</ol>
 <pre class="r"><code># get the index for which values in x are greater than 5
 x &gt; 5
 ##  [1] FALSE FALSE FALSE FALSE FALSE  TRUE  TRUE  TRUE  TRUE  TRUE
 x[x &gt; 5]
-## [1]  6  7  8  9 10</code></pre>
-<pre><code>{{&lt; /spoiler &gt;}}</code></pre>
-<ol style="list-style-type: decimal">
+## [1]  6  7  8  9 10</code></pre></li>
 <li><p>Keep all elements evenly divisible by three.</p>
-<p>{{&lt; spoiler text=“Click for the solution” &gt;}}</p></li>
-</ol>
 <pre class="r"><code>x[x %% 3 == 0]
-## [1] 3 6 9</code></pre>
-<pre><code>{{&lt; /spoiler &gt;}}</code></pre>
+## [1] 3 6 9</code></pre></li>
+</ol>
 </div>
 <div id="exercise-subset-a-list" class="section level2">
 <h2>Exercise: subset a list</h2>
@@ -680,8 +666,6 @@ str(y)
 <p>Create the list above in your R session. Write commands to subset the list in the following ways:</p>
 <ol style="list-style-type: decimal">
 <li><p>Subset <code>a</code>. The result should be an atomic vector.</p>
-<p>{{&lt; spoiler text=“Click for the solution” &gt;}}</p></li>
-</ol>
 <pre class="r"><code># use the index value
 y[[1]]
 ## [1] 1 2 3
@@ -690,12 +674,8 @@ y[[1]]
 y$a
 ## [1] 1 2 3
 y[[&quot;a&quot;]]
-## [1] 1 2 3</code></pre>
-<pre><code>{{&lt; /spoiler &gt;}}</code></pre>
-<ol style="list-style-type: decimal">
+## [1] 1 2 3</code></pre></li>
 <li><p>Subset <code>pi</code>. The results should be a new list.</p>
-<p>{{&lt; spoiler text=“Click for the solution” &gt;}}</p></li>
-</ol>
 <pre class="r"><code># correct method
 str(y[&quot;c&quot;])
 ## List of 1
@@ -704,12 +684,8 @@ str(y[&quot;c&quot;])
 # incorrect method to produce another list
 # the result is a scalar
 str(y$c)
-##  num 3.14</code></pre>
-<pre><code>{{&lt; /spoiler &gt;}}</code></pre>
-<ol style="list-style-type: decimal">
+##  num 3.14</code></pre></li>
 <li><p>Subset the first and third elements from <code>y</code>.</p>
-<p>{{&lt; spoiler text=“Click for the solution” &gt;}}</p></li>
-</ol>
 <pre class="r"><code>y[c(1, 3)]
 ## $a
 ## [1] 1 2 3
@@ -721,13 +697,13 @@ y[c(&quot;a&quot;, &quot;c&quot;)]
 ## [1] 1 2 3
 ## 
 ## $c
-## [1] 3.14</code></pre>
-<pre><code>{{&lt; /spoiler &gt;}}</code></pre>
+## [1] 3.14</code></pre></li>
+</ol>
 </div>
 </div>
 <div id="the-tidyverse" class="section level1">
 <h1>The <code>tidyverse</code></h1>
-<p>ADD INTRO HERE</p>
+<p>TODO: ADD INTRO HERE</p>
 <div id="how-do-i-read-data" class="section level2">
 <h2>How do I read data?</h2>
 <p>We begin by looking at the file <code>data/infant_hiv.csv</code>, a tidied version of data on the percentage of infants born to women with HIV who received an HIV test themselves within two months of birth. The original data comes from the UNICEF site at <a href="https://data.unicef.org/resources/dataset/hiv-aids-statistical-tables/" class="uri">https://data.unicef.org/resources/dataset/hiv-aids-statistical-tables/</a>, and this file contains:</p>
@@ -1784,7 +1760,138 @@ print(grouped)
 </div>
 <div id="exercise-tidy-workflow-for-data-analysis" class="section level2">
 <h2>Exercise: tidy workflow for data analysis</h2>
-<p>TODO</p>
+<p>The Department of Education collects <a href="https://collegescorecard.ed.gov/">annual statistics on colleges and universities in the United States</a>. I have included a subset of this data from 2018-19 in the <a href="https://github.com/uc-cfss/rcfss"><code>rcfss</code></a> library from GitHub. To install the package, run the command <code>devtools::install_github(&quot;uc-cfss/rcfss&quot;)</code> in the console.</p>
+<blockquote>
+<p>If you don’t already have the <code>devtools</code> library installed, you will get an error. Go back and install this first using <code>install.packages(&quot;devtools&quot;)</code>, then run <code>devtools::install_github(&quot;uc-cfss/rcfss&quot;)</code>.</p>
+</blockquote>
+<pre class="r"><code>library(rcfss)
+data(&quot;scorecard&quot;)
+glimpse(scorecard)
+## Rows: 1,753
+## Columns: 14
+## $ unitid    &lt;int&gt; 210492, 446048, 441982, 445692, 445708, 449658, 461528, 4809…
+## $ name      &lt;chr&gt; &quot;Bryn Athyn College of the New Church&quot;, &quot;Ave Maria Universit…
+## $ state     &lt;chr&gt; &quot;PA&quot;, &quot;FL&quot;, &quot;MA&quot;, &quot;UT&quot;, &quot;NC&quot;, &quot;NJ&quot;, &quot;NC&quot;, &quot;TX&quot;, &quot;UT&quot;, &quot;CA&quot;, …
+## $ type      &lt;fct&gt; &quot;Private, nonprofit&quot;, &quot;Private, nonprofit&quot;, &quot;Private, nonpro…
+## $ admrate   &lt;dbl&gt; 0.888, 0.830, 0.157, 0.841, 0.857, 0.597, 0.923, 1.000, 0.71…
+## $ satavg    &lt;dbl&gt; 1113, 1169, 1522, NA, NA, NA, NA, NA, NA, NA, 1105, 980, NA,…
+## $ cost      &lt;int&gt; 30889, 34484, 70289, 33452, 47543, 16000, 16701, NA, 26040, …
+## $ netcost   &lt;dbl&gt; 19048, 17981, 21370, 25270, 26835, 7975, 13543, NA, 22209, 1…
+## $ avgfacsal &lt;dbl&gt; 65475, 68202, 110907, 84042, 84087, 41400, 19746, 37467, NA,…
+## $ pctpell   &lt;dbl&gt; 0.4048, 0.2593, 0.0921, 0.5625, 0.5801, 0.4190, 0.2835, 0.47…
+## $ comprate  &lt;dbl&gt; 0.556, 0.555, 0.926, 0.618, 0.572, 0.250, 0.615, NA, NA, NA,…
+## $ firstgen  &lt;dbl&gt; 0.338, 0.176, NA, 0.304, 0.346, NA, NA, NA, 0.415, NA, NA, 0…
+## $ debt      &lt;dbl&gt; 12000, 12000, 12537, 24500, 16500, NA, 9206, NA, 7500, NA, N…
+## $ locale    &lt;fct&gt; Suburb, Rural, Suburb, City, City, City, City, Suburb, City,…</code></pre>
+<p>Type <code>?scorecard</code> in the console to open up the help file for this data set. This includes the documentation for all the variables.</p>
+<div id="generate-a-data-frame-of-schools-with-a-greater-than-40-share-of-first-generation-students" class="section level3">
+<h3>Generate a data frame of schools with a greater than 40% share of first-generation students</h3>
+<pre class="r"><code>filter(.data = scorecard, firstgen &gt; .40)
+## # A tibble: 352 × 14
+##    unitid name       state type   admrate satavg  cost netcost avgfacsal pctpell
+##     &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;fct&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+##  1 480985 Midwives … UT    Priva…   0.714     NA 26040   22209        NA   0.492
+##  2 482422 DeVry Uni… AZ    Priva…   0.964     NA 34891   30562     60318   0.537
+##  3 482468 DeVry Uni… GA    Priva…   0.946     NA 31704   26800     74214   0.584
+##  4 482538 DeVry Uni… MO    Priva…   0.667     NA 24172   24172     73512   0.546
+##  5 482608 DeVry Uni… PA    Priva…   1         NA 37432   32486     65232   0.583
+##  6 482635 DeVry Uni… TX    Priva…   0.938     NA 35692   30179     68328   0.532
+##  7 475732 Chamberla… GA    Priva…   0.188     NA    NA      NA     57222   0.529
+##  8 487375 Arizona C… NV    Priva…   0.883     NA 36700   33488     66456   1    
+##  9 486938 Chamberla… NV    Priva…   0.571     NA 39475   36915     72810   0.481
+## 10 484905 Universit… TX    Public   0.831    992 18699    7400     76851   0.615
+## # … with 342 more rows, and 4 more variables: comprate &lt;dbl&gt;, firstgen &lt;dbl&gt;,
+## #   debt &lt;dbl&gt;, locale &lt;fct&gt;</code></pre>
+</div>
+<div id="generate-a-data-frame-with-the-average-sat-score-for-each-type-of-college" class="section level3">
+<h3>Generate a data frame with the average SAT score for each type of college</h3>
+<pre class="r"><code>scorecard %&gt;%
+  group_by(type) %&gt;%
+  summarize(mean_sat = mean(satavg, na.rm = TRUE))
+## # A tibble: 3 × 2
+##   type                mean_sat
+##   &lt;fct&gt;                  &lt;dbl&gt;
+## 1 Public                 1129.
+## 2 Private, nonprofit     1153.
+## 3 Private, for-profit    1068.</code></pre>
+</div>
+<div id="calculate-for-each-school-how-many-students-it-takes-to-pay-the-average-faculty-members-salary-and-generate-a-data-frame-with-the-schools-name-and-the-calculated-value" class="section level3">
+<h3>Calculate for each school how many students it takes to pay the average faculty member’s salary and generate a data frame with the school’s name and the calculated value</h3>
+<p>Note: use the net cost of attendance.</p>
+<pre class="r"><code>scorecard %&gt;%
+  mutate(ratio = avgfacsal / netcost) %&gt;%
+  select(name, ratio)
+## # A tibble: 1,753 × 2
+##    name                                         ratio
+##    &lt;chr&gt;                                        &lt;dbl&gt;
+##  1 Bryn Athyn College of the New Church          3.44
+##  2 Ave Maria University                          3.79
+##  3 Franklin W Olin College of Engineering        5.19
+##  4 Neumont College of Computer Science           3.33
+##  5 Johnson &amp; Wales University-Charlotte          3.13
+##  6 Bais Medrash Toras Chesed                     5.19
+##  7 Grace College of Divinity                     1.46
+##  8 Gemini School of Visual Arts &amp; Communication NA   
+##  9 Midwives College of Utah                     NA   
+## 10 Grace Mission University                      3.24
+## # … with 1,743 more rows</code></pre>
+</div>
+<div id="calculate-how-many-private-nonprofit-schools-have-a-smaller-net-cost-than-the-university-of-chicago" class="section level3">
+<h3>Calculate how many private, nonprofit schools have a smaller net cost than the University of Chicago</h3>
+<p>Hint: the result should be a data frame with one row for the University of Chicago, and a column containing the requested value.</p>
+<div id="report-the-number-as-the-total-number-of-schools" class="section level5">
+<h5>Report the number as the total number of schools</h5>
+<pre class="r"><code>scorecard %&gt;%
+  filter(type == &quot;Private, nonprofit&quot;) %&gt;%
+  arrange(netcost) %&gt;%
+  # use row_number() but subtract 1 since UChicago is not cheaper than itself
+  mutate(school_cheaper = row_number() - 1) %&gt;%
+  filter(name == &quot;University of Chicago&quot;) %&gt;%
+  glimpse()
+## Rows: 1
+## Columns: 15
+## $ unitid         &lt;int&gt; 144050
+## $ name           &lt;chr&gt; &quot;University of Chicago&quot;
+## $ state          &lt;chr&gt; &quot;IL&quot;
+## $ type           &lt;fct&gt; &quot;Private, nonprofit&quot;
+## $ admrate        &lt;dbl&gt; 0.0726
+## $ satavg         &lt;dbl&gt; 1520
+## $ cost           &lt;int&gt; 75735
+## $ netcost        &lt;dbl&gt; 26160
+## $ avgfacsal      &lt;dbl&gt; 166221
+## $ pctpell        &lt;dbl&gt; 0.109
+## $ comprate       &lt;dbl&gt; 0.942
+## $ firstgen       &lt;dbl&gt; 0.202
+## $ debt           &lt;dbl&gt; 15000
+## $ locale         &lt;fct&gt; City
+## $ school_cheaper &lt;dbl&gt; 777</code></pre>
+</div>
+<div id="report-the-number-as-the-percentage-of-schools" class="section level5">
+<h5>Report the number as the percentage of schools</h5>
+<pre class="r"><code>scorecard %&gt;%
+  filter(type == &quot;Private, nonprofit&quot;) %&gt;%
+  mutate(netcost_rank = percent_rank(netcost)) %&gt;%
+  filter(name == &quot;University of Chicago&quot;) %&gt;%
+  glimpse()
+## Rows: 1
+## Columns: 15
+## $ unitid       &lt;int&gt; 144050
+## $ name         &lt;chr&gt; &quot;University of Chicago&quot;
+## $ state        &lt;chr&gt; &quot;IL&quot;
+## $ type         &lt;fct&gt; &quot;Private, nonprofit&quot;
+## $ admrate      &lt;dbl&gt; 0.0726
+## $ satavg       &lt;dbl&gt; 1520
+## $ cost         &lt;int&gt; 75735
+## $ netcost      &lt;dbl&gt; 26160
+## $ avgfacsal    &lt;dbl&gt; 166221
+## $ pctpell      &lt;dbl&gt; 0.109
+## $ comprate     &lt;dbl&gt; 0.942
+## $ firstgen     &lt;dbl&gt; 0.202
+## $ debt         &lt;dbl&gt; 15000
+## $ locale       &lt;fct&gt; City
+## $ netcost_rank &lt;dbl&gt; 0.714</code></pre>
+</div>
+</div>
 </div>
 <div id="how-do-i-model-my-data" class="section level2">
 <h2>How do I model my data?</h2>
@@ -2047,6 +2154,7 @@ youth %&gt;%
 ##  png           0.1-7   2013-12-03 [1] CRAN (R 4.1.0)
 ##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.1.0)
 ##  R6            2.5.1   2021-08-19 [1] CRAN (R 4.1.1)
+##  rcfss       * 0.2.1   2022-01-06 [1] local
 ##  Rcpp          1.0.7   2021-07-07 [1] CRAN (R 4.1.0)
 ##  readr       * 2.1.1   2021-11-30 [1] CRAN (R 4.1.1)
 ##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.1.0)
