@@ -1,0 +1,42 @@
+---
+title: "Gun deaths"
+date: "`r lubridate::today()`"
+output: html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, cache = FALSE}
+library(tidyverse)
+# remotes::install_github("uc-cfss/rcfss) # if not already installed, run this code
+library(rcfss)
+
+theme_set(theme_minimal())
+```
+
+```{r youths}
+youth <- gun_deaths %>%
+  filter(age <= 65)
+```
+
+# Gun deaths by age
+
+We have data about `r nrow(gun_deaths)` individuals killed by guns. Only `r nrow(gun_deaths) - nrow(youth)` are older than 65. The distribution of the remainder is shown below:
+
+```{r youth-dist, echo = FALSE}
+youth %>% 
+  ggplot(mapping = aes(age)) + 
+  geom_freqpoly(binwidth = 1)
+```
+
+# Gun deaths by race
+
+```{r race-dist}
+youth %>%
+  ggplot(mapping = aes(fct_infreq(race) %>% fct_rev())) +
+  geom_bar() +
+  coord_flip() +
+  labs(x = "Victim race")
+```
