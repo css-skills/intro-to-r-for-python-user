@@ -61,7 +61,7 @@ knitr::include_graphics(path = "https://redmonk.com/sogrady/files/2021/08/lang.r
 ### Things Python does well
 
 * General computation - since Python is a general computational language, it is more versatile at non-statistical tasks and is a bit more popular outside the statistics community.
-* Speed - because it is a general computing language, Python is optimized to be fast (assuming you write your code optimally). As your data becomes larger or more complex, you might find Python to be faster than R for your analytical needs.
+* Speed - because it is a general computing language, Python is optimized to be fast (assuming you write your code optimally). As your data becomes larger or more complex, you might find Python to be faster than R for your analytic needs.
 * Workflow - since Python is a general-purpose language, you can build entire applications using it. R, not so much.
 
 That said, there are also things it does not do as well as R:
@@ -182,7 +182,7 @@ typeof(as.integer(6))
 
 But wait:
 what is that dot in `as.integer`'s name?
-Is there an object called `as` with a [method](glossary.html#method) called `integer`?
+Is there an object called `as` with a method called `integer`?
 The answer is "no":
 `.` is (usually) just another character in R;
 like the underscore `_`,
@@ -203,7 +203,7 @@ print(primes)
 By default, Python does not display any output when this command is run.
 
 The equivalent operation in R uses a function called `c`,
-which stands for "column" and which creates a **vector** -- the most fundamental data structur in R:
+which stands for "column" and which creates a **vector** -- the most fundamental data structure in R:
 
 ```{r r-vector}
 primes <- c(3, 5, 7, 11)
@@ -612,7 +612,7 @@ There are a few things to note here:
 1.  We have called our temporary variable `pos_neg` rather than `sign`
     so that we don't accidentally overwrite the rather useful built-in R function
     with the latter name.
-    [Name collisions](glossary.html#name-collision) of this sort
+    Name collisions of this sort
     are just as easy in R as they are in Python.
 
 ## How can I vectorize loops and conditionals?
@@ -707,7 +707,7 @@ swap("one", "two", "three")
 
 (Note that we are passing three separate values here,
 not a single vector containing three values.)
-If we want a function to handle a [varying number of arguments](glossary.html#variable-arguments),
+If we want a function to handle a varying number of arguments,
 we represent the "extra" arguments with an ellipsis `...` (three dots),
 which serves the same purpose as Python's `*args`:
 
@@ -755,6 +755,117 @@ orange()
 ```
 
 Best rule of thumb: Give all your objects/functions/arguments distinct names!
+
+## Exercise: subset the vector
+
+```{r subset-prac}
+(x <- seq(from = 1, to = 10))
+```
+
+Create the sequence above in your R session. Write commands to subset the vector in the following ways:
+
+1. Keep the first through fourth elements, plus the seventh element.
+
+    {{< spoiler text="Click for the solution" >}}
+
+```{r subset-first-fourth}
+x[c(1, 2, 3, 4, 7)]
+
+# use a sequence shortcut
+x[c(seq(1, 4), 7)]
+```
+
+    {{< /spoiler >}}
+
+1. Keep the first through eighth elements, plus the tenth element.
+
+    {{< spoiler text="Click for the solution" >}}
+    
+```{r subset-first-eighth-tenth}
+# long way
+x[c(1, 2, 3, 4, 5, 6, 7, 8, 10)]
+
+# sequence shortcut
+x[c(seq(1, 8), 10)]
+
+# negative indexing
+x[c(-9)]
+```
+
+    {{< /spoiler >}}
+
+1. Keep all elements with values greater than five.
+
+    {{< spoiler text="Click for the solution" >}}
+
+```{r subset-greater-five}
+# get the index for which values in x are greater than 5
+x > 5
+x[x > 5]
+```
+
+    {{< /spoiler >}}
+
+1. Keep all elements evenly divisible by three.
+
+    {{< spoiler text="Click for the solution" >}}
+
+```{r subset-divide-three}
+x[x %% 3 == 0]
+```
+
+    {{< /spoiler >}}
+
+## Exercise: subset a list
+
+```{r subset-list-prac}
+y <- list(a = c(1, 2, 3), b = "a string", c = pi, d = list(-1, -5))
+str(y)
+```
+
+Create the list above in your R session. Write commands to subset the list in the following ways:
+
+1. Subset `a`. The result should be an atomic vector.
+
+    {{< spoiler text="Click for the solution" >}}
+    
+```{r subset-a}
+# use the index value
+y[[1]]
+
+# use the element name
+y$a
+y[["a"]]
+```  
+    
+    {{< /spoiler >}}
+
+1. Subset `pi`. The results should be a new list.
+
+    {{< spoiler text="Click for the solution" >}}
+
+```{r subset-pi}
+# correct method
+str(y["c"])
+
+# incorrect method to produce another list
+# the result is a scalar
+str(y$c)
+```
+
+    {{< /spoiler >}}
+
+1. Subset the first and third elements from `y`.
+
+    {{< spoiler text="Click for the solution" >}}
+
+```{r subset-a-1-3}
+y[c(1, 3)]
+y[c("a", "c")]
+```
+
+    {{< /spoiler >}}
+
 
 # The `tidyverse`
 
@@ -805,13 +916,14 @@ print(infant_hiv)
 ```
 
 The equivalent in R is to load
-the [tidyverse](glossary.html#tidyverse) collection of [packages](glossary.html#package)
+the `tidyverse` collection of packages
 and then call the `read_csv` function.
 We will go through this in stages, since each produces output.
 
 ```{r library-fail, eval=FALSE}
 library(tidyverse)
 ```
+
 ```
 Error in library(tidyverse) : there is no package called 'tidyverse'
 ```
@@ -825,11 +937,11 @@ install.packages("tidyverse")
 ```
 
 At any time,
-we can call `sessionInfo` to find out what versions of which packages we have loaded,
+we can call `sessioninfo::session_info` to find out what versions of which packages we have loaded,
 along with the version of R we're using and some other useful information:
 
 ```{r session-info-orig}
-sessionInfo()
+sessioninfo::session_info()
 ```
 
 We then load the library once per program:
@@ -846,10 +958,10 @@ Note that we give `install.packages` a string to install,
 but simply give the name of the package we want to load to `library`.
 
 Loading the tidyverse gives us eight packages.
-One of those, dplyr, defines two functions that mask standard functions in R with the same names.
+One of those, `dplyr`, defines two functions that mask standard functions in R with the same names.
 If we need the originals,
 we can always get them with their
-[fully-qualified names](glossary.html#fully-qualified-name)
+fully-qualified names
 `stats::filter` and `stats::lag`.
 
 Once we have the tidyverse loaded,
@@ -872,8 +984,8 @@ We can now look at what `read_csv` has produced.
 infant_hiv
 ```
 
-This is a [tibble](glossary.html#tibble),
-which is the tidyverse's enhanced version of R's `data.frame`.
+This is a **tibble**,
+which is the `tidyverse`'s enhanced version of R's `data.frame`.
 It organizes data into named columns,
 each having one value for each row.
 In statistical terms,
@@ -907,8 +1019,8 @@ Let's have a closer look at that last command's output:
 tail(infant_hiv)
 ```
 
-Note that the row numbers printed by `tail` are [relative](glossary.html#relative-row-number) to the output,
-not [absolute](glossary.html#absolute-row-number) to the table.
+Note that the row numbers printed by `tail` are relative to the output,
+not absolute to the table.
 This is different from Pandas,
 which retains the original row numbers.
 
@@ -1012,13 +1124,13 @@ infant_hiv[1][1]
 ```
 
 How then are we to get the first mention of Afghanistan?
-The answer is to use [double square brackets](glossary.html#double-square-brackets) to strip away one level of structure:
+The answer is to use double square brackets to strip away one level of structure:
 
 ```{r double-square-on-tibble, output.lines=NA}
 infant_hiv[[1]]
 ```
 
-This is now a plain old vector, so it can be indexed with [single square brackets](glossary.html#single-square-brackets):
+This is now a plain old vector, so it can be indexed with single square brackets:
 
 ```{r double-square-then-single}
 infant_hiv[[1]][1]
@@ -1083,7 +1195,7 @@ print(estimates.mean(skipna=False))
 
 Many functions in R use `na.rm` to control whether `NA`s are removed or not.
 (Remember, the `.` character is just another part of the name)
-R's default behavior is to leave `NA`s in, and then to include them in [aggregate](glossary.html#aggregation) computations.
+R's default behavior is to leave `NA`s in, and then to include them in aggregate computations.
 Python's is to get rid of missing values early and work with what's left,
 which makes translating code from one language to the next much more interesting than it might otherwise be.
 But other than that, the statistics works the same way.
@@ -1117,9 +1229,8 @@ any(is.na(infant_hiv$hi) != is.na(infant_hiv$lo))
 
 ## How do I filter data?
 
-By "[filtering](glossary.html#filter)", we mean "selecting records by value".
-As discussed in Chapter \@ref(basics),
-the simplest approach is to use a vector of logical values to keep only the values corresponding to `TRUE`.
+By "filtering", we mean "selecting records by value".
+The simplest approach is to use a vector of logical values to keep only the values corresponding to `TRUE`.
 In Python, this is:
 
 ```{python py-simple-filter}
@@ -1203,15 +1314,14 @@ because the string `"lo"` is greater than the number 0.5 everywhere.
 
 But how is it that the name `lo` can be used on its own?
 It is the name of a column, but there is no variable called `lo`.
-The answer is that R uses [lazy evaluation](glossary.html#lazy-evaluation):
+The answer is that R uses lazy evaluation:
 function arguments aren't evaluated until they're needed,
 so the function `filter` actually gets the expression `lo > 0.5`,
 which allows it to check that there's a column called `lo` and then use it appropriately.
 It may seem strange at first,
 but it is much tidier than `filter(data, data$lo > 0.5)` or `filter(data, "lo > 0.5")`.
-We will explore lazy evaluation further in Chapter \@ref(nse).
 
-We can make data anlaysis code more readable by using the [pipe operator](glossary.html#pipe-operator) `%>%`:
+We can make data analysis code more readable by using the pipe operator `%>%`:
 
 ```{r filter-in-pipe}
 infant_hiv %>% filter(lo > 0.5)
@@ -1236,7 +1346,7 @@ infant_hiv %>% filter(estimate != 0.95) %>% filter(lo > 0.5) %>% filter(hi <= (l
 Breaking the condition into stages like this often makes reading and testing much easier,
 and encourages incremental write-test-extend development.
 Let's increase the band from 10% to 20%,
-break the line the way the [tidyverse style guide][tidyverse-style] recommends
+break the line the way the `tidyverse` style guide recommends
 to make the operations easier to spot,
 and order by `lo` in descending order:
 
@@ -1248,7 +1358,7 @@ infant_hiv %>%
   arrange(desc(lo))
 ```
 
-We can now [select](glossary.html#select) the three columns we care about:
+We can now select the three columns we care about:
 
 ```{r filter-arrange-select}
 infant_hiv %>%
@@ -1264,7 +1374,7 @@ we are using the unquoted column names `year`, `lo`, and `hi`
 and letting R's lazy evaluation take care of the details for us.
 
 Rather than selecting these three columns,
-we can [select *out*](glossary.html#negative-selection) the columns we're not interested in
+we can select *out* the columns we're not interested in
 by negating their names.
 This leaves the columns that are kept in their original order,
 rather than putting `lo` before `hi`,
@@ -1302,7 +1412,7 @@ infant_hiv %>%
 
 Does the difference between high and low estimates vary by year?
 To answer that question,
-we use `group_by` to [group](glossary.html#group) records by value
+we use `group_by` to group records by value
 and then `summarize` to aggregate within groups.
 We might as well get rid of the `arrange` and `select` calls in our pipeline at this point,
 since we're not using them,
@@ -1334,6 +1444,10 @@ print(grouped)
 
 There are other ways to tackle this problem with Pandas,
 but the tidyverse approach produces code that I find more readable.
+
+## Exercise: tidy workflow for data analysis
+
+TODO
 
 ## How do I model my data?
 
@@ -1387,14 +1501,22 @@ Here, the call to `lm` is using the variable `.` to mean
 Most of the functions in the tidyverse use this convention
 so that data can be passed to a function that expects it in a position other than the first.
 
+### Alternative workflows for modeling
+
+TODO
+
+- `caret`
+- `mlr`
+- `tidymodels`
+
 ## How do I create a plot?
 
 Human being always want to see the previously unseen,
 though they are not always glad to have done so.
 The most popular tool for doing this in R is `ggplot2`,
 which implements and extends the patterns for creating charts described in @Wilk2005.
-Every chart it creates has a [geometry](glossary.html#geometry) that controls how data is displayed
-and a [mapping](glossary.html#mapping) that controls how values are represented geometrically.
+Every chart it creates has a geometry that controls how data is displayed
+and a mapping that controls how values are represented geometrically.
 For example,
 these lines of code create a scatter plot
 showing the relationship between `lo` and `hi` values in the infant HIV data:
@@ -1407,7 +1529,7 @@ Looking more closely:
 
 -   The function `ggplot` creates an object to represent the chart with `infant_hiv` as the underlying data.
 -   `geom_point` specifies the geometry we want (points).
--   Its `mapping` argument is assigned an [aesthetic](glossary.html#aesthetic)
+-   Its `mapping` argument is assigned an aesthetic
     that specifies `lo` is to be used as the `x` coordinate and `hi` is to be used as the `y` coordinate.
 -   The elements of the chart are combined with `+` rather than `%>%` for historical reasons.
 
@@ -1482,15 +1604,86 @@ infant_hiv %>%
 
 # R Markdown vs. Jupyter Notebooks
 
+> For more information on R Markdown documents and how to generate them, check out [last quarter's workshop](https://css-skills.uchicago.edu/posts/2021-11-16-literate-programming-with-r-markdown/).
 
+## Jupyter Notebooks
+
+```{r jupyter-notebook, fig.alt = "A screenshot of the Jupyter Notebook interface, depicting code cells, executed output, and Markdown formatted text."}
+include_graphics(path = "https://www.dataquest.io/wp-content/uploads/2019/01/interface-screenshot.png")
+```
+
+.footnote[Source: [Dataquest](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)]
+
+## R Markdown
+
+``````{verbatim}
+---
+title: "Gun deaths"
+date: "`r lubridate::today()`"
+output: html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, cache = FALSE}
+library(tidyverse)
+# remotes::install_github("uc-cfss/rcfss) # if not already installed, run this code
+library(rcfss)
+
+theme_set(theme_minimal())
+```
+
+```{r youths}
+youth <- gun_deaths %>%
+  filter(age <= 65)
+```
+
+# Gun deaths by age
+
+We have data about `r nrow(gun_deaths)` individuals killed by guns. Only `r nrow(gun_deaths) - nrow(youth)` are older than 65. The distribution of the remainder is shown below:
+
+```{r youth-dist, echo = FALSE}
+youth %>% 
+  ggplot(mapping = aes(age)) + 
+  geom_freqpoly(binwidth = 1)
+```
+
+# Gun deaths by race
+
+```{r race-dist}
+youth %>%
+  ggplot(mapping = aes(fct_infreq(race) %>% fct_rev())) +
+  geom_bar() +
+  coord_flip() +
+  labs(x = "Victim race")
+```
+``````
+
+## Major components
+
+1. A **YAML header** surrounded by `---`s
+1. **Chunks** of R code surounded by ` ``` `
+1. Text mixed with simple text formatting using the [Markdown syntax](../hw01-edit-README.html)
+
+## Knitting process
+
+```{r knit}
+include_graphics(path = "https://r4ds.had.co.nz/images/RMarkdownFlow.png")
+```
 
 # Running Python within R
 
+R and Python can and should be friends! Beyond that, you can actually call Python from within R using a variety of technqiues, as well as translate between R and Python objects.
+
 ## `reticulate`
 
+- [`reticulate`](https://rstudio.github.io/reticulate/)
 
 ## `keras`
 
+- [R interfacet to Keras](https://keras.rstudio.com/)
 
 # Acknowledgments {.toc-ignore}
 
