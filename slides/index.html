@@ -1,0 +1,3109 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Introduction to R for the Python User</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Computation Skills Workshop" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/metropolis.css" rel="stylesheet" />
+    <link href="libs/remark-css/lucy-fonts.css" rel="stylesheet" />
+    <link href="libs/countdown/countdown.css" rel="stylesheet" />
+    <script src="libs/countdown/countdown.js"></script>
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Introduction to R for the Python User
+### Computation Skills Workshop
+
+---
+
+
+
+
+class: inverse, center, middle
+
+# Why R?
+
+---
+
+# R's origins
+
+- S language
+- S-PLUS
+- Open-source off-shoot
+
+.footnote[["History and Overview of R" in *R Programming for Data Science* by Roger Peng](https://bookdown.org/rdpeng/rprogdatascience/history-and-overview-of-r.html)]
+
+
+--
+
+For the **user** who wanted to conduct analysis as well as the **developer** who wanted to build programs
+
+---
+
+# Where things stand now
+
+![](https://redmonk.com/sogrady/files/2021/08/lang.rank_.0621.png)&lt;!-- --&gt;
+
+---
+
+class: inverse, center, middle
+
+# R or Python?
+
+---
+
+# R or Python?
+
+## Things R does well
+
+- Data analysis
+- Data visualization
+- Report generation
+
+--
+
+## Things Python does well
+
+* General computation
+* Speed 
+* Workflow
+
+
+--
+
+## Things Python does (not so) well
+
+- Visualizations
+- Package management
+
+---
+
+class: inverse, center, middle
+
+&lt;blockquote class="twitter-tweet" data-conversation="none"&gt;&lt;p lang="en" dir="ltr"&gt;It&amp;#39;s not R or Python, but R _and_ Python. Read more about how we at &lt;a href="https://twitter.com/rstudio?ref_src=twsrc%5Etfw"&gt;@rstudio&lt;/a&gt; think about R &amp;amp; Python below &lt;a href="https://t.co/0fuqCcTQ9c"&gt;https://t.co/0fuqCcTQ9c&lt;/a&gt;&lt;/p&gt;&amp;mdash; Hadley Wickham (@hadleywickham) &lt;a href="https://twitter.com/hadleywickham/status/1207288614465523712?ref_src=twsrc%5Etfw"&gt;December 18, 2019&lt;/a&gt;&lt;/blockquote&gt; &lt;script async src="https://platform.twitter.com/widgets.js" charset="utf-8"&gt;&lt;/script&gt;
+
+---
+
+# The R ecosystem
+
+R is available on the [Comprehensive R Archive Network](https://cran.r-project.org/) (known as CRAN)
+
+1. "Base" R that is downloaded from CRAN
+1. Everything else
+
+--
+
+- Packages
+
+---
+
+class: inverse, center, middle
+
+# Simple beginnings
+
+---
+
+# How do I say hello?
+
+.pull-left[
+
+## Python
+
+
+```python
+print("Hello, world!")
+## Hello, world!
+```
+
+]
+
+.pull-right[
+
+## R
+
+
+```r
+print("Hello, world!")
+## [1] "Hello, world!"
+```
+
+]
+
+---
+
+# What is `[1]`?
+
+
+```r
+'This is in single quotes.'
+## [1] "This is in single quotes."
+"This is in double quotes."
+## [1] "This is in double quotes."
+```
+
+---
+
+# How do I add numbers?
+
+.pull-left[
+
+
+```python
+print(1 + 2 + 3)
+## 6
+```
+
+
+```python
+print(type(6))
+## &lt;class 'int'&gt;
+```
+
+]
+
+.pull-right[
+
+
+```r
+1 + 2 + 3
+## [1] 6
+```
+
+
+```r
+typeof(6)
+## [1] "double"
+```
+
+]
+
+---
+
+# Floating points vs. integers
+
+
+```r
+typeof(6)
+## [1] "double"
+```
+
+--
+
+
+```r
+typeof(6L)
+## [1] "integer"
+```
+
+--
+
+
+```r
+typeof(1L + 2L + 3L)
+## [1] "integer"
+```
+
+
+```r
+*typeof(as.integer(6))
+## [1] "integer"
+```
+
+---
+
+# How do I store many numbers together?
+
+.pull-left[
+
+
+```python
+primes = [3, 5, 7, 11]
+print(primes)
+## [3, 5, 7, 11]
+```
+
+]
+
+.pull-right[
+
+
+```r
+primes &lt;- c(3, 5, 7, 11)
+primes
+## [1]  3  5  7 11
+```
+
+]
+
+---
+
+# What is `[1]`?
+
+.pull-left[
+
+
+```python
+print(primes, len(primes))
+## [3, 5, 7, 11] 4
+```
+
+
+```python
+print(len(4))
+## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: object of type 'int' has no len()
+## 
+## Detailed traceback:
+##   File "&lt;string&gt;", line 1, in &lt;module&gt;
+```
+
+]
+
+.pull-right[
+
+
+```r
+length(primes)
+## [1] 4
+```
+
+
+--
+
+
+
+```r
+length(4)
+## [1] 1
+```
+
+
+--
+
+
+```r
+typeof(primes)
+## [1] "double"
+```
+
+]
+
+
+---
+
+# What is `[1]`?
+
+
+```r
+c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+  1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+##  [1]  1  2  3  4  5  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10  1  2  3  4  5
+## [26]  6  7  8  9 10  1  2  3  4  5  6  7  8  9 10
+```
+
+---
+
+# How do I index a vector?
+
+.pull-left[
+
+
+```python
+colors = ["red", "blue", "green"]
+print(colors[0])
+## red
+```
+
+```python
+print(colors[2])
+## green
+```
+
+```python
+colors[3]
+## Error in py_call_impl(callable, dots$args, dots$keywords): IndexError: list index out of range
+## 
+## Detailed traceback:
+##   File "&lt;string&gt;", line 1, in &lt;module&gt;
+```
+
+```python
+print(colors[-1])
+## green
+```
+
+]
+
+.pull-right[
+
+
+```r
+colors &lt;- c("red", "blue", "green")
+colors[1]
+## [1] "red"
+```
+
+
+```r
+colors[3]
+## [1] "green"
+```
+]
+
+---
+
+# How do I index a vector?
+
+
+```r
+colors[-1]
+## [1] "blue"  "green"
+```
+
+--
+
+
+```r
+colors[1, 2]
+## Error in colors[1, 2]: incorrect number of dimensions
+```
+
+--
+
+
+```r
+colors[c(3, 1, 2)]
+## [1] "green" "red"   "blue"
+```
+
+
+```r
+colors[c(1, 1, 1)]
+## [1] "red" "red" "red"
+```
+
+---
+
+# How do I create new vectors from old?
+
+.pull-left[
+
+
+```python
+original = [3, 5, 7, 9]
+doubled = [2 * x for x in original]
+print(doubled)
+## [6, 10, 14, 18]
+```
+
+instead of:
+
+
+```python
+doubled = []
+for x in original:
+  doubled.append(2 * x)
+print(doubled)
+## [6, 10, 14, 18]
+```
+
+]
+
+.pull-right[
+
+
+```r
+original &lt;- c(3, 5, 7, 9)
+doubled &lt;- 2 * original
+doubled
+## [1]  6 10 14 18
+```
+
+]
+
+---
+
+# How do I create new vectors from old?
+
+
+```r
+tens &lt;- c(10, 20, 30)
+hundreds &lt;- c(100, 200, 300)
+tens + hundreds / (tens * hundreds)
+## [1] 10.10000 20.05000 30.03333
+```
+
+--
+
+## Vector recycling
+
+
+```r
+hundreds + 5
+## [1] 105 205 305
+```
+
+--
+
+
+```r
+thousands &lt;- c(1000, 2000)
+hundreds + thousands
+## [1] 1100 2200 1300
+```
+
+---
+
+# Logical indexing
+
+
+```r
+colors
+## [1] "red"   "blue"  "green"
+colors[c(TRUE, FALSE, TRUE)]
+## [1] "red"   "green"
+```
+
+--
+
+
+```r
+before_letter_m &lt;- colors &lt; "m"
+before_letter_m # to show the index
+## [1] FALSE  TRUE  TRUE
+ifelse(before_letter_m, colors, c("comes", "after", "m"))
+## [1] "comes" "blue"  "green"
+```
+
+--
+
+
+```r
+ifelse(colors &lt; "m", colors, toupper(colors))
+## [1] "RED"   "blue"  "green"
+```
+
+---
+
+# How can I store different types of objects?
+
+
+```r
+thing[i]
+thing[i, j]
+thing[[i]]
+thing[[i, j]]
+thing$name
+thing$"name"
+```
+
+---
+
+# Lists in R
+
+
+```r
+thing &lt;- list("first", c(2, 20, 200), 3.3)
+thing
+## [[1]]
+## [1] "first"
+## 
+## [[2]]
+## [1]   2  20 200
+## 
+## [[3]]
+## [1] 3.3
+```
+
+---
+
+# What is the difference between `[` and `[[`?
+
+
+```r
+thing[[1]]
+## [1] "first"
+```
+
+```r
+thing[[2]]
+## [1]   2  20 200
+```
+
+```r
+thing[[3]]
+## [1] 3.3
+```
+
+--
+
+
+```r
+typeof(thing[[1]])
+## [1] "character"
+```
+
+```r
+typeof(thing[[2]])
+## [1] "double"
+```
+
+```r
+typeof(thing[[3]])
+## [1] "double"
+```
+
+---
+
+# What is the difference between `[` and `[[`?
+
+
+```r
+thing[1]
+## [[1]]
+## [1] "first"
+```
+
+--
+
+
+```r
+typeof(thing[1])
+## [1] "list"
+```
+
+--
+
+
+```r
+v &lt;- c("first", "second", "third")
+v[2]
+## [1] "second"
+```
+
+
+```r
+typeof(v[2])
+## [1] "character"
+```
+
+
+```r
+v[[2]]
+## [1] "second"
+```
+
+
+```r
+typeof(v[[2]])
+## [1] "character"
+```
+
+---
+
+# How can I access elements by name?
+
+
+```r
+values &lt;- c("m", "f", "nb", "f", "f", "m", "m")
+lookup &lt;- c(m = "Male", f = "Female", nb = "Non-binary")
+lookup[values]
+##            m            f           nb            f            f            m 
+##       "Male"     "Female" "Non-binary"     "Female"     "Female"       "Male" 
+##            m 
+##       "Male"
+```
+
+--
+
+
+```r
+lookup_list &lt;- list(m = "Male", f = "Female", nb = "Non-binary")
+lookup_list$m
+## [1] "Male"
+```
+
+--
+
+
+```r
+another_list &lt;- list("first field" = "F", "second field" = "S")
+another_list$`first field`
+## [1] "F"
+```
+
+---
+
+# How do I choose and repeat things?
+
+.pull-left[
+
+
+```python
+values = [-15, 0, 15]
+for v in values:
+    if v &lt; 0:
+        pos_neg = -1
+    elif v == 0:
+        pos_neg = 0
+    else:
+        pos_neg = 1
+    print("The pos_neg of", v, "is", pos_neg)
+## The pos_neg of -15 is -1
+## The pos_neg of 0 is 0
+## The pos_neg of 15 is 1
+print("The final value of v is", v)
+## The final value of v is 15
+```
+
+]
+
+.pull-right[
+
+
+```r
+values &lt;- c(-15, 0, 15)
+for (v in values) {
+  if (v &lt; 0) {
+    pos_neg &lt;- -1
+  }
+  else if (v == 0) {
+    pos_neg &lt;- 0
+  }
+  else {
+    pos_neg &lt;- 1
+  }
+  print(glue::glue("The sign of {v} is {pos_neg}"))
+}
+## The sign of -15 is -1
+## The sign of 0 is 0
+## The sign of 15 is 1
+print(glue::glue("The final value of v is {v}"))
+## The final value of v is 15
+```
+
+]
+
+
+---
+
+# How can I vectorize loops and conditionals?
+
+
+```r
+print(sign(values))
+## [1] -1  0  1
+print(glue::glue("The sign of {values} is {sign(values)}"))
+## The sign of -15 is -1
+## The sign of 0 is 0
+## The sign of 15 is 1
+```
+
+--
+
+
+```r
+pos_neg &lt;- dplyr::case_when(
+  values &lt;  0 ~ -1,
+  values == 0 ~ 0,
+  values &gt;  0 ~ 1
+)
+
+print(glue::glue("The sign of {values} is {pos_neg}"))
+## The sign of -15 is -1
+## The sign of 0 is 0
+## The sign of 15 is 1
+```
+
+---
+
+# Vector in a conditional statement?
+
+No.
+
+
+```r
+numbers &lt;- c(0, 1, 2)
+if (numbers) {
+  print("This should not work.")
+}
+```
+
+--
+
+
+```r
+numbers &lt;- c(0, 1, 2)
+if (all(numbers &gt;= 0)) {
+  print("This, on the other hand, should work.")
+}
+## [1] "This, on the other hand, should work."
+```
+
+---
+
+# How do I create and call functions?
+
+
+```r
+swap &lt;- function(pair) {
+  c(pair[2], pair[1])
+}
+swap(c("left", "right"))
+## [1] "right" "left"
+```
+
+---
+
+# Function with variable arguments?
+
+
+```r
+swap("one", "two", "three")
+## Error in swap("one", "two", "three"): unused arguments ("two", "three")
+```
+
+--
+
+
+```r
+print_with_title &lt;- function(title, ...) {
+  print(glue("=={title}=="), paste(..., sep = "\n"))
+}
+
+print_with_title("to-do", "Monday", "Tuesday", "Wednesday")
+## ==to-do==
+## Monday
+## Tuesday
+## Wednesday
+```
+
+---
+
+# Default values for arguments
+
+
+```r
+example &lt;- function(first, second = "second", third = "third") {
+  print(glue("first='{first}' second='{second}' third='{third}'"))
+}
+
+example("with just first")
+## first='with just first' second='second' third='third'
+example("with first and second by position", "positional")
+## first='with first and second by position' second='positional' third='third'
+example("with first and third by name", third = "by name")
+## first='with first and third by name' second='second' third='by name'
+```
+
+--
+
+## Avoid name conflicts
+
+
+```r
+purple &lt;- function(x) x + 100
+orange &lt;- function() {
+  purple &lt;- 10
+  purple(purple)
+}
+orange()
+## [1] 110
+```
+
+---
+
+class: inverse, center, middle
+
+# Practice subsetting vectors
+
+<div class="countdown" id="timer_61ef1e8c" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">08</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+class: inverse, center, middle
+
+# The `tidyverse`
+
+---
+
+&lt;iframe src="https://www.tidyverse.org/" width="100%" height="600px" data-external="1"&gt;&lt;/iframe&gt;
+
+---
+
+# How do I read data?
+
+- `data/infant_hiv.csv`
+
+```verbatim
+country,year,estimate,hi,lo
+AFG,2009,NA,NA,NA
+AFG,2010,NA,NA,NA
+...
+AFG,2017,NA,NA,NA
+AGO,2009,NA,NA,NA
+AGO,2010,0.03,0.04,0.02
+AGO,2011,0.05,0.07,0.04
+AGO,2012,0.06,0.08,0.05
+...
+ZWE,2016,0.71,0.88,0.62
+ZWE,2017,0.65,0.81,0.57
+```
+
+---
+
+# How do I read data?
+
+| Header   | Datatype  | Description                                 |
+|----------|-----------|---------------------------------------------|
+| country  | char      | ISO3 country code of country reporting data |
+| year     | integer   | year CE for which data reported             |
+| estimate | double/NA | estimated percentage of measurement         |
+| hi       | double/NA | high end of range                           |
+| lo       | double/NA | low end of range                            |
+
+---
+
+# How do I read data?
+
+
+```python
+import pandas as pd
+
+infant_hiv = pd.read_csv('data/infant_hiv.csv')
+print(infant_hiv)
+##      country  year  estimate    hi    lo
+## 0        AFG  2009       NaN   NaN   NaN
+## 1        AFG  2010       NaN   NaN   NaN
+## 2        AFG  2011       NaN   NaN   NaN
+## 3        AFG  2012       NaN   NaN   NaN
+## 4        AFG  2013       NaN   NaN   NaN
+## ...      ...   ...       ...   ...   ...
+## 1723     ZWE  2013      0.57  0.70  0.49
+## 1724     ZWE  2014      0.54  0.67  0.47
+## 1725     ZWE  2015      0.59  0.73  0.51
+## 1726     ZWE  2016      0.71  0.88  0.62
+## 1727     ZWE  2017      0.65  0.81  0.57
+## 
+## [1728 rows x 5 columns]
+```
+
+---
+
+# How do I read data?
+
+
+```r
+library(tidyverse)
+```
+
+```
+Error in library(tidyverse) : there is no package called 'tidyverse'
+```
+
+--
+
+
+```r
+install.packages("tidyverse")
+```
+
+---
+
+# Session information
+
+
+```r
+sessioninfo::session_info()
+## ─ Session info ───────────────────────────────────────────────────────────────
+##  setting  value
+##  version  R version 4.1.2 (2021-11-01)
+##  os       macOS Monterey 12.1
+##  system   aarch64, darwin20
+##  ui       X11
+##  language (EN)
+##  collate  en_US.UTF-8
+##  ctype    en_US.UTF-8
+##  tz       America/Chicago
+##  date     2022-01-24
+##  pandoc   2.14.2 @ /usr/local/bin/ (via rmarkdown)
+## 
+## ─ Packages ───────────────────────────────────────────────────────────────────
+##  package     * version date (UTC) lib source
+##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.1.0)
+##  backports     1.4.1   2021-12-13 [1] CRAN (R 4.1.1)
+##  broom         0.7.11  2022-01-03 [1] CRAN (R 4.1.2)
+##  bslib         0.3.1   2021-10-06 [1] CRAN (R 4.1.1)
+##  callr         3.7.0   2021-04-20 [1] CRAN (R 4.1.0)
+##  cellranger    1.1.0   2016-07-27 [1] CRAN (R 4.1.0)
+##  cli           3.1.0   2021-10-27 [1] CRAN (R 4.1.1)
+##  codetools     0.2-18  2020-11-04 [1] CRAN (R 4.1.2)
+##  colorspace    2.0-2   2021-06-24 [1] CRAN (R 4.1.1)
+##  countdown   * 0.3.5   2022-01-07 [1] Github (gadenbuie/countdown@a544fa4)
+##  crayon        1.4.2   2021-10-29 [1] CRAN (R 4.1.1)
+##  DBI           1.1.2   2021-12-20 [1] CRAN (R 4.1.1)
+##  dbplyr        2.1.1   2021-04-06 [1] CRAN (R 4.1.0)
+##  digest        0.6.29  2021-12-01 [1] CRAN (R 4.1.1)
+##  dplyr       * 1.0.7   2021-06-18 [1] CRAN (R 4.1.0)
+##  ellipsis      0.3.2   2021-04-29 [1] CRAN (R 4.1.0)
+##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.1.0)
+##  fansi         0.5.0   2021-05-25 [1] CRAN (R 4.1.0)
+##  fastmap       1.1.0   2021-01-25 [1] CRAN (R 4.1.0)
+##  flipbookr   * 0.1.0   2021-05-31 [1] CRAN (R 4.1.0)
+##  forcats     * 0.5.1   2021-01-27 [1] CRAN (R 4.1.1)
+##  fs            1.5.2   2021-12-08 [1] CRAN (R 4.1.1)
+##  gapminder   * 0.3.0   2017-10-31 [1] CRAN (R 4.1.0)
+##  generics      0.1.1   2021-10-25 [1] CRAN (R 4.1.1)
+##  ggplot2     * 3.3.5   2021-06-25 [1] CRAN (R 4.1.1)
+##  glue        * 1.6.0   2021-12-17 [1] CRAN (R 4.1.1)
+##  gtable        0.3.0   2019-03-25 [1] CRAN (R 4.1.1)
+##  haven         2.4.3   2021-08-04 [1] CRAN (R 4.1.1)
+##  here        * 1.0.1   2020-12-13 [1] CRAN (R 4.1.0)
+##  highr         0.9     2021-04-16 [1] CRAN (R 4.1.0)
+##  hms           1.1.1   2021-09-26 [1] CRAN (R 4.1.1)
+##  htmltools     0.5.2   2021-08-25 [1] CRAN (R 4.1.1)
+##  httr          1.4.2   2020-07-20 [1] CRAN (R 4.1.0)
+##  jquerylib     0.1.4   2021-04-26 [1] CRAN (R 4.1.0)
+##  jsonlite      1.7.2   2020-12-09 [1] CRAN (R 4.1.0)
+##  knitr       * 1.37    2021-12-16 [1] CRAN (R 4.1.1)
+##  lattice       0.20-45 2021-09-22 [1] CRAN (R 4.1.2)
+##  lifecycle     1.0.1   2021-09-24 [1] CRAN (R 4.1.1)
+##  lubridate     1.8.0   2021-10-07 [1] CRAN (R 4.1.1)
+##  magrittr      2.0.1   2020-11-17 [1] CRAN (R 4.1.0)
+##  Matrix        1.3-4   2021-06-01 [1] CRAN (R 4.1.2)
+##  modelr        0.1.8   2020-05-19 [1] CRAN (R 4.1.0)
+##  munsell       0.5.0   2018-06-12 [1] CRAN (R 4.1.0)
+##  pillar        1.6.4   2021-10-18 [1] CRAN (R 4.1.1)
+##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.1.0)
+##  png           0.1-7   2013-12-03 [1] CRAN (R 4.1.0)
+##  processx      3.5.2   2021-04-30 [1] CRAN (R 4.1.0)
+##  ps            1.6.0   2021-02-28 [1] CRAN (R 4.1.0)
+##  purrr       * 0.3.4   2020-04-17 [1] CRAN (R 4.1.0)
+##  R6            2.5.1   2021-08-19 [1] CRAN (R 4.1.1)
+##  rcfss       * 0.2.1   2022-01-06 [1] local
+##  Rcpp          1.0.7   2021-07-07 [1] CRAN (R 4.1.0)
+##  readr       * 2.1.1   2021-11-30 [1] CRAN (R 4.1.1)
+##  readxl        1.3.1   2019-03-13 [1] CRAN (R 4.1.0)
+##  reprex        2.0.1   2021-08-05 [1] CRAN (R 4.1.1)
+##  reticulate  * 1.23    2022-01-14 [1] CRAN (R 4.1.1)
+##  rlang       * 0.4.12  2021-10-18 [1] CRAN (R 4.1.1)
+##  rmarkdown     2.11    2021-09-14 [1] CRAN (R 4.1.1)
+##  rprojroot     2.0.2   2020-11-15 [1] CRAN (R 4.1.0)
+##  rstudioapi    0.13    2020-11-12 [1] CRAN (R 4.1.0)
+##  rvest         1.0.2   2021-10-16 [1] CRAN (R 4.1.1)
+##  sass          0.4.0   2021-05-12 [1] CRAN (R 4.1.0)
+##  scales        1.1.1   2020-05-11 [1] CRAN (R 4.1.0)
+##  sessioninfo   1.2.2   2021-12-06 [1] CRAN (R 4.1.1)
+##  stringi       1.7.6   2021-11-29 [1] CRAN (R 4.1.1)
+##  stringr     * 1.4.0   2019-02-10 [1] CRAN (R 4.1.1)
+##  tibble      * 3.1.6   2021-11-07 [1] CRAN (R 4.1.1)
+##  tidyr       * 1.1.4   2021-09-27 [1] CRAN (R 4.1.1)
+##  tidyselect    1.1.1   2021-04-30 [1] CRAN (R 4.1.0)
+##  tidyverse   * 1.3.1   2021-04-15 [1] CRAN (R 4.1.0)
+##  tzdb          0.2.0   2021-10-27 [1] CRAN (R 4.1.1)
+##  utf8          1.2.2   2021-07-24 [1] CRAN (R 4.1.0)
+##  vctrs         0.3.8   2021-04-29 [1] CRAN (R 4.1.0)
+##  whisker       0.4     2019-08-28 [1] CRAN (R 4.1.0)
+##  withr         2.4.3   2021-11-30 [1] CRAN (R 4.1.1)
+##  xaringan      0.22    2021-06-23 [1] CRAN (R 4.1.0)
+##  xfun          0.29    2021-12-14 [1] CRAN (R 4.1.1)
+##  xml2          1.3.3   2021-11-30 [1] CRAN (R 4.1.1)
+##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.1.0)
+## 
+##  [1] /Library/Frameworks/R.framework/Versions/4.1-arm64/Resources/library
+## 
+## ─ Python configuration ───────────────────────────────────────────────────────
+##  python:         /Users/soltoffbc/Library/r-miniconda-arm64/envs/r-reticulate/bin/python
+##  libpython:      /Users/soltoffbc/Library/r-miniconda-arm64/envs/r-reticulate/lib/libpython3.8.dylib
+##  pythonhome:     /Users/soltoffbc/Library/r-miniconda-arm64/envs/r-reticulate:/Users/soltoffbc/Library/r-miniconda-arm64/envs/r-reticulate
+##  version:        3.8.12 | packaged by conda-forge | (default, Oct 12 2021, 21:25:50)  [Clang 11.1.0 ]
+##  numpy:          /Users/soltoffbc/Library/r-miniconda-arm64/envs/r-reticulate/lib/python3.8/site-packages/numpy
+##  numpy_version:  1.22.0
+##  
+##  NOTE: Python version was forced by use_python function
+## 
+## ──────────────────────────────────────────────────────────────────────────────
+```
+
+---
+
+# Loading a package
+
+``` r
+library(tidyverse)
+#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──
+#&gt; ✓ ggplot2 3.3.5     ✓ purrr   0.3.4
+#&gt; ✓ tibble  3.1.6     ✓ dplyr   1.0.7
+#&gt; ✓ tidyr   1.1.4     ✓ stringr 1.4.0
+#&gt; ✓ readr   2.1.1     ✓ forcats 0.5.1
+#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+#&gt; x dplyr::filter() masks stats::filter()
+#&gt; x dplyr::lag()    masks stats::lag()
+```
+
+---
+
+# How do I read data?
+
+
+```r
+infant_hiv &lt;- read_csv('data/infant_hiv.csv')
+## Rows: 1728 Columns: 5
+## ── Column specification ────────────────────────────────────────────────────────
+## Delimiter: ","
+## chr (1): country
+## dbl (4): year, estimate, hi, lo
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+```
+
+---
+
+# How do I read data?
+
+
+```r
+infant_hiv
+## # A tibble: 1,728 × 5
+##    country  year estimate    hi    lo
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 AFG      2009       NA    NA    NA
+##  2 AFG      2010       NA    NA    NA
+##  3 AFG      2011       NA    NA    NA
+##  4 AFG      2012       NA    NA    NA
+##  5 AFG      2013       NA    NA    NA
+##  6 AFG      2014       NA    NA    NA
+##  7 AFG      2015       NA    NA    NA
+##  8 AFG      2016       NA    NA    NA
+##  9 AFG      2017       NA    NA    NA
+## 10 AGO      2009       NA    NA    NA
+## # … with 1,718 more rows
+```
+
+---
+
+# How do I inspect data?
+
+.pull-left[
+
+
+```python
+print(infant_hiv.head())
+##   country  year  estimate  hi  lo
+## 0     AFG  2009       NaN NaN NaN
+## 1     AFG  2010       NaN NaN NaN
+## 2     AFG  2011       NaN NaN NaN
+## 3     AFG  2012       NaN NaN NaN
+## 4     AFG  2013       NaN NaN NaN
+```
+
+```python
+print(infant_hiv.tail())
+##      country  year  estimate    hi    lo
+## 1723     ZWE  2013      0.57  0.70  0.49
+## 1724     ZWE  2014      0.54  0.67  0.47
+## 1725     ZWE  2015      0.59  0.73  0.51
+## 1726     ZWE  2016      0.71  0.88  0.62
+## 1727     ZWE  2017      0.65  0.81  0.57
+```
+
+]
+
+.pull-right[
+
+
+```r
+head(infant_hiv)
+## # A tibble: 6 × 5
+##   country  year estimate    hi    lo
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 AFG      2009       NA    NA    NA
+## 2 AFG      2010       NA    NA    NA
+## 3 AFG      2011       NA    NA    NA
+## 4 AFG      2012       NA    NA    NA
+## 5 AFG      2013       NA    NA    NA
+## 6 AFG      2014       NA    NA    NA
+```
+
+```r
+tail(infant_hiv)
+## # A tibble: 6 × 5
+##   country  year estimate    hi    lo
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 ZWE      2012     0.38  0.47  0.33
+## 2 ZWE      2013     0.57  0.7   0.49
+## 3 ZWE      2014     0.54  0.67  0.47
+## 4 ZWE      2015     0.59  0.73  0.51
+## 5 ZWE      2016     0.71  0.88  0.62
+## 6 ZWE      2017     0.65  0.81  0.57
+```
+
+]
+
+---
+
+# How do I inspect data?
+
+
+```r
+tail(infant_hiv)
+## # A tibble: 6 × 5
+##   country  year estimate    hi    lo
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 ZWE      2012     0.38  0.47  0.33
+## 2 ZWE      2013     0.57  0.7   0.49
+## 3 ZWE      2014     0.54  0.67  0.47
+## 4 ZWE      2015     0.59  0.73  0.51
+## 5 ZWE      2016     0.71  0.88  0.62
+## 6 ZWE      2017     0.65  0.81  0.57
+```
+
+---
+
+# How do I inspect data?
+
+.pull-left[
+
+
+```python
+print(infant_hiv.info())
+## &lt;class 'pandas.core.frame.DataFrame'&gt;
+## RangeIndex: 1728 entries, 0 to 1727
+## Data columns (total 5 columns):
+##  #   Column    Non-Null Count  Dtype  
+## ---  ------    --------------  -----  
+##  0   country   1728 non-null   object 
+##  1   year      1728 non-null   int64  
+##  2   estimate  728 non-null    float64
+##  3   hi        728 non-null    float64
+##  4   lo        728 non-null    float64
+## dtypes: float64(3), int64(1), object(1)
+## memory usage: 67.6+ KB
+## None
+```
+
+]
+
+.pull-right[
+
+
+```r
+summary(infant_hiv)
+##    country               year         estimate           hi        
+##  Length:1728        Min.   :2009   Min.   :0.000   Min.   :0.0000  
+##  Class :character   1st Qu.:2011   1st Qu.:0.100   1st Qu.:0.1400  
+##  Mode  :character   Median :2013   Median :0.340   Median :0.4350  
+##                     Mean   :2013   Mean   :0.387   Mean   :0.4614  
+##                     3rd Qu.:2015   3rd Qu.:0.620   3rd Qu.:0.7625  
+##                     Max.   :2017   Max.   :0.950   Max.   :0.9500  
+##                                    NA's   :1000    NA's   :1000    
+##        lo        
+##  Min.   :0.0000  
+##  1st Qu.:0.0800  
+##  Median :0.2600  
+##  Mean   :0.3221  
+##  3rd Qu.:0.5100  
+##  Max.   :0.9500  
+##  NA's   :1000
+```
+
+]
+
+---
+
+# How do I index rows and columns?
+
+.pull-left[
+
+
+```python
+print(infant_hiv['estimate'])
+## 0        NaN
+## 1        NaN
+## 2        NaN
+## 3        NaN
+## 4        NaN
+##         ... 
+## 1723    0.57
+## 1724    0.54
+## 1725    0.59
+## 1726    0.71
+## 1727    0.65
+## Name: estimate, Length: 1728, dtype: float64
+```
+
+]
+
+.pull-right[
+
+
+```r
+infant_hiv['estimate']
+## # A tibble: 1,728 × 1
+##    estimate
+##       &lt;dbl&gt;
+##  1       NA
+##  2       NA
+##  3       NA
+##  4       NA
+##  5       NA
+##  6       NA
+##  7       NA
+##  8       NA
+##  9       NA
+## 10       NA
+## # … with 1,718 more rows
+```
+
+
+```r
+infant_hiv$estimate
+##    [1]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.03 0.05 0.06 0.15
+##   [15] 0.10 0.06 0.01 0.01   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [29]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [43]   NA   NA   NA   NA   NA 0.13 0.12 0.12 0.52 0.53 0.67 0.66   NA   NA
+##   [57]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [71]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [85]   NA   NA   NA   NA   NA   NA 0.26 0.24 0.38 0.55 0.61 0.74 0.83 0.75
+##   [99] 0.74   NA 0.10 0.10 0.11 0.18 0.12 0.02 0.12 0.20   NA   NA   NA   NA
+##  [113]   NA   NA   NA   NA   NA   NA   NA 0.10 0.09 0.12 0.26 0.27 0.25 0.32
+##  [127] 0.03 0.09 0.13 0.19 0.25 0.30 0.28 0.15 0.16   NA 0.02 0.02 0.02 0.03
+##  [141] 0.15 0.10 0.17 0.14   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [155]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [169]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.95 0.95
+##  [183] 0.95 0.95 0.95 0.95 0.80 0.95 0.87 0.77 0.75 0.72 0.51 0.55 0.50 0.62
+##  [197] 0.37 0.36 0.07 0.46 0.46 0.46 0.46 0.44 0.43 0.42 0.40 0.25 0.25 0.46
+##  [211] 0.25 0.45 0.45 0.46 0.46 0.45   NA   NA   NA   NA   NA   NA   NA   NA
+##  [225]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [239]   NA   NA   NA   NA   NA   NA 0.53 0.35 0.36 0.48 0.41 0.45 0.47 0.50
+##  [253] 0.01 0.01 0.07 0.05 0.03 0.09 0.12 0.21 0.23   NA   NA   NA   NA   NA
+##  [267]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [281]   NA 0.64 0.56 0.67 0.77 0.92 0.70 0.85   NA   NA   NA   NA   NA   NA
+##  [295]   NA   NA   NA   NA 0.22 0.03 0.19 0.12 0.33 0.28 0.39 0.40 0.27 0.20
+##  [309] 0.25 0.30 0.32 0.36 0.33 0.53 0.51   NA 0.03 0.05 0.07 0.10 0.14 0.16
+##  [323] 0.20 0.34 0.08 0.07 0.03 0.05 0.04 0.00 0.01 0.02 0.03   NA   NA   NA
+##  [337]   NA   NA   NA   NA   NA   NA 0.05 0.10 0.18 0.22 0.30 0.37 0.45 0.44
+##  [351] 0.48   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.95 0.95 0.95 0.76
+##  [365] 0.85 0.94 0.70 0.94 0.93 0.92 0.69 0.66 0.89 0.66 0.78 0.79 0.64 0.71
+##  [379] 0.83 0.95 0.95 0.95 0.95 0.92 0.95 0.95 0.95   NA   NA   NA   NA   NA
+##  [393]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [407]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.02 0.08 0.08 0.02
+##  [421] 0.08 0.10 0.10   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [435]   NA   NA   NA   NA   NA   NA   NA 0.28 0.10 0.43 0.46 0.64 0.95 0.95
+##  [449] 0.72 0.80   NA   NA 0.38 0.23 0.55 0.27 0.23 0.33 0.61 0.01 0.01 0.95
+##  [463] 0.87 0.21 0.87 0.54 0.70 0.69 0.04 0.05 0.04 0.04 0.04 0.05 0.07 0.10
+##  [477] 0.11   NA   NA   NA   NA 0.27 0.39 0.36 0.39 0.15   NA   NA   NA   NA
+##  [491]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [505] 0.04 0.40 0.15 0.24 0.24 0.25 0.31 0.45 0.38   NA   NA   NA   NA   NA
+##  [519]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [533]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [547]   NA   NA   NA   NA 0.06 0.27 0.28 0.16 0.20 0.24 0.24 0.04   NA   NA
+##  [561]   NA   NA   NA   NA   NA   NA   NA 0.61 0.82 0.69 0.62 0.58 0.74 0.77
+##  [575] 0.79 0.84   NA 0.01 0.11 0.09 0.19 0.15 0.20 0.31 0.30   NA 0.05 0.06
+##  [589] 0.00 0.06 0.07 0.04 0.39 0.11   NA   NA   NA   NA   NA 0.08 0.11 0.12
+##  [603] 0.12   NA   NA 0.00 0.03 0.05 0.24 0.35 0.36 0.36   NA   NA   NA   NA
+##  [617]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [631]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.19 0.17 0.11
+##  [645] 0.15 0.15 0.15 0.17   NA 0.27 0.47 0.38 0.32 0.60 0.55 0.54 0.53 0.61
+##  [659] 0.69 0.89 0.43 0.47 0.49 0.40 0.60 0.59   NA   NA   NA   NA   NA   NA
+##  [673]   NA   NA   NA   NA   NA 0.04 0.39 0.35 0.36 0.32 0.35 0.40   NA   NA
+##  [687]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.04 0.05 0.06
+##  [701] 0.02 0.01   NA 0.06 0.07 0.08 0.09 0.10 0.25 0.27 0.23   NA   NA   NA
+##  [715]   NA   NA   NA   NA   NA   NA 0.02 0.13 0.03 0.09 0.12 0.15 0.20 0.23
+##  [729] 0.31   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [743]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [757]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.63   NA 0.68
+##  [771] 0.59   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [785]   NA   NA   NA   NA   NA   NA   NA   NA 0.95 0.95 0.95 0.95 0.95 0.95
+##  [799] 0.84 0.76 0.82   NA 0.75 0.46 0.45 0.45 0.74 0.51 0.56 0.51   NA   NA
+##  [813] 0.03 0.11 0.11 0.38 0.33 0.66 0.70   NA 0.45 0.62 0.34 0.37 0.37 0.79
+##  [827] 0.74 0.64   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [841]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [855]   NA   NA 0.01 0.08 0.06 0.10 0.03 0.03 0.07 0.07   NA   NA   NA   NA
+##  [869]   NA   NA   NA   NA   NA 0.05 0.05 0.17 0.28 0.31 0.13   NA   NA   NA
+##  [883]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [897]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.43
+##  [911] 0.95 0.95 0.70 0.47 0.51 0.87 0.58 0.51   NA   NA   NA   NA   NA   NA
+##  [925]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [939]   NA   NA   NA   NA   NA   NA   NA 0.02 0.21 0.21 0.68 0.65 0.62 0.61
+##  [953] 0.59 0.57 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95   NA   NA 0.00
+##  [967] 0.01   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [981]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [995]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1009] 0.08 0.08 0.08 0.10 0.08 0.06 0.03 0.11 0.11   NA   NA   NA   NA   NA
+## [1023]   NA   NA   NA   NA   NA 0.01 0.04 0.05 0.09 0.12 0.15 0.26 0.28   NA
+## [1037]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1051]   NA   NA   NA   NA 0.31 0.36 0.30 0.31 0.38 0.41 0.44 0.50   NA   NA
+## [1065]   NA   NA   NA   NA   NA 0.08 0.08   NA   NA   NA   NA   NA   NA   NA
+## [1079]   NA   NA   NA   NA   NA 0.06 0.17 0.21 0.20 0.31 0.52 0.37 0.61 0.68
+## [1093] 0.68 0.77 0.87 0.75 0.69 0.95   NA 0.57 0.85 0.59 0.55 0.91 0.17 0.53
+## [1107] 0.95   NA   NA   NA 0.01 0.09 0.02 0.11 0.05 0.10 0.04 0.06 0.07 0.06
+## [1121] 0.05 0.06 0.10 0.11 0.12 0.50 0.38 0.95 0.47 0.57 0.51 0.65 0.60 0.75
+## [1135]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1149]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.02
+## [1163] 0.03 0.05 0.09 0.05 0.08 0.21 0.26 0.45   NA   NA   NA   NA   NA   NA
+## [1177]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1191]   NA   NA   NA   NA   NA   NA   NA 0.01 0.01 0.01 0.00 0.01 0.01 0.00
+## [1205] 0.00 0.01   NA 0.30 0.39 0.20 0.39 0.45 0.55 0.51 0.49   NA   NA 0.13
+## [1219] 0.25 0.36 0.29 0.63 0.41 0.78 0.01 0.03 0.05 0.03 0.00 0.02 0.03 0.04
+## [1233] 0.05   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.23 0.18
+## [1247] 0.53 0.30 0.37 0.36 0.35   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1261]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1275]   NA   NA   NA   NA   NA 0.27 0.34 0.50 0.39 0.38 0.47 0.52 0.52   NA
+## [1289]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1303]   NA   NA   NA   NA   NA   NA   NA   NA 0.64 0.58 0.54 0.84 0.58 0.73
+## [1317] 0.74 0.81 0.83 0.87 0.84 0.90 0.85   NA   NA   NA   NA   NA   NA   NA
+## [1331]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.11 0.11 0.09
+## [1345] 0.10 0.12 0.12 0.16 0.13 0.23   NA   NA   NA   NA   NA   NA   NA   NA
+## [1359]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.01 0.01 0.02
+## [1373] 0.25 0.02 0.03 0.06 0.07   NA 0.28 0.28 0.02 0.31 0.40 0.40 0.35 0.34
+## [1387]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1401]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.01 0.03 0.10   NA
+## [1415]   NA   NA   NA   NA   NA   NA   NA   NA 0.09 0.09 0.09 0.34 0.58 0.81
+## [1429] 0.95 0.95 0.67   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1443]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1457]   NA   NA   NA 0.50 0.93 0.95 0.87 0.84 0.88 0.82 0.81   NA   NA   NA
+## [1471]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1485]   NA   NA 0.03 0.02 0.06 0.06 0.07 0.05 0.05 0.05 0.07 0.14 0.05 0.11
+## [1499] 0.11 0.16 0.17 0.36 0.36   NA 0.54 0.56 0.64 0.68 0.70 0.92 0.92 0.94
+## [1513] 0.01 0.04 0.08 0.11 0.14 0.14 0.30 0.21 0.43   NA   NA   NA   NA   NA
+## [1527]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1541]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.37 0.50 0.95
+## [1555] 0.83 0.90 0.94   NA   NA 0.16 0.14 0.18 0.33 0.40 0.31 0.13   NA   NA
+## [1569]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1583]   NA   NA 0.13 0.24 0.30 0.29 0.29 0.39 0.38 0.39 0.36 0.08 0.13 0.38
+## [1597] 0.45 0.50 0.69 0.43 0.35 0.48 0.78 0.95 0.81 0.88 0.95 0.78 0.47 0.55
+## [1611] 0.48   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.62 0.68 0.85
+## [1625] 0.95 0.95 0.95 0.90 0.95   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1639] 0.00 0.12 0.58 0.54 0.48 0.84 0.76 0.74 0.56   NA   NA   NA   NA   NA
+## [1653]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1667]   NA 0.31 0.30 0.63 0.41 0.49 0.49 0.31   NA   NA   NA   NA   NA   NA
+## [1681]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1695]   NA   NA   NA   NA   NA   NA   NA   NA 0.66 0.65 0.89 0.75 0.86 0.95
+## [1709] 0.79 0.95 0.59 0.27 0.70 0.74 0.64 0.91 0.43 0.43 0.46   NA 0.12 0.23
+## [1723] 0.38 0.57 0.54 0.59 0.71 0.65
+```
+
+]
+
+---
+
+# What about single values?
+
+.pull-left[
+
+
+```python
+print(infant_hiv.estimate[11])
+## 0.05
+```
+
+]
+
+.pull-right[
+
+
+```r
+infant_hiv$estimate[12]
+## [1] 0.05
+```
+
+]
+
+---
+
+# Everything is a vector
+
+.pull-left[
+
+
+```python
+print(len(infant_hiv.estimate[11]))
+## Error in py_call_impl(callable, dots$args, dots$keywords): TypeError: object of type 'numpy.float64' has no len()
+## 
+## Detailed traceback:
+##   File "&lt;string&gt;", line 1, in &lt;module&gt;
+```
+
+
+```python
+print(infant_hiv.estimate[5:15])
+## 5      NaN
+## 6      NaN
+## 7      NaN
+## 8      NaN
+## 9      NaN
+## 10    0.03
+## 11    0.05
+## 12    0.06
+## 13    0.15
+## 14    0.10
+## Name: estimate, dtype: float64
+```
+
+]
+
+.pull-right[
+
+
+```r
+length(infant_hiv$estimate[12])
+## [1] 1
+```
+
+
+```r
+infant_hiv$estimate[6:15]
+##  [1]   NA   NA   NA   NA   NA 0.03 0.05 0.06 0.15 0.10
+```
+
+]
+
+---
+
+# Select by column number
+
+.pull-left[
+
+
+```python
+print(infant_hiv.iloc[:, 0])
+## 0       AFG
+## 1       AFG
+## 2       AFG
+## 3       AFG
+## 4       AFG
+##        ... 
+## 1723    ZWE
+## 1724    ZWE
+## 1725    ZWE
+## 1726    ZWE
+## 1727    ZWE
+## Name: country, Length: 1728, dtype: object
+```
+
+
+```python
+print(infant_hiv.iloc[:, 0][0])
+## AFG
+```
+
+]
+
+.pull-right[
+
+
+```r
+infant_hiv[1]
+## # A tibble: 1,728 × 1
+##    country
+##    &lt;chr&gt;  
+##  1 AFG    
+##  2 AFG    
+##  3 AFG    
+##  4 AFG    
+##  5 AFG    
+##  6 AFG    
+##  7 AFG    
+##  8 AFG    
+##  9 AFG    
+## 10 AGO    
+## # … with 1,718 more rows
+```
+
+
+```r
+infant_hiv[[1]]
+##    [1] "AFG" "AFG" "AFG" "AFG" "AFG" "AFG" "AFG" "AFG" "AFG" "AGO" "AGO" "AGO"
+##   [13] "AGO" "AGO" "AGO" "AGO" "AGO" "AGO" "AIA" "AIA" "AIA" "AIA" "AIA" "AIA"
+##   [25] "AIA" "AIA" "AIA" "ALB" "ALB" "ALB" "ALB" "ALB" "ALB" "ALB" "ALB" "ALB"
+##   [37] "ARE" "ARE" "ARE" "ARE" "ARE" "ARE" "ARE" "ARE" "ARE" "ARG" "ARG" "ARG"
+##   [49] "ARG" "ARG" "ARG" "ARG" "ARG" "ARG" "ARM" "ARM" "ARM" "ARM" "ARM" "ARM"
+##   [61] "ARM" "ARM" "ARM" "ATG" "ATG" "ATG" "ATG" "ATG" "ATG" "ATG" "ATG" "ATG"
+##   [73] "AUS" "AUS" "AUS" "AUS" "AUS" "AUS" "AUS" "AUS" "AUS" "AUT" "AUT" "AUT"
+##   [85] "AUT" "AUT" "AUT" "AUT" "AUT" "AUT" "AZE" "AZE" "AZE" "AZE" "AZE" "AZE"
+##   [97] "AZE" "AZE" "AZE" "BDI" "BDI" "BDI" "BDI" "BDI" "BDI" "BDI" "BDI" "BDI"
+##  [109] "BEL" "BEL" "BEL" "BEL" "BEL" "BEL" "BEL" "BEL" "BEL" "BEN" "BEN" "BEN"
+##  [121] "BEN" "BEN" "BEN" "BEN" "BEN" "BEN" "BFA" "BFA" "BFA" "BFA" "BFA" "BFA"
+##  [133] "BFA" "BFA" "BFA" "BGD" "BGD" "BGD" "BGD" "BGD" "BGD" "BGD" "BGD" "BGD"
+##  [145] "BGR" "BGR" "BGR" "BGR" "BGR" "BGR" "BGR" "BGR" "BGR" "BHR" "BHR" "BHR"
+##  [157] "BHR" "BHR" "BHR" "BHR" "BHR" "BHR" "BHS" "BHS" "BHS" "BHS" "BHS" "BHS"
+##  [169] "BHS" "BHS" "BHS" "BIH" "BIH" "BIH" "BIH" "BIH" "BIH" "BIH" "BIH" "BIH"
+##  [181] "BLR" "BLR" "BLR" "BLR" "BLR" "BLR" "BLR" "BLR" "BLR" "BLZ" "BLZ" "BLZ"
+##  [193] "BLZ" "BLZ" "BLZ" "BLZ" "BLZ" "BLZ" "BOL" "BOL" "BOL" "BOL" "BOL" "BOL"
+##  [205] "BOL" "BOL" "BOL" "BRA" "BRA" "BRA" "BRA" "BRA" "BRA" "BRA" "BRA" "BRA"
+##  [217] "BRB" "BRB" "BRB" "BRB" "BRB" "BRB" "BRB" "BRB" "BRB" "BRN" "BRN" "BRN"
+##  [229] "BRN" "BRN" "BRN" "BRN" "BRN" "BRN" "BTN" "BTN" "BTN" "BTN" "BTN" "BTN"
+##  [241] "BTN" "BTN" "BTN" "BWA" "BWA" "BWA" "BWA" "BWA" "BWA" "BWA" "BWA" "BWA"
+##  [253] "CAF" "CAF" "CAF" "CAF" "CAF" "CAF" "CAF" "CAF" "CAF" "CAN" "CAN" "CAN"
+##  [265] "CAN" "CAN" "CAN" "CAN" "CAN" "CAN" "CHE" "CHE" "CHE" "CHE" "CHE" "CHE"
+##  [277] "CHE" "CHE" "CHE" "CHL" "CHL" "CHL" "CHL" "CHL" "CHL" "CHL" "CHL" "CHL"
+##  [289] "CHN" "CHN" "CHN" "CHN" "CHN" "CHN" "CHN" "CHN" "CHN" "CIV" "CIV" "CIV"
+##  [301] "CIV" "CIV" "CIV" "CIV" "CIV" "CIV" "CMR" "CMR" "CMR" "CMR" "CMR" "CMR"
+##  [313] "CMR" "CMR" "CMR" "COD" "COD" "COD" "COD" "COD" "COD" "COD" "COD" "COD"
+##  [325] "COG" "COG" "COG" "COG" "COG" "COG" "COG" "COG" "COG" "COK" "COK" "COK"
+##  [337] "COK" "COK" "COK" "COK" "COK" "COK" "COL" "COL" "COL" "COL" "COL" "COL"
+##  [349] "COL" "COL" "COL" "COM" "COM" "COM" "COM" "COM" "COM" "COM" "COM" "COM"
+##  [361] "CPV" "CPV" "CPV" "CPV" "CPV" "CPV" "CPV" "CPV" "CPV" "CRI" "CRI" "CRI"
+##  [373] "CRI" "CRI" "CRI" "CRI" "CRI" "CRI" "CUB" "CUB" "CUB" "CUB" "CUB" "CUB"
+##  [385] "CUB" "CUB" "CUB" "CYP" "CYP" "CYP" "CYP" "CYP" "CYP" "CYP" "CYP" "CYP"
+##  [397] "CZE" "CZE" "CZE" "CZE" "CZE" "CZE" "CZE" "CZE" "CZE" "DEU" "DEU" "DEU"
+##  [409] "DEU" "DEU" "DEU" "DEU" "DEU" "DEU" "DJI" "DJI" "DJI" "DJI" "DJI" "DJI"
+##  [421] "DJI" "DJI" "DJI" "DMA" "DMA" "DMA" "DMA" "DMA" "DMA" "DMA" "DMA" "DMA"
+##  [433] "DNK" "DNK" "DNK" "DNK" "DNK" "DNK" "DNK" "DNK" "DNK" "DOM" "DOM" "DOM"
+##  [445] "DOM" "DOM" "DOM" "DOM" "DOM" "DOM" "DZA" "DZA" "DZA" "DZA" "DZA" "DZA"
+##  [457] "DZA" "DZA" "DZA" "ECU" "ECU" "ECU" "ECU" "ECU" "ECU" "ECU" "ECU" "ECU"
+##  [469] "EGY" "EGY" "EGY" "EGY" "EGY" "EGY" "EGY" "EGY" "EGY" "ERI" "ERI" "ERI"
+##  [481] "ERI" "ERI" "ERI" "ERI" "ERI" "ERI" "ESP" "ESP" "ESP" "ESP" "ESP" "ESP"
+##  [493] "ESP" "ESP" "ESP" "EST" "EST" "EST" "EST" "EST" "EST" "EST" "EST" "EST"
+##  [505] "ETH" "ETH" "ETH" "ETH" "ETH" "ETH" "ETH" "ETH" "ETH" "FIN" "FIN" "FIN"
+##  [517] "FIN" "FIN" "FIN" "FIN" "FIN" "FIN" "FJI" "FJI" "FJI" "FJI" "FJI" "FJI"
+##  [529] "FJI" "FJI" "FJI" "FRA" "FRA" "FRA" "FRA" "FRA" "FRA" "FRA" "FRA" "FRA"
+##  [541] "FSM" "FSM" "FSM" "FSM" "FSM" "FSM" "FSM" "FSM" "FSM" "GAB" "GAB" "GAB"
+##  [553] "GAB" "GAB" "GAB" "GAB" "GAB" "GAB" "GBR" "GBR" "GBR" "GBR" "GBR" "GBR"
+##  [565] "GBR" "GBR" "GBR" "GEO" "GEO" "GEO" "GEO" "GEO" "GEO" "GEO" "GEO" "GEO"
+##  [577] "GHA" "GHA" "GHA" "GHA" "GHA" "GHA" "GHA" "GHA" "GHA" "GIN" "GIN" "GIN"
+##  [589] "GIN" "GIN" "GIN" "GIN" "GIN" "GIN" "GMB" "GMB" "GMB" "GMB" "GMB" "GMB"
+##  [601] "GMB" "GMB" "GMB" "GNB" "GNB" "GNB" "GNB" "GNB" "GNB" "GNB" "GNB" "GNB"
+##  [613] "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GRC" "GRC" "GRC"
+##  [625] "GRC" "GRC" "GRC" "GRC" "GRC" "GRC" "GRD" "GRD" "GRD" "GRD" "GRD" "GRD"
+##  [637] "GRD" "GRD" "GRD" "GTM" "GTM" "GTM" "GTM" "GTM" "GTM" "GTM" "GTM" "GTM"
+##  [649] "GUY" "GUY" "GUY" "GUY" "GUY" "GUY" "GUY" "GUY" "GUY" "HND" "HND" "HND"
+##  [661] "HND" "HND" "HND" "HND" "HND" "HND" "HRV" "HRV" "HRV" "HRV" "HRV" "HRV"
+##  [673] "HRV" "HRV" "HRV" "HTI" "HTI" "HTI" "HTI" "HTI" "HTI" "HTI" "HTI" "HTI"
+##  [685] "HUN" "HUN" "HUN" "HUN" "HUN" "HUN" "HUN" "HUN" "HUN" "IDN" "IDN" "IDN"
+##  [697] "IDN" "IDN" "IDN" "IDN" "IDN" "IDN" "IND" "IND" "IND" "IND" "IND" "IND"
+##  [709] "IND" "IND" "IND" "IRL" "IRL" "IRL" "IRL" "IRL" "IRL" "IRL" "IRL" "IRL"
+##  [721] "IRN" "IRN" "IRN" "IRN" "IRN" "IRN" "IRN" "IRN" "IRN" "IRQ" "IRQ" "IRQ"
+##  [733] "IRQ" "IRQ" "IRQ" "IRQ" "IRQ" "IRQ" "ISL" "ISL" "ISL" "ISL" "ISL" "ISL"
+##  [745] "ISL" "ISL" "ISL" "ISR" "ISR" "ISR" "ISR" "ISR" "ISR" "ISR" "ISR" "ISR"
+##  [757] "ITA" "ITA" "ITA" "ITA" "ITA" "ITA" "ITA" "ITA" "ITA" "JAM" "JAM" "JAM"
+##  [769] "JAM" "JAM" "JAM" "JAM" "JAM" "JAM" "JOR" "JOR" "JOR" "JOR" "JOR" "JOR"
+##  [781] "JOR" "JOR" "JOR" "JPN" "JPN" "JPN" "JPN" "JPN" "JPN" "JPN" "JPN" "JPN"
+##  [793] "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KEN" "KEN" "KEN"
+##  [805] "KEN" "KEN" "KEN" "KEN" "KEN" "KEN" "KGZ" "KGZ" "KGZ" "KGZ" "KGZ" "KGZ"
+##  [817] "KGZ" "KGZ" "KGZ" "KHM" "KHM" "KHM" "KHM" "KHM" "KHM" "KHM" "KHM" "KHM"
+##  [829] "KIR" "KIR" "KIR" "KIR" "KIR" "KIR" "KIR" "KIR" "KIR" "KNA" "KNA" "KNA"
+##  [841] "KNA" "KNA" "KNA" "KNA" "KNA" "KNA" "KOR" "KOR" "KOR" "KOR" "KOR" "KOR"
+##  [853] "KOR" "KOR" "KOR" "LAO" "LAO" "LAO" "LAO" "LAO" "LAO" "LAO" "LAO" "LAO"
+##  [865] "LBN" "LBN" "LBN" "LBN" "LBN" "LBN" "LBN" "LBN" "LBN" "LBR" "LBR" "LBR"
+##  [877] "LBR" "LBR" "LBR" "LBR" "LBR" "LBR" "LBY" "LBY" "LBY" "LBY" "LBY" "LBY"
+##  [889] "LBY" "LBY" "LBY" "LCA" "LCA" "LCA" "LCA" "LCA" "LCA" "LCA" "LCA" "LCA"
+##  [901] "LKA" "LKA" "LKA" "LKA" "LKA" "LKA" "LKA" "LKA" "LKA" "LSO" "LSO" "LSO"
+##  [913] "LSO" "LSO" "LSO" "LSO" "LSO" "LSO" "LTU" "LTU" "LTU" "LTU" "LTU" "LTU"
+##  [925] "LTU" "LTU" "LTU" "LUX" "LUX" "LUX" "LUX" "LUX" "LUX" "LUX" "LUX" "LUX"
+##  [937] "LVA" "LVA" "LVA" "LVA" "LVA" "LVA" "LVA" "LVA" "LVA" "MAR" "MAR" "MAR"
+##  [949] "MAR" "MAR" "MAR" "MAR" "MAR" "MAR" "MDA" "MDA" "MDA" "MDA" "MDA" "MDA"
+##  [961] "MDA" "MDA" "MDA" "MDG" "MDG" "MDG" "MDG" "MDG" "MDG" "MDG" "MDG" "MDG"
+##  [973] "MDV" "MDV" "MDV" "MDV" "MDV" "MDV" "MDV" "MDV" "MDV" "MEX" "MEX" "MEX"
+##  [985] "MEX" "MEX" "MEX" "MEX" "MEX" "MEX" "MHL" "MHL" "MHL" "MHL" "MHL" "MHL"
+##  [997] "MHL" "MHL" "MHL" "MKD" "MKD" "MKD" "MKD" "MKD" "MKD" "MKD" "MKD" "MKD"
+## [1009] "MLI" "MLI" "MLI" "MLI" "MLI" "MLI" "MLI" "MLI" "MLI" "MLT" "MLT" "MLT"
+## [1021] "MLT" "MLT" "MLT" "MLT" "MLT" "MLT" "MMR" "MMR" "MMR" "MMR" "MMR" "MMR"
+## [1033] "MMR" "MMR" "MMR" "MNE" "MNE" "MNE" "MNE" "MNE" "MNE" "MNE" "MNE" "MNE"
+## [1045] "MNG" "MNG" "MNG" "MNG" "MNG" "MNG" "MNG" "MNG" "MNG" "MOZ" "MOZ" "MOZ"
+## [1057] "MOZ" "MOZ" "MOZ" "MOZ" "MOZ" "MOZ" "MRT" "MRT" "MRT" "MRT" "MRT" "MRT"
+## [1069] "MRT" "MRT" "MRT" "MUS" "MUS" "MUS" "MUS" "MUS" "MUS" "MUS" "MUS" "MUS"
+## [1081] "MWI" "MWI" "MWI" "MWI" "MWI" "MWI" "MWI" "MWI" "MWI" "MYS" "MYS" "MYS"
+## [1093] "MYS" "MYS" "MYS" "MYS" "MYS" "MYS" "NAM" "NAM" "NAM" "NAM" "NAM" "NAM"
+## [1105] "NAM" "NAM" "NAM" "NER" "NER" "NER" "NER" "NER" "NER" "NER" "NER" "NER"
+## [1117] "NGA" "NGA" "NGA" "NGA" "NGA" "NGA" "NGA" "NGA" "NGA" "NIC" "NIC" "NIC"
+## [1129] "NIC" "NIC" "NIC" "NIC" "NIC" "NIC" "NIU" "NIU" "NIU" "NIU" "NIU" "NIU"
+## [1141] "NIU" "NIU" "NIU" "NLD" "NLD" "NLD" "NLD" "NLD" "NLD" "NLD" "NLD" "NLD"
+## [1153] "NOR" "NOR" "NOR" "NOR" "NOR" "NOR" "NOR" "NOR" "NOR" "NPL" "NPL" "NPL"
+## [1165] "NPL" "NPL" "NPL" "NPL" "NPL" "NPL" "NRU" "NRU" "NRU" "NRU" "NRU" "NRU"
+## [1177] "NRU" "NRU" "NRU" "NZL" "NZL" "NZL" "NZL" "NZL" "NZL" "NZL" "NZL" "NZL"
+## [1189] "OMN" "OMN" "OMN" "OMN" "OMN" "OMN" "OMN" "OMN" "OMN" "PAK" "PAK" "PAK"
+## [1201] "PAK" "PAK" "PAK" "PAK" "PAK" "PAK" "PAN" "PAN" "PAN" "PAN" "PAN" "PAN"
+## [1213] "PAN" "PAN" "PAN" "PER" "PER" "PER" "PER" "PER" "PER" "PER" "PER" "PER"
+## [1225] "PHL" "PHL" "PHL" "PHL" "PHL" "PHL" "PHL" "PHL" "PHL" "PLW" "PLW" "PLW"
+## [1237] "PLW" "PLW" "PLW" "PLW" "PLW" "PLW" "PNG" "PNG" "PNG" "PNG" "PNG" "PNG"
+## [1249] "PNG" "PNG" "PNG" "POL" "POL" "POL" "POL" "POL" "POL" "POL" "POL" "POL"
+## [1261] "PRK" "PRK" "PRK" "PRK" "PRK" "PRK" "PRK" "PRK" "PRK" "PRT" "PRT" "PRT"
+## [1273] "PRT" "PRT" "PRT" "PRT" "PRT" "PRT" "PRY" "PRY" "PRY" "PRY" "PRY" "PRY"
+## [1285] "PRY" "PRY" "PRY" "PSE" "PSE" "PSE" "PSE" "PSE" "PSE" "PSE" "PSE" "PSE"
+## [1297] "ROU" "ROU" "ROU" "ROU" "ROU" "ROU" "ROU" "ROU" "ROU" "RUS" "RUS" "RUS"
+## [1309] "RUS" "RUS" "RUS" "RUS" "RUS" "RUS" "RWA" "RWA" "RWA" "RWA" "RWA" "RWA"
+## [1321] "RWA" "RWA" "RWA" "SAU" "SAU" "SAU" "SAU" "SAU" "SAU" "SAU" "SAU" "SAU"
+## [1333] "SDN" "SDN" "SDN" "SDN" "SDN" "SDN" "SDN" "SDN" "SDN" "SEN" "SEN" "SEN"
+## [1345] "SEN" "SEN" "SEN" "SEN" "SEN" "SEN" "SGP" "SGP" "SGP" "SGP" "SGP" "SGP"
+## [1357] "SGP" "SGP" "SGP" "SLB" "SLB" "SLB" "SLB" "SLB" "SLB" "SLB" "SLB" "SLB"
+## [1369] "SLE" "SLE" "SLE" "SLE" "SLE" "SLE" "SLE" "SLE" "SLE" "SLV" "SLV" "SLV"
+## [1381] "SLV" "SLV" "SLV" "SLV" "SLV" "SLV" "SOM" "SOM" "SOM" "SOM" "SOM" "SOM"
+## [1393] "SOM" "SOM" "SOM" "SRB" "SRB" "SRB" "SRB" "SRB" "SRB" "SRB" "SRB" "SRB"
+## [1405] "SSD" "SSD" "SSD" "SSD" "SSD" "SSD" "SSD" "SSD" "SSD" "STP" "STP" "STP"
+## [1417] "STP" "STP" "STP" "STP" "STP" "STP" "SUR" "SUR" "SUR" "SUR" "SUR" "SUR"
+## [1429] "SUR" "SUR" "SUR" "SVK" "SVK" "SVK" "SVK" "SVK" "SVK" "SVK" "SVK" "SVK"
+## [1441] "SVN" "SVN" "SVN" "SVN" "SVN" "SVN" "SVN" "SVN" "SVN" "SWE" "SWE" "SWE"
+## [1453] "SWE" "SWE" "SWE" "SWE" "SWE" "SWE" "SWZ" "SWZ" "SWZ" "SWZ" "SWZ" "SWZ"
+## [1465] "SWZ" "SWZ" "SWZ" "SYC" "SYC" "SYC" "SYC" "SYC" "SYC" "SYC" "SYC" "SYC"
+## [1477] "SYR" "SYR" "SYR" "SYR" "SYR" "SYR" "SYR" "SYR" "SYR" "TCD" "TCD" "TCD"
+## [1489] "TCD" "TCD" "TCD" "TCD" "TCD" "TCD" "TGO" "TGO" "TGO" "TGO" "TGO" "TGO"
+## [1501] "TGO" "TGO" "TGO" "THA" "THA" "THA" "THA" "THA" "THA" "THA" "THA" "THA"
+## [1513] "TJK" "TJK" "TJK" "TJK" "TJK" "TJK" "TJK" "TJK" "TJK" "TKM" "TKM" "TKM"
+## [1525] "TKM" "TKM" "TKM" "TKM" "TKM" "TKM" "TLS" "TLS" "TLS" "TLS" "TLS" "TLS"
+## [1537] "TLS" "TLS" "TLS" "TON" "TON" "TON" "TON" "TON" "TON" "TON" "TON" "TON"
+## [1549] "TTO" "TTO" "TTO" "TTO" "TTO" "TTO" "TTO" "TTO" "TTO" "TUN" "TUN" "TUN"
+## [1561] "TUN" "TUN" "TUN" "TUN" "TUN" "TUN" "TUR" "TUR" "TUR" "TUR" "TUR" "TUR"
+## [1573] "TUR" "TUR" "TUR" "TUV" "TUV" "TUV" "TUV" "TUV" "TUV" "TUV" "TUV" "TUV"
+## [1585] "TZA" "TZA" "TZA" "TZA" "TZA" "TZA" "TZA" "TZA" "TZA" "UGA" "UGA" "UGA"
+## [1597] "UGA" "UGA" "UGA" "UGA" "UGA" "UGA" "UKR" "UKR" "UKR" "UKR" "UKR" "UKR"
+## [1609] "UKR" "UKR" "UKR" "UNK" "UNK" "UNK" "UNK" "UNK" "UNK" "UNK" "UNK" "UNK"
+## [1621] "URY" "URY" "URY" "URY" "URY" "URY" "URY" "URY" "URY" "USA" "USA" "USA"
+## [1633] "USA" "USA" "USA" "USA" "USA" "USA" "UZB" "UZB" "UZB" "UZB" "UZB" "UZB"
+## [1645] "UZB" "UZB" "UZB" "VCT" "VCT" "VCT" "VCT" "VCT" "VCT" "VCT" "VCT" "VCT"
+## [1657] "VEN" "VEN" "VEN" "VEN" "VEN" "VEN" "VEN" "VEN" "VEN" "VNM" "VNM" "VNM"
+## [1669] "VNM" "VNM" "VNM" "VNM" "VNM" "VNM" "VUT" "VUT" "VUT" "VUT" "VUT" "VUT"
+## [1681] "VUT" "VUT" "VUT" "WSM" "WSM" "WSM" "WSM" "WSM" "WSM" "WSM" "WSM" "WSM"
+## [1693] "YEM" "YEM" "YEM" "YEM" "YEM" "YEM" "YEM" "YEM" "YEM" "ZAF" "ZAF" "ZAF"
+## [1705] "ZAF" "ZAF" "ZAF" "ZAF" "ZAF" "ZAF" "ZMB" "ZMB" "ZMB" "ZMB" "ZMB" "ZMB"
+## [1717] "ZMB" "ZMB" "ZMB" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE"
+```
+
+]
+
+---
+
+# How do I calculate basic statistics?
+
+.pull-left[
+
+
+```python
+estimates = infant_hiv.estimate
+print(len(estimates))
+## 1728
+```
+
+```python
+print(estimates.mean())
+## 0.3870192307692308
+```
+
+]
+
+.pull-right[
+
+
+```r
+estimates &lt;- infant_hiv$estimate
+length(estimates)
+## [1] 1728
+```
+
+```r
+mean(estimates)
+## [1] NA
+```
+
+
+```r
+mean(estimates, na.rm = TRUE)
+## [1] 0.3870192
+```
+
+]
+
+
+---
+
+# How do I calculate basic statistics?
+
+.pull-left[
+
+
+```python
+print("min", estimates.min())
+## min 0.0
+print("max", estimates.max())
+## max 0.95
+print("std", estimates.std())
+## std 0.3034511074214113
+```
+
+]
+
+.pull-right[
+
+
+```r
+print(glue("min {min(estimates, na.rm = TRUE)}"))
+## min 0
+print(glue("max {max(estimates, na.rm = TRUE)}"))
+## max 0.95
+print(glue("sd {sd(estimates, na.rm = TRUE)}"))
+## sd 0.303451107421411
+```
+
+]
+
+---
+
+# How do I calculate basic statistics?
+
+## Python
+
+
+```python
+print((infant_hiv.hi.isnull() != infant_hiv.lo.isnull()).any())
+## False
+```
+
+## R
+
+
+```r
+any(is.na(infant_hiv$hi) != is.na(infant_hiv$lo))
+## [1] FALSE
+```
+
+---
+
+# How do I filter data?
+
+.pull-left[
+
+
+```python
+maximal = estimates[estimates &gt;= 0.95]
+print(len(maximal))
+## 52
+```
+
+]
+
+.pull-right[
+
+
+```r
+maximal &lt;- estimates[estimates &gt;= 0.95]
+length(maximal)
+## [1] 1052
+```
+
+]
+
+---
+
+# Treatment of `NA`s
+
+.pull-left[
+
+
+```python
+print(maximal)
+## 180     0.95
+## 181     0.95
+## 182     0.95
+## 183     0.95
+## 184     0.95
+## 185     0.95
+## 187     0.95
+## 360     0.95
+## 361     0.95
+## 362     0.95
+## 379     0.95
+## 380     0.95
+## 381     0.95
+## 382     0.95
+## 384     0.95
+## 385     0.95
+## 386     0.95
+## 446     0.95
+## 447     0.95
+## 461     0.95
+## 792     0.95
+## 793     0.95
+## 794     0.95
+## 795     0.95
+## 796     0.95
+## 797     0.95
+## 910     0.95
+## 911     0.95
+## 954     0.95
+## 955     0.95
+## 956     0.95
+## 957     0.95
+## 958     0.95
+## 959     0.95
+## 960     0.95
+## 961     0.95
+## 962     0.95
+## 1097    0.95
+## 1106    0.95
+## 1127    0.95
+## 1428    0.95
+## 1429    0.95
+## 1461    0.95
+## 1553    0.95
+## 1603    0.95
+## 1606    0.95
+## 1624    0.95
+## 1625    0.95
+## 1626    0.95
+## 1628    0.95
+## 1707    0.95
+## 1709    0.95
+## Name: estimate, dtype: float64
+```
+
+]
+
+.pull-right[
+
+
+```r
+maximal
+##    [1]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [15]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [29]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [43]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [57]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [71]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [85]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   [99]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [113]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.95 0.95
+##  [127] 0.95 0.95 0.95 0.95 0.95   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [141]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [155]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [169]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [183]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [197]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.95 0.95
+##  [211] 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95   NA   NA   NA   NA   NA   NA
+##  [225]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [239]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [253]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.95
+##  [267] 0.95   NA   NA 0.95   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [281]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [295]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [309]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [323]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [337]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [351]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [365]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [379]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [393]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [407]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [421]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [435]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [449]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [463]   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.95 0.95 0.95 0.95 0.95
+##  [477] 0.95   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [491]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [505]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [519]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [533]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [547]   NA   NA 0.95 0.95   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [561]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [575]   NA   NA   NA 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95   NA   NA
+##  [589]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [603]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [617]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [631]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [645]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [659]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [673]   NA   NA   NA   NA   NA 0.95   NA 0.95   NA   NA   NA 0.95   NA   NA
+##  [687]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [701]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [715]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [729]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [743]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [757]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [771]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [785]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [799]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [813]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [827]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [841]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [855]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [869]   NA   NA   NA   NA   NA   NA 0.95 0.95   NA   NA   NA   NA   NA   NA
+##  [883]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [897]   NA   NA   NA   NA   NA   NA   NA   NA 0.95   NA   NA   NA   NA   NA
+##  [911]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [925]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [939]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [953]   NA   NA   NA 0.95   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##  [967]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.95 0.95   NA   NA
+##  [981]   NA   NA   NA   NA   NA   NA   NA   NA 0.95 0.95 0.95 0.95   NA   NA
+##  [995]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1009]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1023]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## [1037]   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA 0.95
+## [1051] 0.95   NA
+```
+
+]
+
+---
+
+# How do I filter data?
+
+
+```r
+which(estimates &gt;= 0.95)
+##  [1]  181  182  183  184  185  186  188  361  362  363  380  381  382  383  385
+## [16]  386  387  447  448  462  793  794  795  796  797  798  911  912  955  956
+## [31]  957  958  959  960  961  962  963 1098 1107 1128 1429 1430 1462 1554 1604
+## [46] 1607 1625 1626 1627 1629 1708 1710
+```
+
+--
+
+
+```r
+length(which(estimates &gt;= 0.95))
+## [1] 52
+```
+
+--
+
+
+```r
+maximal &lt;- estimates[which(estimates &gt;= 0.95)]
+maximal
+##  [1] 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95
+## [16] 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95
+## [31] 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95 0.95
+## [46] 0.95 0.95 0.95 0.95 0.95 0.95 0.95
+```
+
+---
+
+# How do I write tidy code?
+
+- `filter`: choose observations (rows) by value(s)
+- `arrange`: reorder rows
+- `select`: choose variables (columns) by name
+- `mutate`: derive new variables from existing ones
+- `group_by`: define subsets of rows for further processing
+- `summarize`: combine many values to create a single new value
+
+---
+
+# A tidy filter
+
+
+```r
+filter(infant_hiv, lo &gt; 0.5)
+## # A tibble: 183 × 5
+##    country  year estimate    hi    lo
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 ARG      2016     0.67  0.77  0.61
+##  2 ARG      2017     0.66  0.77  0.6 
+##  3 AZE      2014     0.74  0.95  0.53
+##  4 AZE      2015     0.83  0.95  0.64
+##  5 AZE      2016     0.75  0.95  0.56
+##  6 AZE      2017     0.74  0.95  0.56
+##  7 BLR      2009     0.95  0.95  0.95
+##  8 BLR      2010     0.95  0.95  0.95
+##  9 BLR      2011     0.95  0.95  0.91
+## 10 BLR      2012     0.95  0.95  0.95
+## # … with 173 more rows
+```
+
+---
+
+# Incorporate the pipe
+
+
+```r
+infant_hiv %&gt;% filter(lo &gt; 0.5)
+## # A tibble: 183 × 5
+##    country  year estimate    hi    lo
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 ARG      2016     0.67  0.77  0.61
+##  2 ARG      2017     0.66  0.77  0.6 
+##  3 AZE      2014     0.74  0.95  0.53
+##  4 AZE      2015     0.83  0.95  0.64
+##  5 AZE      2016     0.75  0.95  0.56
+##  6 AZE      2017     0.74  0.95  0.56
+##  7 BLR      2009     0.95  0.95  0.95
+##  8 BLR      2010     0.95  0.95  0.95
+##  9 BLR      2011     0.95  0.95  0.91
+## 10 BLR      2012     0.95  0.95  0.95
+## # … with 173 more rows
+```
+
+---
+
+# Incorporate the pipe
+
+
+```r
+filter(infant_hiv, (estimate != 0.95) &amp; (lo &gt; 0.5) &amp; (hi &lt;= (lo + 0.1)))
+## # A tibble: 1 × 5
+##   country  year estimate    hi    lo
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 TTO      2017     0.94  0.95  0.86
+```
+
+---
+
+# Incorporate the pipe
+
+
+```r
+infant_hiv %&gt;% filter(estimate != 0.95) %&gt;% filter(lo &gt; 0.5) %&gt;% filter(hi &lt;= (lo + 0.1))
+## # A tibble: 1 × 5
+##   country  year estimate    hi    lo
+##   &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 TTO      2017     0.94  0.95  0.86
+```
+
+---
+
+# Incorporate the pipe
+
+
+```r
+infant_hiv %&gt;%
+  filter(estimate != 0.95) %&gt;%
+  filter(lo &gt; 0.5) %&gt;%
+  filter(hi &lt;= (lo + 0.2)) %&gt;%
+  arrange(desc(lo))
+## # A tibble: 55 × 5
+##    country  year estimate    hi    lo
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 TTO      2017     0.94  0.95  0.86
+##  2 SWZ      2011     0.93  0.95  0.84
+##  3 CUB      2014     0.92  0.95  0.83
+##  4 TTO      2016     0.9   0.95  0.83
+##  5 CRI      2009     0.92  0.95  0.81
+##  6 CRI      2012     0.89  0.95  0.81
+##  7 NAM      2014     0.91  0.95  0.81
+##  8 URY      2016     0.9   0.95  0.81
+##  9 ZMB      2014     0.91  0.95  0.81
+## 10 KAZ      2015     0.84  0.95  0.8 
+## # … with 45 more rows
+```
+
+---
+
+# Selecting columns
+
+
+```r
+infant_hiv %&gt;%
+  filter(estimate != 0.95) %&gt;%
+  filter(lo &gt; 0.5) %&gt;%
+  filter(hi &lt;= (lo + 0.2)) %&gt;%
+  arrange(desc(lo)) %&gt;%
+  select(year, lo, hi)
+## # A tibble: 55 × 3
+##     year    lo    hi
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  2017  0.86  0.95
+##  2  2011  0.84  0.95
+##  3  2014  0.83  0.95
+##  4  2016  0.83  0.95
+##  5  2009  0.81  0.95
+##  6  2012  0.81  0.95
+##  7  2014  0.81  0.95
+##  8  2016  0.81  0.95
+##  9  2014  0.81  0.95
+## 10  2015  0.8   0.95
+## # … with 45 more rows
+```
+
+---
+
+# Selecting columns
+
+
+```r
+infant_hiv %&gt;%
+  filter(estimate != 0.95) %&gt;%
+  filter(lo &gt; 0.5) %&gt;%
+  filter(hi &lt;= (lo + 0.2)) %&gt;%
+  arrange(desc(lo)) %&gt;%
+  select(-country, -estimate)
+## # A tibble: 55 × 3
+##     year    hi    lo
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  2017  0.95  0.86
+##  2  2011  0.95  0.84
+##  3  2014  0.95  0.83
+##  4  2016  0.95  0.83
+##  5  2009  0.95  0.81
+##  6  2012  0.95  0.81
+##  7  2014  0.95  0.81
+##  8  2016  0.95  0.81
+##  9  2014  0.95  0.81
+## 10  2015  0.95  0.8 
+## # … with 45 more rows
+```
+
+---
+
+# Creating new columns
+
+
+```r
+infant_hiv %&gt;%
+  filter(estimate != 0.95) %&gt;%
+  filter(lo &gt; 0.5) %&gt;%
+  filter(hi &lt;= (lo + 0.2)) %&gt;%
+  arrange(desc(lo)) %&gt;%
+  select(-country, -estimate) %&gt;%
+  mutate(difference = hi - lo)
+## # A tibble: 55 × 4
+##     year    hi    lo difference
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt;
+##  1  2017  0.95  0.86      0.09 
+##  2  2011  0.95  0.84      0.11 
+##  3  2014  0.95  0.83      0.12 
+##  4  2016  0.95  0.83      0.12 
+##  5  2009  0.95  0.81      0.140
+##  6  2012  0.95  0.81      0.140
+##  7  2014  0.95  0.81      0.140
+##  8  2016  0.95  0.81      0.140
+##  9  2014  0.95  0.81      0.140
+## 10  2015  0.95  0.8       0.150
+## # … with 45 more rows
+```
+
+---
+
+# Summarizing the data
+
+
+```r
+infant_hiv %&gt;%
+  filter(estimate != 0.95) %&gt;%
+  filter(lo &gt; 0.5) %&gt;%
+  filter(hi &lt;= (lo + 0.2)) %&gt;%
+  mutate(difference = hi - lo) %&gt;%
+  group_by(year) %&gt;%
+  summarize(count = n(), ave_diff = mean(year))
+## # A tibble: 9 × 3
+##    year count ave_diff
+##   &lt;dbl&gt; &lt;int&gt;    &lt;dbl&gt;
+## 1  2009     3     2009
+## 2  2010     3     2010
+## 3  2011     5     2011
+## 4  2012     5     2012
+## 5  2013     6     2013
+## 6  2014    10     2014
+## 7  2015     6     2015
+## 8  2016    10     2016
+## 9  2017     7     2017
+```
+
+---
+
+# Equivalent in Python
+
+
+```python
+data = pd.read_csv('data/infant_hiv.csv')
+data = data.query('(estimate != 0.95) &amp; (lo &gt; 0.5) &amp; (hi &lt;= (lo + 0.2))')
+data = data.assign(difference = (data.hi - data.lo))
+grouped = data.groupby('year').agg(ave_diff=('difference', 'mean'), count=('difference', 'count'))
+print(grouped)
+##       ave_diff  count
+## year                 
+## 2009  0.170000      3
+## 2010  0.186667      3
+## 2011  0.168000      5
+## 2012  0.186000      5
+## 2013  0.183333      6
+## 2014  0.168000     10
+## 2015  0.161667      6
+## 2016  0.166000     10
+## 2017  0.152857      7
+```
+
+---
+
+class: inverse, center, middle
+
+# Practice tidy data analysis
+
+<div class="countdown" id="timer_61ef1e74" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+class: inverse, center, middle
+
+# Statistical modeling
+
+---
+
+# How do I model my data?
+
+
+```r
+lm(estimate ~ lo, data = infant_hiv)
+## 
+## Call:
+## lm(formula = estimate ~ lo, data = infant_hiv)
+## 
+## Coefficients:
+## (Intercept)           lo  
+##      0.0421       1.0707
+```
+
+--
+
+
+```r
+lm(estimate ~ sqrt(lo) + sqrt(hi), data = infant_hiv)
+## 
+## Call:
+## lm(formula = estimate ~ sqrt(lo) + sqrt(hi), data = infant_hiv)
+## 
+## Coefficients:
+## (Intercept)     sqrt(lo)     sqrt(hi)  
+##     -0.2225       0.6177       0.4814
+```
+
+---
+
+# How do I model my data?
+
+
+```r
+lm(estimate ~ lo + hi, data = infant_hiv)
+## 
+## Call:
+## lm(formula = estimate ~ lo + hi, data = infant_hiv)
+## 
+## Coefficients:
+## (Intercept)           lo           hi  
+##    -0.01327      0.42979      0.56752
+```
+
+--
+
+
+```r
+infant_hiv %&gt;%
+  mutate(ave_lo_hi = (lo + hi)/2) %&gt;%
+  lm(estimate ~ ave_lo_hi, data = .)
+## 
+## Call:
+## lm(formula = estimate ~ ave_lo_hi, data = .)
+## 
+## Coefficients:
+## (Intercept)    ave_lo_hi  
+##    -0.00897      1.01080
+```
+
+---
+
+# Open-source to the max
+
+.pull-left[
+
+```r
+# From randomForest
+rf_1 &lt;- randomForest(
+  y ~ ., 
+  data = ., 
+  mtry = 10, 
+  ntree = 2000, 
+  importance = TRUE
+)
+
+# From ranger
+rf_2 &lt;- ranger(
+  y ~ ., 
+  data = dat, 
+  mtry = 10, 
+  num.trees = 2000, 
+  importance = "impurity"
+)
+```
+
+]
+
+.pull-right[
+
+```r
+# From sparklyr
+rf_3 &lt;- ml_random_forest(
+  dat, 
+  intercept = FALSE, 
+  response = "y", 
+  features = names(dat)[names(dat) != "y"], 
+  col.sample.rate = 10,
+  num.trees = 2000
+)
+```
+
+]
+
+---
+
+# Modeling frameworks
+
+- [`caret`](https://topepo.github.io/caret/)
+- [`mlr3`](https://mlr3.mlr-org.com/)
+- [`tidymodels`](https://www.tidymodels.org/)
+
+---
+
+class: inverse, center, middle
+
+# How do I create a plot?
+
+---
+
+
+
+count: false
+ 
+
+.panel1-basic-plot-auto[
+
+```r
+*ggplot(infant_hiv)
+```
+]
+ 
+.panel2-basic-plot-auto[
+&lt;img src="index_files/figure-html/basic-plot_auto_01_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-basic-plot-auto[
+
+```r
+ggplot(infant_hiv) +
+* geom_point(mapping = aes(x = lo, y = hi))
+```
+]
+ 
+.panel2-basic-plot-auto[
+&lt;img src="index_files/figure-html/basic-plot_auto_02_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.panel1-basic-plot-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-basic-plot-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-basic-plot-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: inverse, center, middle
+
+# How do I create a plot?
+
+---
+
+
+
+count: false
+ 
+
+.panel1-plot-after-drop-auto[
+
+```r
+*infant_hiv
+```
+]
+ 
+.panel2-plot-after-drop-auto[
+
+```
+## # A tibble: 1,728 × 5
+##    country  year estimate    hi    lo
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 AFG      2009       NA    NA    NA
+##  2 AFG      2010       NA    NA    NA
+##  3 AFG      2011       NA    NA    NA
+##  4 AFG      2012       NA    NA    NA
+##  5 AFG      2013       NA    NA    NA
+##  6 AFG      2014       NA    NA    NA
+##  7 AFG      2015       NA    NA    NA
+##  8 AFG      2016       NA    NA    NA
+##  9 AFG      2017       NA    NA    NA
+## 10 AGO      2009       NA    NA    NA
+## # … with 1,718 more rows
+```
+]
+
+---
+count: false
+ 
+
+.panel1-plot-after-drop-auto[
+
+```r
+infant_hiv %&gt;%
+* drop_na()
+```
+]
+ 
+.panel2-plot-after-drop-auto[
+
+```
+## # A tibble: 728 × 5
+##    country  year estimate    hi    lo
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 AGO      2010     0.03  0.04  0.02
+##  2 AGO      2011     0.05  0.07  0.04
+##  3 AGO      2012     0.06  0.08  0.05
+##  4 AGO      2013     0.15  0.2   0.12
+##  5 AGO      2014     0.1   0.14  0.08
+##  6 AGO      2015     0.06  0.08  0.05
+##  7 AGO      2016     0.01  0.02  0.01
+##  8 AGO      2017     0.01  0.02  0.01
+##  9 ARG      2011     0.13  0.14  0.11
+## 10 ARG      2012     0.12  0.14  0.11
+## # … with 718 more rows
+```
+]
+
+---
+count: false
+ 
+
+.panel1-plot-after-drop-auto[
+
+```r
+infant_hiv %&gt;%
+  drop_na() %&gt;%
+* ggplot(mapping = aes(x = lo, y = hi,
+*                      color = estimate))
+```
+]
+ 
+.panel2-plot-after-drop-auto[
+&lt;img src="index_files/figure-html/plot-after-drop_auto_03_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plot-after-drop-auto[
+
+```r
+infant_hiv %&gt;%
+  drop_na() %&gt;%
+  ggplot(mapping = aes(x = lo, y = hi,
+                       color = estimate)) +
+* geom_point(alpha = 0.5)
+```
+]
+ 
+.panel2-plot-after-drop-auto[
+&lt;img src="index_files/figure-html/plot-after-drop_auto_04_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plot-after-drop-auto[
+
+```r
+infant_hiv %&gt;%
+  drop_na() %&gt;%
+  ggplot(mapping = aes(x = lo, y = hi,
+                       color = estimate)) +
+  geom_point(alpha = 0.5) +
+* xlim(0.0, 1.0)
+```
+]
+ 
+.panel2-plot-after-drop-auto[
+&lt;img src="index_files/figure-html/plot-after-drop_auto_05_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plot-after-drop-auto[
+
+```r
+infant_hiv %&gt;%
+  drop_na() %&gt;%
+  ggplot(mapping = aes(x = lo, y = hi,
+                       color = estimate)) +
+  geom_point(alpha = 0.5) +
+  xlim(0.0, 1.0) +
+* ylim(0.0, 1.0)
+```
+]
+ 
+.panel2-plot-after-drop-auto[
+&lt;img src="index_files/figure-html/plot-after-drop_auto_06_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.panel1-plot-after-drop-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-plot-after-drop-auto {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-plot-after-drop-auto {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: inverse, center, middle
+
+# Remove outliers
+
+---
+
+
+
+count: false
+ 
+
+.panel1-plot-remove-outliers-user[
+
+```r
+*infant_hiv %&gt;%
+* drop_na() %&gt;%
+* filter(hi != 0.95)
+```
+]
+ 
+.panel2-plot-remove-outliers-user[
+
+```
+## # A tibble: 604 × 5
+##    country  year estimate    hi    lo
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 AGO      2010     0.03  0.04  0.02
+##  2 AGO      2011     0.05  0.07  0.04
+##  3 AGO      2012     0.06  0.08  0.05
+##  4 AGO      2013     0.15  0.2   0.12
+##  5 AGO      2014     0.1   0.14  0.08
+##  6 AGO      2015     0.06  0.08  0.05
+##  7 AGO      2016     0.01  0.02  0.01
+##  8 AGO      2017     0.01  0.02  0.01
+##  9 ARG      2011     0.13  0.14  0.11
+## 10 ARG      2012     0.12  0.14  0.11
+## # … with 594 more rows
+```
+]
+
+---
+count: false
+ 
+
+.panel1-plot-remove-outliers-user[
+
+```r
+infant_hiv %&gt;%
+  drop_na() %&gt;%
+  filter(hi != 0.95) %&gt;%
+* filter(!((lo &lt; 0.10) &amp; (hi &gt; 0.25)))
+```
+]
+ 
+.panel2-plot-remove-outliers-user[
+
+```
+## # A tibble: 595 × 5
+##    country  year estimate    hi    lo
+##    &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 AGO      2010     0.03  0.04  0.02
+##  2 AGO      2011     0.05  0.07  0.04
+##  3 AGO      2012     0.06  0.08  0.05
+##  4 AGO      2013     0.15  0.2   0.12
+##  5 AGO      2014     0.1   0.14  0.08
+##  6 AGO      2015     0.06  0.08  0.05
+##  7 AGO      2016     0.01  0.02  0.01
+##  8 AGO      2017     0.01  0.02  0.01
+##  9 ARG      2011     0.13  0.14  0.11
+## 10 ARG      2012     0.12  0.14  0.11
+## # … with 585 more rows
+```
+]
+
+---
+count: false
+ 
+
+.panel1-plot-remove-outliers-user[
+
+```r
+infant_hiv %&gt;%
+  drop_na() %&gt;%
+  filter(hi != 0.95) %&gt;%
+  filter(!((lo &lt; 0.10) &amp; (hi &gt; 0.25))) %&gt;%
+* ggplot(mapping = aes(x = lo, y = hi,
+*                      color = estimate)) +
+* geom_point(alpha = 0.5) +
+* xlim(0.0, 1.0) +
+* ylim(0.0, 1.0)
+```
+]
+ 
+.panel2-plot-remove-outliers-user[
+&lt;img src="index_files/figure-html/plot-remove-outliers_user_03_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.panel1-plot-remove-outliers-user {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-plot-remove-outliers-user {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-plot-remove-outliers-user {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: inverse, center, middle
+
+# Add a fitted curve
+
+---
+
+
+
+count: false
+ 
+
+.panel1-plot-with-fit-user[
+
+```r
+*infant_hiv %&gt;%
+* drop_na() %&gt;%
+* filter(hi != 0.95) %&gt;%
+* filter(!((lo &lt; 0.10) &amp; (hi &gt; 0.25))) %&gt;%
+* ggplot(mapping = aes(x = lo, y = hi)) +
+* geom_point(mapping = aes(color = estimate),
+*            alpha = 0.5) +
+* geom_smooth(method = lm, color = 'red')
+```
+]
+ 
+.panel2-plot-with-fit-user[
+&lt;img src="index_files/figure-html/plot-with-fit_user_01_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plot-with-fit-user[
+
+```r
+infant_hiv %&gt;%
+  drop_na() %&gt;%
+  filter(hi != 0.95) %&gt;%
+  filter(!((lo &lt; 0.10) &amp; (hi &gt; 0.25))) %&gt;%
+  ggplot(mapping = aes(x = lo, y = hi)) +
+  geom_point(mapping = aes(color = estimate),
+             alpha = 0.5) +
+  geom_smooth(method = lm, color = 'red') +
+* xlim(0.0, 1.0) +
+* ylim(0.0, 1.0)
+```
+]
+ 
+.panel2-plot-with-fit-user[
+&lt;img src="index_files/figure-html/plot-with-fit_user_02_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.panel1-plot-with-fit-user {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-plot-with-fit-user {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-plot-with-fit-user {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: inverse, center, middle
+
+# Zoom in on region of interest
+
+---
+
+
+
+count: false
+ 
+
+.panel1-plot-cartesian-user[
+
+```r
+*infant_hiv %&gt;%
+* drop_na() %&gt;%
+* filter(hi != 0.95) %&gt;%
+* filter(!((lo &lt; 0.10) &amp; (hi &gt; 0.25))) %&gt;%
+* ggplot(mapping = aes(x = lo, y = hi)) +
+* geom_point(mapping = aes(color = estimate),
+*            alpha = 0.5) +
+* geom_smooth(method = lm, color = 'red')
+```
+]
+ 
+.panel2-plot-cartesian-user[
+&lt;img src="index_files/figure-html/plot-cartesian_user_01_output-1.png" width="432" /&gt;
+]
+
+---
+count: false
+ 
+
+.panel1-plot-cartesian-user[
+
+```r
+infant_hiv %&gt;%
+  drop_na() %&gt;%
+  filter(hi != 0.95) %&gt;%
+  filter(!((lo &lt; 0.10) &amp; (hi &gt; 0.25))) %&gt;%
+  ggplot(mapping = aes(x = lo, y = hi)) +
+  geom_point(mapping = aes(color = estimate),
+             alpha = 0.5) +
+  geom_smooth(method = lm, color = 'red') +
+* coord_cartesian(xlim = c(0.0, 1.0),
+*                 ylim = c(0.0, 1.0))
+```
+]
+ 
+.panel2-plot-cartesian-user[
+&lt;img src="index_files/figure-html/plot-cartesian_user_02_output-1.png" width="432" /&gt;
+]
+
+&lt;style&gt;
+.panel1-plot-cartesian-user {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel2-plot-cartesian-user {
+  color: black;
+  width: 49%;
+  hight: 32%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+.panel3-plot-cartesian-user {
+  color: black;
+  width: NA%;
+  hight: 33%;
+  float: left;
+  padding-left: 1%;
+  font-size: 80%
+}
+&lt;/style&gt;
+
+
+
+---
+
+class: inverse, center, middle
+
+# Practice generating graphs
+
+<div class="countdown" id="timer_61ef1e48" style="right:0;bottom:0;" data-warnwhen="0">
+<code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
+</div>
+
+---
+
+# Jupyter Notebooks
+
+&lt;img src="https://www.dataquest.io/wp-content/uploads/2019/01/interface-screenshot.png" title="A screenshot of the Jupyter Notebook interface, depicting code cells, executed output, and Markdown formatted text." alt="A screenshot of the Jupyter Notebook interface, depicting code cells, executed output, and Markdown formatted text."  /&gt;
+
+.footnote[Source: [Dataquest](https://www.dataquest.io/blog/jupyter-notebook-tips-tricks-shortcuts/)]
+
+---
+
+# R Markdown
+
+
+````default
+---
+title: "Gun deaths"
+date: "`r lubridate::today()`"
+output: html_document
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r packages, cache = FALSE}
+library(tidyverse)
+# remotes::install_github("uc-cfss/rcfss) # if not already installed, run this code
+library(rcfss)
+
+theme_set(theme_minimal())
+```
+
+```{r youths}
+youth &lt;- gun_deaths %&gt;%
+  filter(age &lt;= 65)
+```
+
+# Gun deaths by age
+
+We have data about `r nrow(gun_deaths)` individuals killed by guns. Only `r nrow(gun_deaths) - nrow(youth)` are older than 65. The distribution of the remainder is shown below:
+
+```{r youth-dist, echo = FALSE}
+youth %&gt;% 
+  ggplot(mapping = aes(age)) + 
+  geom_freqpoly(binwidth = 1)
+```
+
+# Gun deaths by race
+
+```{r race-dist}
+youth %&gt;%
+  ggplot(mapping = aes(fct_infreq(race) %&gt;% fct_rev())) +
+  geom_bar() +
+  coord_flip() +
+  labs(x = "Victim race")
+```
+````
+
+---
+
+# Major components
+
+1. A **YAML header** surrounded by `---`s
+1. **Chunks** of R code surounded by ` ``` `
+1. Text mixed with simple text formatting using the [Markdown syntax](../hw01-edit-README.html)
+
+---
+
+# Knitting process
+
+![](https://r4ds.had.co.nz/images/RMarkdownFlow.png)&lt;!-- --&gt;
+
+---
+
+# Running Python within R
+
+- [`reticulate`](https://rstudio.github.io/reticulate/)
+- [R interfacet to Keras](https://keras.rstudio.com/)
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script src="https://cfss.uchicago.edu/slides/macros.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
+<script>var slideshow = remark.create({
+"highlightLanguage": "r",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
