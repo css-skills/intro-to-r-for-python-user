@@ -25,6 +25,17 @@ Room 295 in [1155 E 60th St](https://goo.gl/maps/7n7wDsd9mjnfRBtR8).
 
 ## Links
 
+- [Slides](https://css-skills.github.io/intro-to-r-for-python-user/slides/)
+- [Source materials for the workshop on GitHub](https://github.com/css-skills/intro-to-r-for-python-user)
+
+## Additional Resources
+
 - [R for Data Engineers: A Brief Introduction for People Who Count From Zero](https://tidynomicon.github.io/tidynomicon/) by Greg Wilson
 - [R for Data Science](https://r4ds.had.co.nz/) by Hadley Wickham and Garrett Grolemund
 - [Advanced R](https://adv-r.hadley.nz/) by Hadley Wickham
+- [R for Data Science Online Learning Community](https://www.rfordatasci.com/)
+- [#TidyTuesday](https://github.com/rfordatascience/tidytuesday)
+
+## Acknowledgments
+
+- This workshop is derived in part from [R for Data Engineers: A Brief Introduction for People Who Count From Zero](https://tidynomicon.github.io/tidynomicon/) by Greg Wilson and is licensed under the [Creative Commons Attribution 4.0 International license (CC-BY-4.0)](https://tidynomicon.github.io/tidynomicon/license.html).
