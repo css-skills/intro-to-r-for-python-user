@@ -1,6 +1,5 @@
 # load required packages
-library(tibble)
-library(ggplot2)
+library(tidyverse)
 library(gapminder)
 
 # view header of the dataset
