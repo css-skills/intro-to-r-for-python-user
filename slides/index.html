@@ -95,9 +95,15 @@ R is available on the [Comprehensive R Archive Network](https://cran.r-project.o
 1. "Base" R that is downloaded from CRAN
 1. Everything else
 
+
 --
 
 - Packages
+
+
+--
+
+- [RStudio](https://www.rstudio.com)
 
 ---
 
@@ -813,7 +819,7 @@ class: inverse, center, middle
 
 # Practice subsetting vectors
 
-<div class="countdown" id="timer_61f02906" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_61f066c4" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">08</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -1511,151 +1517,8 @@ infant_hiv[1]
 
 
 ```r
-infant_hiv[[1]]
-##    [1] "AFG" "AFG" "AFG" "AFG" "AFG" "AFG" "AFG" "AFG" "AFG" "AGO" "AGO" "AGO"
-##   [13] "AGO" "AGO" "AGO" "AGO" "AGO" "AGO" "AIA" "AIA" "AIA" "AIA" "AIA" "AIA"
-##   [25] "AIA" "AIA" "AIA" "ALB" "ALB" "ALB" "ALB" "ALB" "ALB" "ALB" "ALB" "ALB"
-##   [37] "ARE" "ARE" "ARE" "ARE" "ARE" "ARE" "ARE" "ARE" "ARE" "ARG" "ARG" "ARG"
-##   [49] "ARG" "ARG" "ARG" "ARG" "ARG" "ARG" "ARM" "ARM" "ARM" "ARM" "ARM" "ARM"
-##   [61] "ARM" "ARM" "ARM" "ATG" "ATG" "ATG" "ATG" "ATG" "ATG" "ATG" "ATG" "ATG"
-##   [73] "AUS" "AUS" "AUS" "AUS" "AUS" "AUS" "AUS" "AUS" "AUS" "AUT" "AUT" "AUT"
-##   [85] "AUT" "AUT" "AUT" "AUT" "AUT" "AUT" "AZE" "AZE" "AZE" "AZE" "AZE" "AZE"
-##   [97] "AZE" "AZE" "AZE" "BDI" "BDI" "BDI" "BDI" "BDI" "BDI" "BDI" "BDI" "BDI"
-##  [109] "BEL" "BEL" "BEL" "BEL" "BEL" "BEL" "BEL" "BEL" "BEL" "BEN" "BEN" "BEN"
-##  [121] "BEN" "BEN" "BEN" "BEN" "BEN" "BEN" "BFA" "BFA" "BFA" "BFA" "BFA" "BFA"
-##  [133] "BFA" "BFA" "BFA" "BGD" "BGD" "BGD" "BGD" "BGD" "BGD" "BGD" "BGD" "BGD"
-##  [145] "BGR" "BGR" "BGR" "BGR" "BGR" "BGR" "BGR" "BGR" "BGR" "BHR" "BHR" "BHR"
-##  [157] "BHR" "BHR" "BHR" "BHR" "BHR" "BHR" "BHS" "BHS" "BHS" "BHS" "BHS" "BHS"
-##  [169] "BHS" "BHS" "BHS" "BIH" "BIH" "BIH" "BIH" "BIH" "BIH" "BIH" "BIH" "BIH"
-##  [181] "BLR" "BLR" "BLR" "BLR" "BLR" "BLR" "BLR" "BLR" "BLR" "BLZ" "BLZ" "BLZ"
-##  [193] "BLZ" "BLZ" "BLZ" "BLZ" "BLZ" "BLZ" "BOL" "BOL" "BOL" "BOL" "BOL" "BOL"
-##  [205] "BOL" "BOL" "BOL" "BRA" "BRA" "BRA" "BRA" "BRA" "BRA" "BRA" "BRA" "BRA"
-##  [217] "BRB" "BRB" "BRB" "BRB" "BRB" "BRB" "BRB" "BRB" "BRB" "BRN" "BRN" "BRN"
-##  [229] "BRN" "BRN" "BRN" "BRN" "BRN" "BRN" "BTN" "BTN" "BTN" "BTN" "BTN" "BTN"
-##  [241] "BTN" "BTN" "BTN" "BWA" "BWA" "BWA" "BWA" "BWA" "BWA" "BWA" "BWA" "BWA"
-##  [253] "CAF" "CAF" "CAF" "CAF" "CAF" "CAF" "CAF" "CAF" "CAF" "CAN" "CAN" "CAN"
-##  [265] "CAN" "CAN" "CAN" "CAN" "CAN" "CAN" "CHE" "CHE" "CHE" "CHE" "CHE" "CHE"
-##  [277] "CHE" "CHE" "CHE" "CHL" "CHL" "CHL" "CHL" "CHL" "CHL" "CHL" "CHL" "CHL"
-##  [289] "CHN" "CHN" "CHN" "CHN" "CHN" "CHN" "CHN" "CHN" "CHN" "CIV" "CIV" "CIV"
-##  [301] "CIV" "CIV" "CIV" "CIV" "CIV" "CIV" "CMR" "CMR" "CMR" "CMR" "CMR" "CMR"
-##  [313] "CMR" "CMR" "CMR" "COD" "COD" "COD" "COD" "COD" "COD" "COD" "COD" "COD"
-##  [325] "COG" "COG" "COG" "COG" "COG" "COG" "COG" "COG" "COG" "COK" "COK" "COK"
-##  [337] "COK" "COK" "COK" "COK" "COK" "COK" "COL" "COL" "COL" "COL" "COL" "COL"
-##  [349] "COL" "COL" "COL" "COM" "COM" "COM" "COM" "COM" "COM" "COM" "COM" "COM"
-##  [361] "CPV" "CPV" "CPV" "CPV" "CPV" "CPV" "CPV" "CPV" "CPV" "CRI" "CRI" "CRI"
-##  [373] "CRI" "CRI" "CRI" "CRI" "CRI" "CRI" "CUB" "CUB" "CUB" "CUB" "CUB" "CUB"
-##  [385] "CUB" "CUB" "CUB" "CYP" "CYP" "CYP" "CYP" "CYP" "CYP" "CYP" "CYP" "CYP"
-##  [397] "CZE" "CZE" "CZE" "CZE" "CZE" "CZE" "CZE" "CZE" "CZE" "DEU" "DEU" "DEU"
-##  [409] "DEU" "DEU" "DEU" "DEU" "DEU" "DEU" "DJI" "DJI" "DJI" "DJI" "DJI" "DJI"
-##  [421] "DJI" "DJI" "DJI" "DMA" "DMA" "DMA" "DMA" "DMA" "DMA" "DMA" "DMA" "DMA"
-##  [433] "DNK" "DNK" "DNK" "DNK" "DNK" "DNK" "DNK" "DNK" "DNK" "DOM" "DOM" "DOM"
-##  [445] "DOM" "DOM" "DOM" "DOM" "DOM" "DOM" "DZA" "DZA" "DZA" "DZA" "DZA" "DZA"
-##  [457] "DZA" "DZA" "DZA" "ECU" "ECU" "ECU" "ECU" "ECU" "ECU" "ECU" "ECU" "ECU"
-##  [469] "EGY" "EGY" "EGY" "EGY" "EGY" "EGY" "EGY" "EGY" "EGY" "ERI" "ERI" "ERI"
-##  [481] "ERI" "ERI" "ERI" "ERI" "ERI" "ERI" "ESP" "ESP" "ESP" "ESP" "ESP" "ESP"
-##  [493] "ESP" "ESP" "ESP" "EST" "EST" "EST" "EST" "EST" "EST" "EST" "EST" "EST"
-##  [505] "ETH" "ETH" "ETH" "ETH" "ETH" "ETH" "ETH" "ETH" "ETH" "FIN" "FIN" "FIN"
-##  [517] "FIN" "FIN" "FIN" "FIN" "FIN" "FIN" "FJI" "FJI" "FJI" "FJI" "FJI" "FJI"
-##  [529] "FJI" "FJI" "FJI" "FRA" "FRA" "FRA" "FRA" "FRA" "FRA" "FRA" "FRA" "FRA"
-##  [541] "FSM" "FSM" "FSM" "FSM" "FSM" "FSM" "FSM" "FSM" "FSM" "GAB" "GAB" "GAB"
-##  [553] "GAB" "GAB" "GAB" "GAB" "GAB" "GAB" "GBR" "GBR" "GBR" "GBR" "GBR" "GBR"
-##  [565] "GBR" "GBR" "GBR" "GEO" "GEO" "GEO" "GEO" "GEO" "GEO" "GEO" "GEO" "GEO"
-##  [577] "GHA" "GHA" "GHA" "GHA" "GHA" "GHA" "GHA" "GHA" "GHA" "GIN" "GIN" "GIN"
-##  [589] "GIN" "GIN" "GIN" "GIN" "GIN" "GIN" "GMB" "GMB" "GMB" "GMB" "GMB" "GMB"
-##  [601] "GMB" "GMB" "GMB" "GNB" "GNB" "GNB" "GNB" "GNB" "GNB" "GNB" "GNB" "GNB"
-##  [613] "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GNQ" "GRC" "GRC" "GRC"
-##  [625] "GRC" "GRC" "GRC" "GRC" "GRC" "GRC" "GRD" "GRD" "GRD" "GRD" "GRD" "GRD"
-##  [637] "GRD" "GRD" "GRD" "GTM" "GTM" "GTM" "GTM" "GTM" "GTM" "GTM" "GTM" "GTM"
-##  [649] "GUY" "GUY" "GUY" "GUY" "GUY" "GUY" "GUY" "GUY" "GUY" "HND" "HND" "HND"
-##  [661] "HND" "HND" "HND" "HND" "HND" "HND" "HRV" "HRV" "HRV" "HRV" "HRV" "HRV"
-##  [673] "HRV" "HRV" "HRV" "HTI" "HTI" "HTI" "HTI" "HTI" "HTI" "HTI" "HTI" "HTI"
-##  [685] "HUN" "HUN" "HUN" "HUN" "HUN" "HUN" "HUN" "HUN" "HUN" "IDN" "IDN" "IDN"
-##  [697] "IDN" "IDN" "IDN" "IDN" "IDN" "IDN" "IND" "IND" "IND" "IND" "IND" "IND"
-##  [709] "IND" "IND" "IND" "IRL" "IRL" "IRL" "IRL" "IRL" "IRL" "IRL" "IRL" "IRL"
-##  [721] "IRN" "IRN" "IRN" "IRN" "IRN" "IRN" "IRN" "IRN" "IRN" "IRQ" "IRQ" "IRQ"
-##  [733] "IRQ" "IRQ" "IRQ" "IRQ" "IRQ" "IRQ" "ISL" "ISL" "ISL" "ISL" "ISL" "ISL"
-##  [745] "ISL" "ISL" "ISL" "ISR" "ISR" "ISR" "ISR" "ISR" "ISR" "ISR" "ISR" "ISR"
-##  [757] "ITA" "ITA" "ITA" "ITA" "ITA" "ITA" "ITA" "ITA" "ITA" "JAM" "JAM" "JAM"
-##  [769] "JAM" "JAM" "JAM" "JAM" "JAM" "JAM" "JOR" "JOR" "JOR" "JOR" "JOR" "JOR"
-##  [781] "JOR" "JOR" "JOR" "JPN" "JPN" "JPN" "JPN" "JPN" "JPN" "JPN" "JPN" "JPN"
-##  [793] "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KAZ" "KEN" "KEN" "KEN"
-##  [805] "KEN" "KEN" "KEN" "KEN" "KEN" "KEN" "KGZ" "KGZ" "KGZ" "KGZ" "KGZ" "KGZ"
-##  [817] "KGZ" "KGZ" "KGZ" "KHM" "KHM" "KHM" "KHM" "KHM" "KHM" "KHM" "KHM" "KHM"
-##  [829] "KIR" "KIR" "KIR" "KIR" "KIR" "KIR" "KIR" "KIR" "KIR" "KNA" "KNA" "KNA"
-##  [841] "KNA" "KNA" "KNA" "KNA" "KNA" "KNA" "KOR" "KOR" "KOR" "KOR" "KOR" "KOR"
-##  [853] "KOR" "KOR" "KOR" "LAO" "LAO" "LAO" "LAO" "LAO" "LAO" "LAO" "LAO" "LAO"
-##  [865] "LBN" "LBN" "LBN" "LBN" "LBN" "LBN" "LBN" "LBN" "LBN" "LBR" "LBR" "LBR"
-##  [877] "LBR" "LBR" "LBR" "LBR" "LBR" "LBR" "LBY" "LBY" "LBY" "LBY" "LBY" "LBY"
-##  [889] "LBY" "LBY" "LBY" "LCA" "LCA" "LCA" "LCA" "LCA" "LCA" "LCA" "LCA" "LCA"
-##  [901] "LKA" "LKA" "LKA" "LKA" "LKA" "LKA" "LKA" "LKA" "LKA" "LSO" "LSO" "LSO"
-##  [913] "LSO" "LSO" "LSO" "LSO" "LSO" "LSO" "LTU" "LTU" "LTU" "LTU" "LTU" "LTU"
-##  [925] "LTU" "LTU" "LTU" "LUX" "LUX" "LUX" "LUX" "LUX" "LUX" "LUX" "LUX" "LUX"
-##  [937] "LVA" "LVA" "LVA" "LVA" "LVA" "LVA" "LVA" "LVA" "LVA" "MAR" "MAR" "MAR"
-##  [949] "MAR" "MAR" "MAR" "MAR" "MAR" "MAR" "MDA" "MDA" "MDA" "MDA" "MDA" "MDA"
-##  [961] "MDA" "MDA" "MDA" "MDG" "MDG" "MDG" "MDG" "MDG" "MDG" "MDG" "MDG" "MDG"
-##  [973] "MDV" "MDV" "MDV" "MDV" "MDV" "MDV" "MDV" "MDV" "MDV" "MEX" "MEX" "MEX"
-##  [985] "MEX" "MEX" "MEX" "MEX" "MEX" "MEX" "MHL" "MHL" "MHL" "MHL" "MHL" "MHL"
-##  [997] "MHL" "MHL" "MHL" "MKD" "MKD" "MKD" "MKD" "MKD" "MKD" "MKD" "MKD" "MKD"
-## [1009] "MLI" "MLI" "MLI" "MLI" "MLI" "MLI" "MLI" "MLI" "MLI" "MLT" "MLT" "MLT"
-## [1021] "MLT" "MLT" "MLT" "MLT" "MLT" "MLT" "MMR" "MMR" "MMR" "MMR" "MMR" "MMR"
-## [1033] "MMR" "MMR" "MMR" "MNE" "MNE" "MNE" "MNE" "MNE" "MNE" "MNE" "MNE" "MNE"
-## [1045] "MNG" "MNG" "MNG" "MNG" "MNG" "MNG" "MNG" "MNG" "MNG" "MOZ" "MOZ" "MOZ"
-## [1057] "MOZ" "MOZ" "MOZ" "MOZ" "MOZ" "MOZ" "MRT" "MRT" "MRT" "MRT" "MRT" "MRT"
-## [1069] "MRT" "MRT" "MRT" "MUS" "MUS" "MUS" "MUS" "MUS" "MUS" "MUS" "MUS" "MUS"
-## [1081] "MWI" "MWI" "MWI" "MWI" "MWI" "MWI" "MWI" "MWI" "MWI" "MYS" "MYS" "MYS"
-## [1093] "MYS" "MYS" "MYS" "MYS" "MYS" "MYS" "NAM" "NAM" "NAM" "NAM" "NAM" "NAM"
-## [1105] "NAM" "NAM" "NAM" "NER" "NER" "NER" "NER" "NER" "NER" "NER" "NER" "NER"
-## [1117] "NGA" "NGA" "NGA" "NGA" "NGA" "NGA" "NGA" "NGA" "NGA" "NIC" "NIC" "NIC"
-## [1129] "NIC" "NIC" "NIC" "NIC" "NIC" "NIC" "NIU" "NIU" "NIU" "NIU" "NIU" "NIU"
-## [1141] "NIU" "NIU" "NIU" "NLD" "NLD" "NLD" "NLD" "NLD" "NLD" "NLD" "NLD" "NLD"
-## [1153] "NOR" "NOR" "NOR" "NOR" "NOR" "NOR" "NOR" "NOR" "NOR" "NPL" "NPL" "NPL"
-## [1165] "NPL" "NPL" "NPL" "NPL" "NPL" "NPL" "NRU" "NRU" "NRU" "NRU" "NRU" "NRU"
-## [1177] "NRU" "NRU" "NRU" "NZL" "NZL" "NZL" "NZL" "NZL" "NZL" "NZL" "NZL" "NZL"
-## [1189] "OMN" "OMN" "OMN" "OMN" "OMN" "OMN" "OMN" "OMN" "OMN" "PAK" "PAK" "PAK"
-## [1201] "PAK" "PAK" "PAK" "PAK" "PAK" "PAK" "PAN" "PAN" "PAN" "PAN" "PAN" "PAN"
-## [1213] "PAN" "PAN" "PAN" "PER" "PER" "PER" "PER" "PER" "PER" "PER" "PER" "PER"
-## [1225] "PHL" "PHL" "PHL" "PHL" "PHL" "PHL" "PHL" "PHL" "PHL" "PLW" "PLW" "PLW"
-## [1237] "PLW" "PLW" "PLW" "PLW" "PLW" "PLW" "PNG" "PNG" "PNG" "PNG" "PNG" "PNG"
-## [1249] "PNG" "PNG" "PNG" "POL" "POL" "POL" "POL" "POL" "POL" "POL" "POL" "POL"
-## [1261] "PRK" "PRK" "PRK" "PRK" "PRK" "PRK" "PRK" "PRK" "PRK" "PRT" "PRT" "PRT"
-## [1273] "PRT" "PRT" "PRT" "PRT" "PRT" "PRT" "PRY" "PRY" "PRY" "PRY" "PRY" "PRY"
-## [1285] "PRY" "PRY" "PRY" "PSE" "PSE" "PSE" "PSE" "PSE" "PSE" "PSE" "PSE" "PSE"
-## [1297] "ROU" "ROU" "ROU" "ROU" "ROU" "ROU" "ROU" "ROU" "ROU" "RUS" "RUS" "RUS"
-## [1309] "RUS" "RUS" "RUS" "RUS" "RUS" "RUS" "RWA" "RWA" "RWA" "RWA" "RWA" "RWA"
-## [1321] "RWA" "RWA" "RWA" "SAU" "SAU" "SAU" "SAU" "SAU" "SAU" "SAU" "SAU" "SAU"
-## [1333] "SDN" "SDN" "SDN" "SDN" "SDN" "SDN" "SDN" "SDN" "SDN" "SEN" "SEN" "SEN"
-## [1345] "SEN" "SEN" "SEN" "SEN" "SEN" "SEN" "SGP" "SGP" "SGP" "SGP" "SGP" "SGP"
-## [1357] "SGP" "SGP" "SGP" "SLB" "SLB" "SLB" "SLB" "SLB" "SLB" "SLB" "SLB" "SLB"
-## [1369] "SLE" "SLE" "SLE" "SLE" "SLE" "SLE" "SLE" "SLE" "SLE" "SLV" "SLV" "SLV"
-## [1381] "SLV" "SLV" "SLV" "SLV" "SLV" "SLV" "SOM" "SOM" "SOM" "SOM" "SOM" "SOM"
-## [1393] "SOM" "SOM" "SOM" "SRB" "SRB" "SRB" "SRB" "SRB" "SRB" "SRB" "SRB" "SRB"
-## [1405] "SSD" "SSD" "SSD" "SSD" "SSD" "SSD" "SSD" "SSD" "SSD" "STP" "STP" "STP"
-## [1417] "STP" "STP" "STP" "STP" "STP" "STP" "SUR" "SUR" "SUR" "SUR" "SUR" "SUR"
-## [1429] "SUR" "SUR" "SUR" "SVK" "SVK" "SVK" "SVK" "SVK" "SVK" "SVK" "SVK" "SVK"
-## [1441] "SVN" "SVN" "SVN" "SVN" "SVN" "SVN" "SVN" "SVN" "SVN" "SWE" "SWE" "SWE"
-## [1453] "SWE" "SWE" "SWE" "SWE" "SWE" "SWE" "SWZ" "SWZ" "SWZ" "SWZ" "SWZ" "SWZ"
-## [1465] "SWZ" "SWZ" "SWZ" "SYC" "SYC" "SYC" "SYC" "SYC" "SYC" "SYC" "SYC" "SYC"
-## [1477] "SYR" "SYR" "SYR" "SYR" "SYR" "SYR" "SYR" "SYR" "SYR" "TCD" "TCD" "TCD"
-## [1489] "TCD" "TCD" "TCD" "TCD" "TCD" "TCD" "TGO" "TGO" "TGO" "TGO" "TGO" "TGO"
-## [1501] "TGO" "TGO" "TGO" "THA" "THA" "THA" "THA" "THA" "THA" "THA" "THA" "THA"
-## [1513] "TJK" "TJK" "TJK" "TJK" "TJK" "TJK" "TJK" "TJK" "TJK" "TKM" "TKM" "TKM"
-## [1525] "TKM" "TKM" "TKM" "TKM" "TKM" "TKM" "TLS" "TLS" "TLS" "TLS" "TLS" "TLS"
-## [1537] "TLS" "TLS" "TLS" "TON" "TON" "TON" "TON" "TON" "TON" "TON" "TON" "TON"
-## [1549] "TTO" "TTO" "TTO" "TTO" "TTO" "TTO" "TTO" "TTO" "TTO" "TUN" "TUN" "TUN"
-## [1561] "TUN" "TUN" "TUN" "TUN" "TUN" "TUN" "TUR" "TUR" "TUR" "TUR" "TUR" "TUR"
-## [1573] "TUR" "TUR" "TUR" "TUV" "TUV" "TUV" "TUV" "TUV" "TUV" "TUV" "TUV" "TUV"
-## [1585] "TZA" "TZA" "TZA" "TZA" "TZA" "TZA" "TZA" "TZA" "TZA" "UGA" "UGA" "UGA"
-## [1597] "UGA" "UGA" "UGA" "UGA" "UGA" "UGA" "UKR" "UKR" "UKR" "UKR" "UKR" "UKR"
-## [1609] "UKR" "UKR" "UKR" "UNK" "UNK" "UNK" "UNK" "UNK" "UNK" "UNK" "UNK" "UNK"
-## [1621] "URY" "URY" "URY" "URY" "URY" "URY" "URY" "URY" "URY" "USA" "USA" "USA"
-## [1633] "USA" "USA" "USA" "USA" "USA" "USA" "UZB" "UZB" "UZB" "UZB" "UZB" "UZB"
-## [1645] "UZB" "UZB" "UZB" "VCT" "VCT" "VCT" "VCT" "VCT" "VCT" "VCT" "VCT" "VCT"
-## [1657] "VEN" "VEN" "VEN" "VEN" "VEN" "VEN" "VEN" "VEN" "VEN" "VNM" "VNM" "VNM"
-## [1669] "VNM" "VNM" "VNM" "VNM" "VNM" "VNM" "VUT" "VUT" "VUT" "VUT" "VUT" "VUT"
-## [1681] "VUT" "VUT" "VUT" "WSM" "WSM" "WSM" "WSM" "WSM" "WSM" "WSM" "WSM" "WSM"
-## [1693] "YEM" "YEM" "YEM" "YEM" "YEM" "YEM" "YEM" "YEM" "YEM" "ZAF" "ZAF" "ZAF"
-## [1705] "ZAF" "ZAF" "ZAF" "ZAF" "ZAF" "ZAF" "ZMB" "ZMB" "ZMB" "ZMB" "ZMB" "ZMB"
-## [1717] "ZMB" "ZMB" "ZMB" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE" "ZWE"
+infant_hiv[[1]][1]
+## [1] "AFG"
 ```
 
 ]
@@ -2217,7 +2080,7 @@ class: inverse, center, middle
 
 # Practice tidy data analysis
 
-<div class="countdown" id="timer_61f02a07" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_61f06964" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 
@@ -2891,7 +2754,7 @@ class: inverse, center, middle
 
 # Practice generating graphs
 
-<div class="countdown" id="timer_61f027ce" style="right:0;bottom:0;" data-warnwhen="0">
+<div class="countdown" id="timer_61f0681a" style="right:0;bottom:0;" data-warnwhen="0">
 <code class="countdown-time"><span class="countdown-digits minutes">10</span><span class="countdown-digits colon">:</span><span class="countdown-digits seconds">00</span></code>
 </div>
 

@@ -111,9 +111,15 @@ R is available on the [Comprehensive R Archive Network](https://cran.r-project.o
 1. "Base" R that is downloaded from CRAN
 1. Everything else
 
+
 --
 
 - Packages
+
+
+--
+
+- [RStudio](https://www.rstudio.com)
 
 ---
 
@@ -929,7 +935,7 @@ infant_hiv[1]
 ```
 
 ```{r double-square-on-tibble, output.lines=NA}
-infant_hiv[[1]]
+infant_hiv[[1]][1]
 ```
 
 ]
