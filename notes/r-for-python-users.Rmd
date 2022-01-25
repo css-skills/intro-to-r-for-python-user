@@ -1817,7 +1817,7 @@ R and Python can and should be friends! Beyond that, you can actually call Pytho
 
 ## `keras`
 
-- [R interfacet to Keras](https://keras.rstudio.com/)
+- [R interface to Keras](https://keras.rstudio.com/)
 
 # Acknowledgments {.toc-ignore}
 
