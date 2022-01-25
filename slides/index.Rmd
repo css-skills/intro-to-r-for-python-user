@@ -1,7 +1,14 @@
 ---
 title: "Introduction to R for the Python User"
 author: "Computation Skills Workshop"
-output: rcfss::xaringan
+output:
+  xaringan::moon_reader:
+    css: ["default", "metropolis", "lucy-fonts"]
+    lib_dir: "libs"
+    nature:
+      highlightLanguage: r
+      highlightLines: true
+      countIncrementalSlides: false
 ---
 
 ```{r setup, include=FALSE}
@@ -243,16 +250,9 @@ print(len(4))
 length(primes)
 ```
 
-
---
-
-
 ```{r r-len-int}
 length(4)
 ```
-
-
---
 
 ```{r r-typeof-vec}
 typeof(primes)
@@ -1298,7 +1298,7 @@ class: inverse, center, middle
 ---
 
 ```{r basic-plot, include = FALSE}
-ggplot(infant_hiv) +
+ggplot(data = infant_hiv) +
   geom_point(mapping = aes(x = lo, y = hi))
 ```
 
@@ -1473,8 +1473,16 @@ youth %>%
 
 # Knitting process
 
-```{r knit, echo = FALSE}
+```{r knit, echo = FALSE, fig.align = "center"}
 include_graphics(path = "https://r4ds.had.co.nz/images/RMarkdownFlow.png")
+```
+
+---
+
+class: inverse, center, middle
+
+```{r echo = FALSE}
+knitr::include_graphics(path = "https://rstudio.github.io/reticulate/images/reticulated_python.png")
 ```
 
 ---
@@ -1482,4 +1490,4 @@ include_graphics(path = "https://r4ds.had.co.nz/images/RMarkdownFlow.png")
 # Running Python within R
 
 - [`reticulate`](https://rstudio.github.io/reticulate/)
-- [R interfacet to Keras](https://keras.rstudio.com/)
+- [R interface to Keras](https://keras.rstudio.com/)
